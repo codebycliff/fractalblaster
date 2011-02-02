@@ -48,7 +48,9 @@ namespace Engine
         }
         public Program()
         {
-            a = new AudioFile(@"C:\Users\David\Desktop\The Killers\The Killers - Day & Age (2008)\02 - Human.mp3");
+            Console.Write("Enter an audio file path: ");
+            string path = Console.ReadLine();
+            a = new AudioFile(path);
             a.Open();
 
             BufferSize b = new BufferSize(getBufferSize);
@@ -60,14 +62,18 @@ namespace Engine
             IntPtr wave = WaveInterfaceInstance();
 
             ChangeOutputStream(stream);
-            System.Threading.Thread.Sleep(10000);
-            Pause();
-            System.Threading.Thread.Sleep(10000);
-            UnPause();
-            System.Threading.Thread.Sleep(10000);
-            Stop();
 
-            //System.Threading.Thread.Sleep((a.info.Duration+5)*1000);
+            // Pause, UnPause, Stop Test Code
+            //System.Threading.Thread.Sleep(10000);
+            //Pause();
+            //System.Threading.Thread.Sleep(10000);
+            //UnPause();
+            //System.Threading.Thread.Sleep(10000);
+            //Stop();
+
+
+            // Hold for 5 minutes before stopping
+            System.Threading.Thread.Sleep((a.info.Duration+5)*1000);
         }
         public int getBufferSize()
         {
