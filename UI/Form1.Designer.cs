@@ -113,12 +113,14 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Fractal Blasters Media Player";
             this.ResumeLayout(false);
-
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(Form1_MouseDown);
+            this.MouseMove +=new System.Windows.Forms.MouseEventHandler(Form1_MouseMove);
         }
 
         #endregion

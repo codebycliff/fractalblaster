@@ -13,6 +13,7 @@ namespace UI
     public partial class Form1 : Form
     {
         Engine.Engine prog;
+        private Point mouse_offset;
 
         public Form1()
         {
@@ -52,6 +53,21 @@ namespace UI
         private void button6_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouse_offset = new Point(-e.X, -e.Y);
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouse_offset.X, mouse_offset.Y);
+                this.Location = mousePos; //move the form to the desired location
+            }
         }
     }
 }
