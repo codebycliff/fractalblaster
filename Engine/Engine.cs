@@ -8,10 +8,13 @@ using System.Runtime.InteropServices;
 
 namespace Engine
 {
-    class Program
+    public class Engine
     {
         MemoryStream pcm;
         AudioFile a;
+        BufferSize b;
+        Buffer g;
+        IntPtr stream;
 
         struct NativeBufferPair
         {
@@ -42,39 +45,25 @@ namespace Engine
         public delegate int BufferSize();
         public delegate IntPtr Buffer(bool gc);
 
-        static void Main(string[] args)
+        public Engine()
         {
-            new Program();
+            b = new BufferSize(getBufferSize);
+            g = new Buffer(getBuffer);
         }
-        public Program()
+
+        public void openFile(String path)
         {
-            Console.Write("Enter an audio file path: ");
-            string path = Console.ReadLine();
             a = new AudioFile(path);
             a.Open();
-
-            BufferSize b = new BufferSize(getBufferSize);
-            GC.KeepAlive(b);
-            Buffer g = new Buffer(getBuffer);
-            GC.KeepAlive(g);
-
-            IntPtr stream = CreateOutputStream(g,b, a.info.Channels);
+            stream = CreateOutputStream(g, b, a.info.Channels);
             IntPtr wave = WaveInterfaceInstance();
-
-            ChangeOutputStream(stream);
-
-            // Pause, UnPause, Stop Test Code
-            //System.Threading.Thread.Sleep(10000);
-            //Pause();
-            //System.Threading.Thread.Sleep(10000);
-            //UnPause();
-            //System.Threading.Thread.Sleep(10000);
-            //Stop();
-
-
-            // Hold for 5 minutes before stopping
-            System.Threading.Thread.Sleep((a.info.Duration+5)*1000);
         }
+
+        public void playFile()
+        {
+            ChangeOutputStream(stream);
+        }
+
         public int getBufferSize()
         {
             if (pcm == null)
