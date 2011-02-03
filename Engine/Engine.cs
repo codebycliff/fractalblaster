@@ -15,6 +15,7 @@ namespace Engine
         BufferSize b;
         Buffer g;
         IntPtr stream;
+        string filepath;
 
         struct NativeBufferPair
         {
@@ -53,15 +54,25 @@ namespace Engine
 
         public void openFile(String path)
         {
+            filepath = path;
             a = new AudioFile(path);
-            a.Open();
-            stream = CreateOutputStream(g, b, a.info.Channels);
+            a.Open();         
             IntPtr wave = WaveInterfaceInstance();
         }
 
         public void playFile()
         {
+            stream = CreateOutputStream(g, b, a.info.Channels);
             ChangeOutputStream(stream);
+        }
+
+        public void StopFile()
+        {
+            Stop();
+            a.Close();
+            AudioFile b = new AudioFile(filepath);
+            b.Open();
+            a = b;
         }
 
         public int getBufferSize()

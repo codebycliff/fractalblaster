@@ -86,7 +86,11 @@ void WaveInterface::BlockCompleted()
 	}
 	delete Playing;
 	Playing = NULL;
-	PushNextBlock();
+
+	if(state != PlaybackState::Stopped)
+	{
+		PushNextBlock();
+	}
 }
 
 void WaveInterface::PushNextBlock()

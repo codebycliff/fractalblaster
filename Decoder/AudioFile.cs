@@ -9,10 +9,6 @@ namespace FractalBlaster
     public class AudioFile
     {
 
-        const string OUTPUT_FILE = @"C:\Output.raw";
-        const string INPUT_FILE = @"C:\1.mp3";
-
-
         private string file;
         private FFMPEG.DecoderInterop Decoder;
         public AudioMetadata info;
@@ -48,7 +44,7 @@ namespace FractalBlaster
 
         public void ReadData()
         {
-
+            /*
             Console.WriteLine(info.Artist + " - " + info.Title);
             Console.WriteLine(info.Album + " - " + info.Year);
             Console.WriteLine("Duration - " + info.Duration / 60 + ":" + ("" + info.Duration % 60).PadLeft(2,'0'));
@@ -62,6 +58,7 @@ namespace FractalBlaster
                     break;
                 fs.Write(vals, 0, vals.Length);
             }
+            */
         }
 
         public MemoryStream ReadFrames(int numFrames)
@@ -83,15 +80,10 @@ namespace FractalBlaster
             return rval;
         }
 
-        public static void Main(String[] args)
+        public void Close()
         {
-            AudioFile a = new AudioFile(INPUT_FILE);
-            if (a.Open())
-            {
-                a.ReadData();
-            }
+            Decoder.Close();
         }
-        
     }
 
     public struct AudioMetadata

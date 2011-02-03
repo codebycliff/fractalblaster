@@ -42,13 +42,20 @@ namespace FractalBlaster.FFMPEG
             this.file = file;
             audioCodecContext = new FFMPEG.AVCodecContext();
             formatContext = new FFMPEG.AVFormatContext();
+
+            pAudioStream = IntPtr.Zero;
+            pAudioCodec = IntPtr.Zero;
+            pAudioCodecContext = IntPtr.Zero;
+            pFormatContext = IntPtr.Zero;
+
+            audioStartIndex = -1;
+
             currentFrame = -1;
             sampleSize = -1;
         }
 
         ~DecoderInterop()
         {
-            FFMPEG.av_close_input_file(pFormatContext);         
             FFMPEG.av_free_static();
         }
 
@@ -143,6 +150,7 @@ namespace FractalBlaster.FFMPEG
 
                 rval = new byte[frameSize];
                 Marshal.Copy(pSamples, rval, 0, frameSize);
+
                 return rval;
 
             }
@@ -155,6 +163,15 @@ namespace FractalBlaster.FFMPEG
             {
                 Marshal.FreeHGlobal(pSamples);
             }
+        }
+
+        public void Close()
+        {
+            FFMPEG.av_freep(pAudioStream);
+
+            FFMPEG.avcodec_close(pAudioCodecContext);
+
+            FFMPEG.av_close_input_file(pFormatContext);
         }
 
         public AudioMetadata RetrieveMetadata()

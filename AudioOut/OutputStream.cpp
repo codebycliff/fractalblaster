@@ -26,9 +26,6 @@ char* OutputStream::DeadStream()
 
 OutputStream::~OutputStream()
 {
-	// Call into managed code to release any extra frames
-	LoadNextFrameSet();
-	LoadNextFrameSet();
 }
 
 bool OutputStream::isDeviceBuffered()
