@@ -12,11 +12,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csp
 		{816E457D-3036-4212-BA8F-D29F60674161} = {816E457D-3036-4212-BA8F-D29F60674161}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{6B3A6A00-627E-48CD-BB17-E9396368D96C}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = FractalBlaster.vsmdi
 	EndGlobalSection
@@ -67,8 +65,24 @@ Global
 		{6E2585BB-E0FF-4EEF-B622-0E624BE82300}.Release|Win32.ActiveCfg = Release|x86
 		{6E2585BB-E0FF-4EEF-B622-0E624BE82300}.Release|x86.ActiveCfg = Release|x86
 		{6E2585BB-E0FF-4EEF-B622-0E624BE82300}.Release|x86.Build.0 = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|Win32.ActiveCfg = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|x86.ActiveCfg = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Debug|x86.Build.0 = Debug|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|Any CPU.ActiveCfg = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|Win32.ActiveCfg = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|x86.ActiveCfg = Release|x86
+		{6B3A6A00-627E-48CD-BB17-E9396368D96C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
