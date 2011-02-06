@@ -56,8 +56,13 @@ namespace Engine
         {
             filepath = path;
             a = new AudioFile(path);
-            a.Open();         
+            a.Open(); 
             IntPtr wave = WaveInterfaceInstance();
+        }
+
+        public AudioMetadata getMetadata()
+        {
+            return a.getMetadata();
         }
 
         public void playFile()
@@ -81,6 +86,7 @@ namespace Engine
                 return 0;
             return (int)pcm.Length;
         }
+
         public IntPtr getBuffer(bool gc)
         {
             if (gc)

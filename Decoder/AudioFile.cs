@@ -84,6 +84,11 @@ namespace FractalBlaster
         {
             Decoder.Close();
         }
+
+        public AudioMetadata getMetadata()
+        {
+            return Decoder.RetrieveMetadata();
+        }
     }
 
     public struct AudioMetadata

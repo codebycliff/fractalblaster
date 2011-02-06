@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class Form1
+    partial class UI
     {
         /// <summary>
         /// Required designer variable.
@@ -43,7 +43,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(43, 12);
+            this.button1.Location = new System.Drawing.Point(64, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -53,7 +53,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(43, 42);
+            this.button2.Location = new System.Drawing.Point(64, 41);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -63,7 +63,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(43, 72);
+            this.button3.Location = new System.Drawing.Point(64, 70);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(43, 101);
+            this.button4.Location = new System.Drawing.Point(64, 99);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 3;
@@ -83,7 +83,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(43, 130);
+            this.button5.Location = new System.Drawing.Point(64, 128);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 4;
@@ -93,7 +93,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(43, 160);
+            this.button6.Location = new System.Drawing.Point(64, 157);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 5;
@@ -101,11 +101,11 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // Form1
+            // UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(163, 196);
+            this.ClientSize = new System.Drawing.Size(200, 200);
             this.ControlBox = false;
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -114,13 +114,17 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(200, 200);
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "UI";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Fractal Blasters Media Player";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_Close);
             this.ResumeLayout(false);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(Form1_MouseDown);
-            this.MouseMove +=new System.Windows.Forms.MouseEventHandler(Form1_MouseMove);
+
         }
 
         #endregion
