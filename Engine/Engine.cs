@@ -55,6 +55,19 @@ namespace Engine
         public void openFile(String path)
         {
             filepath = path;
+            if (a != null)
+            {
+                Stop();
+                a.Close();
+                // Clean up Remaining Native Arrays
+                for (int i = 0; i < native.Count; i++)
+                {
+                    native.First.Value.handle.Free();
+                    Marshal.FreeHGlobal(native.First.Value.array);
+                    native.RemoveFirst();
+                    GC.Collect();
+                }
+            }
             a = new AudioFile(path);
             a.Open(); 
             IntPtr wave = WaveInterfaceInstance();
@@ -74,10 +87,19 @@ namespace Engine
         public void StopFile()
         {
             Stop();
-            a.Close();
-            AudioFile b = new AudioFile(filepath);
-            b.Open();
-            a = b;
+            a.Stop();
+
+            // Clean up Remaining Native Arrays
+            for (int i = 0; i < native.Count; i++)
+            {
+                native.First.Value.handle.Free();
+                Marshal.FreeHGlobal(native.First.Value.array);
+                native.RemoveFirst();
+                GC.Collect();
+            }
+
+            //a = new AudioFile(filepath);
+            //a.Open();
         }
 
         public int getBufferSize()
@@ -94,6 +116,7 @@ namespace Engine
                 native.First.Value.handle.Free();
                 Marshal.FreeHGlobal(native.First.Value.array);
                 native.RemoveFirst();
+                GC.Collect();
             }
             pcm = a.ReadFrames(500);
             if (pcm == null)

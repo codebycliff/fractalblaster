@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Engine;
 using FractalBlaster;
+using System.Threading;
 
 namespace UI
 {
@@ -22,6 +23,7 @@ namespace UI
         {
             InitializeComponent();
             prog = new Engine.Engine();
+            PlaybackStateMachine.engine = prog;
         }
 
         public void setPlaylistForm(PlaylistForm p)
@@ -31,6 +33,7 @@ namespace UI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 prog.openFile(openFileDialog1.FileName);
@@ -52,27 +55,7 @@ namespace UI
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            prog.playFile();         
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
-            Engine.Engine.Pause();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Engine.Engine.UnPause();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            prog.StopFile();
-        }
-
+      
         private void button6_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -109,6 +92,31 @@ namespace UI
         private void Form1_Close(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void UI_Load(object sender, EventArgs e)
+        {
+            playlistForm.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
+            playlistForm.Show(this);
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            if (PlaybackStateMachine.isPlaying())
+            {
+                PlaybackStateMachine.Open(playlistForm.getFilename());
+            }
+            PlaybackStateMachine.Play();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            PlaybackStateMachine.Pause();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            PlaybackStateMachine.Stop();
         }
         
 

@@ -15,6 +15,7 @@ namespace UI
         private List<String> displaynames;
         private Point mouse_offset;
         private bool loading;
+
         public PlaylistForm()
         {
             filenames = new List<String>();
@@ -60,10 +61,11 @@ namespace UI
 
         private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (loading) return;
-            UI userInterface = (UI)this.Owner;
-            userInterface.prog.StopFile();
-            userInterface.prog.openFile(filenames.ElementAt(listBox1.SelectedIndex));
+        }
+
+        public String getFilename()
+        {
+            return filenames.ElementAt(listBox1.SelectedIndex);
         }
 
     }

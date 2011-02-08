@@ -56,7 +56,7 @@ namespace FractalBlaster.FFMPEG
 
         ~DecoderInterop()
         {
-            FFMPEG.av_free_static();
+            //FFMPEG.av_free_static();
         }
 
         public bool OpenAndAnalyze()
@@ -165,11 +165,25 @@ namespace FractalBlaster.FFMPEG
             }
         }
 
+        public enum SeekOrigin {Begin =0, Current =1, End=2};
+        public void SeekBeginning()
+        {
+            int flags = FFMPEG.AVSEEK_FLAG_ANY | FFMPEG.AVSEEK_FLAG_BACKWARD;
+            long newTimestamp = (long)(0 * FFMPEG.AV_TIME_BASE);
+
+            if (FFMPEG.av_seek_frame(pFormatContext, -1, newTimestamp, flags) < 0)
+            {
+                // Error?
+            }
+
+            FFMPEG.avcodec_flush_buffers(pAudioCodecContext);
+        }
+
         public void Close()
         {
-            FFMPEG.av_freep(pAudioStream);
+            //FFMPEG.av_freep(pAudioStream);
 
-            FFMPEG.avcodec_close(pAudioCodecContext);
+            //FFMPEG.avcodec_close(pAudioCodecContext);
 
             FFMPEG.av_close_input_file(pFormatContext);
         }
