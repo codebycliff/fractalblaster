@@ -4,42 +4,40 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace FractalBlaster
+namespace Decoder
 {
-    public class AudioFile
+    public class AudioFile : Common.Decoder
     {
 
         private string file;
         private FFMPEG.DecoderInterop Decoder;
-        public AudioMetadata info;
-       
-        public AudioFile(string filepath)
+
+        public AudioFile(string filepath) : base(filepath)
         {
             file = filepath;
-            
         }
 
-        public bool Open()
+        public override void Open()
         {
             if (!File.Exists(file))
             {
                 // Error Log - File doesn't exist
-                return false;
+                return;
             }
 
             // FFMPEG Open
             Decoder = new FFMPEG.DecoderInterop(file);
             if (Decoder.OpenAndAnalyze())
             {
-                info = Decoder.RetrieveMetadata();
+                // Do nothing?
             }
             else
             {
                 // Error Log - FFMPEG failed to open the file
-                return false;
+                return;
             }
 
-            return true;
+            return;
         }
 
         public void ReadData()
@@ -61,7 +59,7 @@ namespace FractalBlaster
             */
         }
 
-        public MemoryStream ReadFrames(int numFrames)
+        public override MemoryStream ReadFrame(int numFrames)
         {
             MemoryStream rval = new MemoryStream();
             for (int i = 0; i < numFrames; i++)
@@ -80,30 +78,15 @@ namespace FractalBlaster
             return rval;
         }
 
-        public void Close()
+        public override void Close()
         {
             Decoder.Close();
         }
 
-        public void Stop()
+        public override void SeekBeginning()
         {
             Decoder.SeekBeginning();
         }
 
-        public AudioMetadata getMetadata()
-        {
-            return Decoder.RetrieveMetadata();
-        }
     }
-
-    public struct AudioMetadata
-    {
-        public string Title;
-        public string Artist;
-        public string Album;
-        public int Year;
-        public int Duration;
-        public int Channels;
-        public int SampleRate;   
-    };
 }

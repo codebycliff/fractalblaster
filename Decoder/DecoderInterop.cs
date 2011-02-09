@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace FractalBlaster.FFMPEG
+namespace FFMPEG
 {
     public class DecoderInterop
     {
@@ -187,37 +187,5 @@ namespace FractalBlaster.FFMPEG
 
             FFMPEG.av_close_input_file(pFormatContext);
         }
-
-        public AudioMetadata RetrieveMetadata()
-        {
-            AudioMetadata data = new AudioMetadata();
-
-            char[] nullarray = { '\0' };
-
-            data.Album = System.Text.Encoding.ASCII.GetString(formatContext.album);
-            data.Album = data.Album.Trim();
-            data.Album = data.Album.Trim(nullarray);
-
-            data.Artist = System.Text.Encoding.ASCII.GetString(formatContext.author);
-            data.Artist = data.Artist.Trim();
-            data.Artist = data.Artist.Trim(nullarray);
-
-            data.Duration = (int)formatContext.duration;
-            data.Duration /= 1000000;
-
-            data.Year = formatContext.year;
-
-            data.Title = System.Text.Encoding.ASCII.GetString(formatContext.title);
-            data.Title = data.Title.Trim();
-            data.Title = data.Title.Trim(nullarray);
-
-            data.Channels = audioCodecContext.channels;
-
-            data.SampleRate = audioCodecContext.sample_rate;
-
-            return data;
-        }
-
-
     }
 }

@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Engine;
-using FractalBlaster;
 using System.Threading;
 
 namespace UI
 {
     public partial class UI : Form
     {
-        public Engine.Engine prog;
         private Point mouse_offset;
         List<Point> window_offset;
         PlaylistForm playlistForm;
@@ -22,8 +20,6 @@ namespace UI
         public UI()
         {
             InitializeComponent();
-            prog = new Engine.Engine();
-            PlaybackStateMachine.engine = prog;
         }
 
         public void setPlaylistForm(PlaylistForm p)
@@ -36,6 +32,7 @@ namespace UI
             
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                /*
                 prog.openFile(openFileDialog1.FileName);
                 AudioMetadata am = prog.getMetadata();
                 String displayTitle;
@@ -51,7 +48,12 @@ namespace UI
                 {
                    displayTitle = am.Artist + " - " + am.Title;
                 }
-                playlistForm.addFile(openFileDialog1.FileName, displayTitle);
+                */
+                string displayInfo;
+
+                displayInfo = Metadata.RetrieveMetadata(openFileDialog1.FileName).Artist + " - " + Metadata.RetrieveMetadata(openFileDialog1.FileName).Title;
+
+                playlistForm.addFile(openFileDialog1.FileName, displayInfo);
             }
         }
 
@@ -102,7 +104,7 @@ namespace UI
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            if (PlaybackStateMachine.isPlaying())
+            if (PlaybackStateMachine.isPlaying() || PlaybackStateMachine.SongPlaying() != playlistForm.getFilename())
             {
                 PlaybackStateMachine.Open(playlistForm.getFilename());
             }
@@ -119,6 +121,13 @@ namespace UI
             PlaybackStateMachine.Stop();
         }
         
-
+        public void PlaylistDoubleClicked()
+        {
+            if (PlaybackStateMachine.isPlaying() || PlaybackStateMachine.SongPlaying() != playlistForm.getFilename())
+            {
+                PlaybackStateMachine.Open(playlistForm.getFilename());
+            }
+            PlaybackStateMachine.Play();
+        }
     }
 }

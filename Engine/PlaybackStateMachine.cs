@@ -10,17 +10,20 @@ namespace Engine
         enum PlaybackState { Playing, Paused, Stopped };
 
         static PlaybackState state;
-        public static Engine engine;        
+        static Common.Output output;
+        static string CurrentlyPlaying;
 
         static PlaybackStateMachine()
         {
             state = PlaybackState.Stopped;
+            output = Common.DLLMaster.getOutput();
         }
 
         public static void Open(string file)
         {
-            engine.openFile(file);
+            output.Open(file);
             state = PlaybackState.Stopped;
+            CurrentlyPlaying = file;
         }
 
         public static void Play()
@@ -28,14 +31,14 @@ namespace Engine
             switch (state)
             {
                 case PlaybackState.Paused:
-                    Engine.UnPause();
+                    output.Resume();
                     state = PlaybackState.Playing;
                     break;
                 case PlaybackState.Playing:
                     break;
                 case PlaybackState.Stopped:
                     state = PlaybackState.Playing;
-                    engine.playFile();
+                    output.Play();
                     break;
             }
         }
@@ -45,11 +48,11 @@ namespace Engine
             switch (state)
             {
                 case PlaybackState.Paused:
-                    Engine.UnPause();
+                    output.Resume();
                     state = PlaybackState.Playing;
                     break;
                 case PlaybackState.Playing:
-                    Engine.Pause();
+                    output.Pause();
                     state = PlaybackState.Paused;
                     break;
                 case PlaybackState.Stopped:
@@ -62,11 +65,11 @@ namespace Engine
             switch (state)
             {
                 case PlaybackState.Paused:
-                    engine.StopFile();
+                    output.Stop();
                     state = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Playing:
-                    engine.StopFile();
+                    output.Stop();
                     state = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Stopped:
@@ -85,6 +88,11 @@ namespace Engine
         public static bool isPlaying()
         {
             return (state == PlaybackState.Playing);
+        }
+
+        public static string SongPlaying()
+        {
+            return CurrentlyPlaying;
         }
     }
 }

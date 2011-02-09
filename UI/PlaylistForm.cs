@@ -14,23 +14,20 @@ namespace UI
         private List<String> filenames;
         private List<String> displaynames;
         private Point mouse_offset;
-        private bool loading;
+        private string selected;
 
         public PlaylistForm()
         {
             filenames = new List<String>();
             displaynames = new List<String>();
-            loading = false;
             InitializeComponent();
         }
 
         public void addFile(string filename, string displayname)
         {
-            loading = true;
             filenames.Add(filename);
             displaynames.Add(displayname);
             updateList();
-            loading = false;
         }
 
         private void updateList()
@@ -59,13 +56,15 @@ namespace UI
             }
         }
 
-        private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
-        {
-        }
-
         public String getFilename()
         {
             return filenames.ElementAt(listBox1.SelectedIndex);
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            selected = listBox1.SelectedItem.ToString();
+            ((UI)this.Owner).PlaylistDoubleClicked();
         }
 
     }

@@ -3,7 +3,7 @@
 
 #define DLLExport   __declspec(dllexport)
 
-typedef char* (__stdcall *LOAD_BUFFER_FUNCTION)(bool);  
+typedef char* (__stdcall *LOAD_BUFFER_FUNCTION)(int);  
 typedef int (__stdcall *LOAD_BUFFER_SIZE)();  
 
 class WaveInterface;

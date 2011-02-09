@@ -3,7 +3,7 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace FractalBlaster.FFMPEG
+namespace FFMPEG
 {
     public partial class FFMPEG
     {

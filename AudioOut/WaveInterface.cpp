@@ -150,7 +150,6 @@ void CALLBACK waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD dwInstance, DWORD dwPar
 		// Going to thread this...
 
 		unsigned int threadID;
-		void* (__stdcall *callback)();  
 		_beginthreadex(NULL, 0, (unsigned int (__stdcall*)(void*))CallbackBlockCompleted, NULL, 0, &threadID);
 
 		 //WaveInterface::WaveInterfaceInstance()->BlockCompleted(); <- Causes Lag
