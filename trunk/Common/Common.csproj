@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioMetadata.cs" />
+    <Compile Include="DLLMaster.cs" />
     <Compile Include="IDecode.cs" />
     <Compile Include="IDLL.cs" />
     <Compile Include="IMediaPlugin.cs" />
