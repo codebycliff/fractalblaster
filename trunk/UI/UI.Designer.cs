@@ -32,8 +32,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnForward = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
@@ -63,29 +63,29 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // button3
+            // btnBack
             // 
-            this.button3.BackgroundImage = global::UI.Properties.Resources.rewind;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(-1, -1);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 72);
-            this.button3.TabIndex = 9;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnBack.BackgroundImage = global::UI.Properties.Resources.rewind;
+            this.btnBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnBack.FlatAppearance.BorderSize = 0;
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Location = new System.Drawing.Point(-1, -1);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 72);
+            this.btnBack.TabIndex = 9;
+            this.btnBack.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnForward
             // 
-            this.button2.BackgroundImage = global::UI.Properties.Resources.forward;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(319, -1);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 72);
-            this.button2.TabIndex = 8;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnForward.BackgroundImage = global::UI.Properties.Resources.forward;
+            this.btnForward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnForward.FlatAppearance.BorderSize = 0;
+            this.btnForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnForward.Location = new System.Drawing.Point(319, -1);
+            this.btnForward.Name = "btnForward";
+            this.btnForward.Size = new System.Drawing.Size(75, 72);
+            this.btnForward.TabIndex = 8;
+            this.btnForward.UseVisualStyleBackColor = true;
             // 
             // btnStop
             // 
@@ -132,8 +132,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 103);
             this.ControlBox = false;
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.btnForward);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.button6);
@@ -162,8 +162,8 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnForward;
+        private System.Windows.Forms.Button btnBack;
     }
 }
 

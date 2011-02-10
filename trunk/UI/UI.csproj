@@ -100,16 +100,51 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Icons\Blue.ico" />
-    <Content Include="Icons\BlueGreen.ico" />
-    <Content Include="Icons\CyanBlue.ico" />
-    <Content Include="Icons\forward.png" />
-    <Content Include="Icons\pause.png" />
-    <Content Include="Icons\play.png" />
-    <Content Include="Icons\PurpleGray.ico" />
-    <Content Include="Icons\RedBlack.ico" />
-    <Content Include="Icons\rewind.png" />
-    <Content Include="Icons\stop.png" />
+    <Content Include="Icons\Blue.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\BlueGreen.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Blue\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Blue\forward.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Blue\pause.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Blue\play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Blue\stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\CyanBlue.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Navy\forward.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Navy\pause.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Navy\play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Navy\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Navy\stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\PurpleGray.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\RedBlack.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

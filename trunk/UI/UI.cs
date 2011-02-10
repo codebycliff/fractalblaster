@@ -100,6 +100,7 @@ namespace UI
         {
             playlistForm.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
             playlistForm.Show(this);
+            //Common.SettingsLoader.LoadIcons(ref btnPlay, ref btnStop, ref btnPause, ref btnBack, ref btnForward);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
