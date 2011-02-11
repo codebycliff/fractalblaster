@@ -1,0 +1,9 @@
+S:\cs309\trunk\Metadata\bin\Debug\Metadata.dll
+S:\cs309\trunk\Metadata\bin\Debug\Metadata.pdb
+S:\cs309\trunk\Metadata\bin\Debug\FractalBlaster.Core.dll
+S:\cs309\trunk\Metadata\bin\Debug\FractalBlaster.Engines.dll
+S:\cs309\trunk\Metadata\bin\Debug\FractalBlaster.Core.pdb
+S:\cs309\trunk\Metadata\bin\Debug\FractalBlaster.Engines.pdb
+S:\cs309\trunk\Metadata\obj\Debug\ResolveAssemblyReference.cache
+S:\cs309\trunk\Metadata\obj\Debug\Metadata.dll
+S:\cs309\trunk\Metadata\obj\Debug\Metadata.pdb
