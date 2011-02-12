@@ -9,10 +9,11 @@ namespace Common
 
     public abstract class Output
     {
-        public abstract void Open(string path);
+        //public abstract void Open(string path);
         public abstract void Play();
         public abstract void Stop();
         public abstract void Pause();
         public abstract void Resume();
+        public abstract void setDecoder(Common.Decoder dec);
     }
 }

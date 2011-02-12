@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Common;
 
 namespace UI
 {
@@ -15,11 +16,14 @@ namespace UI
         private List<String> displaynames;
         private Point mouse_offset;
         private string selected;
+        private int length;
+        private bool repeat;
 
         public PlaylistForm()
         {
             filenames = new List<String>();
             displaynames = new List<String>();
+            length = 0;
             InitializeComponent();
         }
 
@@ -27,7 +31,51 @@ namespace UI
         {
             filenames.Add(filename);
             displaynames.Add(displayname);
+            length = length + 1;
             updateList();
+        }
+
+        public String getFilename()
+        {
+            return filenames.ElementAt(listBox1.SelectedIndex);
+        }
+
+        public void gotoIndex(int i)
+        {
+            if ((i < 0) || (i >= this.length)) return;
+            listBox1.SelectedIndex = i;
+        }
+
+        public void gotoNext()
+        {
+            if (length == 0) return;
+            if (listBox1.SelectedIndex == length - 1)
+            {
+                if (repeat)
+                {
+                    listBox1.SelectedIndex = 1;
+                }
+            }
+            else
+            {
+                listBox1.SelectedIndex = listBox1.SelectedIndex + 1;                
+            }
+        }
+
+        public void gotoPrevious()
+        {
+            if (length == 0) return;
+            if (listBox1.SelectedIndex == 0)
+            {
+                if (repeat)
+                {
+                    listBox1.SelectedIndex = length - 1;
+                }
+            }
+            else
+            {
+                listBox1.SelectedIndex = listBox1.SelectedIndex - 1;
+            }
         }
 
         private void updateList()
@@ -36,7 +84,6 @@ namespace UI
             listBox1.Enabled = false;
             listBox1.DataSource = null;
             listBox1.DataSource = displaynames;
-            listBox1.SelectedIndex = filenames.Count - 1;
             listBox1.Enabled = true;
             listBox1.EndUpdate();
         }
@@ -54,11 +101,6 @@ namespace UI
                 mousePos.Offset(mouse_offset);
                 this.Location = mousePos;
             }
-        }
-
-        public String getFilename()
-        {
-            return filenames.ElementAt(listBox1.SelectedIndex);
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)

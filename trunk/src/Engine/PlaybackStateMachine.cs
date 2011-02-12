@@ -11,6 +11,7 @@ namespace Engine
 
         static PlaybackState state;
         static Common.Output output;
+        static Common.Decoder decoder;
         static string CurrentlyPlaying;
 
         static PlaybackStateMachine()
@@ -21,7 +22,15 @@ namespace Engine
 
         public static void Open(string file)
         {
-            output.Open(file);
+            output.Stop();
+            if (decoder != null)
+            {
+                decoder.Close();
+            }
+            decoder = Common.DLLMaster.getDecoder(file);
+            decoder.Open();
+            decoder.SeekBeginning();
+            output.setDecoder(decoder);
             state = PlaybackState.Stopped;
             CurrentlyPlaying = file;
         }
@@ -66,10 +75,12 @@ namespace Engine
             {
                 case PlaybackState.Paused:
                     output.Stop();
+                    decoder.SeekBeginning();
                     state = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Playing:
                     output.Stop();
+                    decoder.SeekBeginning();
                     state = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Stopped:

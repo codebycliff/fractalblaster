@@ -42,6 +42,7 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Multiselect = true;
             // 
             // button1
             // 
@@ -74,6 +75,7 @@
             this.btnBack.Size = new System.Drawing.Size(75, 72);
             this.btnBack.TabIndex = 9;
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnForward
             // 
@@ -86,6 +88,7 @@
             this.btnForward.Size = new System.Drawing.Size(75, 72);
             this.btnForward.TabIndex = 8;
             this.btnForward.UseVisualStyleBackColor = true;
+            this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
             // 
             // btnStop
             // 

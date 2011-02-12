@@ -54,26 +54,18 @@ namespace Output
 
         public delegate int BufferSize();
         public delegate IntPtr Buffer(bool gc);
-
+        
+        /*
         public override void Open(string path)
         {
-            filepath = path;
-            if (a != null)
-            {
-                AudioOut.Stop();
-                a.Close();
-                // Clean up Remaining Native Arrays
-                for (int i = 0; i < native.Count; i++)
-                {
-                    native.First.Value.handle.Free();
-                    Marshal.FreeHGlobal(native.First.Value.array);
-                    native.RemoveFirst();
-                    GC.Collect();
-                }
-            }
-            a = Common.DLLMaster.getDecoder(path);
-            a.Open(); 
-            IntPtr wave = AudioOut.WaveInterfaceInstance();
+            
+        }
+        */
+
+        public override void setDecoder(Common.Decoder dec)
+        {
+            a = dec;
+            AudioOut.WaveInterfaceInstance();
         }
 
         public override void Play()
@@ -85,7 +77,6 @@ namespace Output
         public override void Stop()
         {
             AudioOut.Stop();
-            a.SeekBeginning();
 
             // Clean up Remaining Native Arrays
             for (int i = 0; i < native.Count; i++)

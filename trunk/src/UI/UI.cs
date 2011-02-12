@@ -31,29 +31,29 @@ namespace UI
         {
             
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                /*
-                prog.openFile(openFileDialog1.FileName);
-                AudioMetadata am = prog.getMetadata();
-                String displayTitle;
-                if (am.Artist.Equals("") && am.Title.Equals(""))
-                {
-                    displayTitle = openFileDialog1.FileName;
-                }
-                else if (am.Artist.Equals("") && !am.Title.Equals(""))
-                {
-                    displayTitle = am.Title;
-                }
-                else
-                {
-                   displayTitle = am.Artist + " - " + am.Title;
-                }
-                */
+            {         
+                string[] filenames = openFileDialog1.FileNames;
+                Common.AudioMetadata am;
                 string displayInfo;
 
-                displayInfo = Metadata.RetrieveMetadata(openFileDialog1.FileName).Artist + " - " + Metadata.RetrieveMetadata(openFileDialog1.FileName).Title;
+                for (int i = 0; i < filenames.Length; i++)
+                {
+                    am = Metadata.RetrieveMetadata(filenames[i]);
+                    if (am.Artist.Equals("") && am.Title.Equals(""))
+                    {
+                        displayInfo = openFileDialog1.FileName;
+                    }
+                    else if (am.Artist.Equals("") && !am.Title.Equals(""))
+                    {
+                        displayInfo = am.Title;
+                    }
+                    else
+                    {
+                        displayInfo = am.Artist + " - " + am.Title;
+                    }
 
-                playlistForm.addFile(openFileDialog1.FileName, displayInfo);
+                    playlistForm.addFile(filenames[i], displayInfo);
+                }                
             }
         }
 
@@ -129,6 +129,36 @@ namespace UI
                 PlaybackStateMachine.Open(playlistForm.getFilename());
             }
             PlaybackStateMachine.Play();
+        }
+
+        private void btnForward_Click(object sender, EventArgs e)
+        {
+            if (PlaybackStateMachine.isPlaying())
+            {
+                PlaybackStateMachine.Stop();
+                playlistForm.gotoNext();
+                PlaybackStateMachine.Open(playlistForm.getFilename());
+                PlaybackStateMachine.Play();
+            }
+            else
+            {
+                playlistForm.gotoNext();
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            if (PlaybackStateMachine.isPlaying())
+            {
+                PlaybackStateMachine.Stop();
+                playlistForm.gotoPrevious();
+                PlaybackStateMachine.Open(playlistForm.getFilename());
+                PlaybackStateMachine.Play();
+            }
+            else
+            {
+                playlistForm.gotoPrevious();
+            }
         }
     }
 }
