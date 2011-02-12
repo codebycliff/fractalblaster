@@ -16,7 +16,6 @@ namespace Main
         /// The main entry point for the application.
         /// </summary>
         /// 
-        static Thread tPlaylist;
         static UI.UI userInterface;
         static UI.PlaylistForm playlistForm;
 
