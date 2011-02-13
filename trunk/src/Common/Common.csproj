@@ -68,6 +68,7 @@
     <Compile Include="IDLL.cs" />
     <Compile Include="IMediaPlugin.cs" />
     <Compile Include="IOutput.cs" />
+    <Compile Include="IPCMReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

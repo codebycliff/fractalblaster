@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace Output
 {
@@ -31,11 +32,9 @@ namespace Output
         }
 
         MemoryStream pcm;
-        Common.Decoder a;
         BufferSize b;
         Buffer g;
         IntPtr stream;
-        string filepath;
 
         struct NativeBufferPair
         {
@@ -62,12 +61,6 @@ namespace Output
         }
         */
 
-        public override void setDecoder(Common.Decoder dec)
-        {
-            a = dec;
-            AudioOut.WaveInterfaceInstance();
-        }
-
         public override void Play()
         {
             stream = AudioOut.CreateOutputStream(g, b, 2);
@@ -86,6 +79,7 @@ namespace Output
                 native.RemoveFirst();
                 GC.Collect();
             }
+            AudioOut.WaveInterfaceInstance();
         }
 
         public override void Pause()
@@ -96,6 +90,11 @@ namespace Output
         public override void Resume()
         {
             AudioOut.UnPause();
+        }
+
+        public IntPtr getStream()
+        {
+            return stream;
         }
 
         public int getBufferSize()
@@ -114,7 +113,7 @@ namespace Output
                 native.RemoveFirst();
                 GC.Collect();
             }
-            pcm = a.ReadFrame(500);
+            pcm = Engine.Engine.getNextFrameset();
             if (pcm == null)
             {
                 return IntPtr.Zero;

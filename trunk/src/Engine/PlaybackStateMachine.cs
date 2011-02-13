@@ -30,7 +30,6 @@ namespace Engine
             decoder = Common.DLLMaster.getDecoder(file);
             decoder.Open();
             decoder.SeekBeginning();
-            output.setDecoder(decoder);
             state = PlaybackState.Stopped;
             CurrentlyPlaying = file;
         }
@@ -104,6 +103,11 @@ namespace Engine
         public static string SongPlaying()
         {
             return CurrentlyPlaying;
+        }
+
+        public static Common.Decoder getDecoder()
+        {
+            return decoder;
         }
     }
 }

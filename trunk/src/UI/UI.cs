@@ -15,16 +15,23 @@ namespace UI
     {
         private Point mouse_offset;
         List<Point> window_offset;
+        List<Form> subwindows;
         PlaylistForm playlistForm;
 
         public UI()
         {
+            subwindows = new List<Form>();
             InitializeComponent();
         }
 
         public void setPlaylistForm(PlaylistForm p)
         {
             playlistForm = p;
+        }
+
+        public void addSubwindow(Form f)
+        {
+            subwindows.Add(f);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -100,6 +107,10 @@ namespace UI
         {
             playlistForm.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
             playlistForm.Show(this);
+            for (int i = 0; i < subwindows.Count; i++)
+            {
+                subwindows.ElementAt(i).Show(this);
+            }
             //Common.SettingsLoader.LoadIcons(ref btnPlay, ref btnStop, ref btnPause, ref btnBack, ref btnForward);
         }
 

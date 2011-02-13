@@ -14,6 +14,5 @@ namespace Common
         public abstract void Stop();
         public abstract void Pause();
         public abstract void Resume();
-        public abstract void setDecoder(Common.Decoder dec);
     }
 }

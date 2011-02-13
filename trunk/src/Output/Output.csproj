@@ -50,6 +50,10 @@
       <Project>{D1F3EFF6-724E-422A-B356-49BC56D8B7E3}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Engine\Engine.csproj">
+      <Project>{6E2585BB-E0FF-4EEF-B622-0E624BE82300}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
