@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Output", "Output\Output.csproj", "{A712BA55-C338-4184-93B2-406771FCA169}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chopper", "Chopper\Chopper.csproj", "{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = FractalBlaster.vsmdi
@@ -133,6 +135,18 @@ Global
 		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Win32.ActiveCfg = Release|Any CPU
 		{A712BA55-C338-4184-93B2-406771FCA169}.Release|x86.ActiveCfg = Release|Any CPU
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|Win32.ActiveCfg = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|x86.ActiveCfg = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Debug|x86.Build.0 = Debug|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|Any CPU.ActiveCfg = Release|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|Mixed Platforms.Build.0 = Release|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|Win32.ActiveCfg = Release|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|x86.ActiveCfg = Release|x86
+		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

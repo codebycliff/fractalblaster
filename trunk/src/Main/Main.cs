@@ -28,6 +28,7 @@ namespace Main
             playlistForm = new UI.PlaylistForm();
             playlistForm.Owner = userInterface;
             userInterface.setPlaylistForm(playlistForm);
+            Engine.Engine.addPCMReceivers(Common.DLLMaster.getPCMReceivers());
             Application.Run(userInterface);
         }
     }

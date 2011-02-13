@@ -10,21 +10,26 @@ namespace Engine
     public static class Engine
     {
         static MemoryStream PCMStream;
-        static List<IPCMReceiver> PCMReceivers;
+        static List<Common.PCMReceiver> PCMReceivers;
 
         static Engine()
         {
-            PCMReceivers = new List<IPCMReceiver>();
+            PCMReceivers = new List<Common.PCMReceiver>();
         }
 
-        public static void addPCMReceiver(IPCMReceiver p)
+        public static void addPCMReceiver(Common.PCMReceiver p)
         {
             PCMReceivers.Add(p);
         }
 
+        public static void addPCMReceivers(List<Common.PCMReceiver> list)
+        {
+            PCMReceivers.AddRange(list);
+        }
+        
         public static MemoryStream getNextFrameset()
         {
-            PCMStream = PlaybackStateMachine.getDecoder().ReadFrame(500);
+            PCMStream = PlaybackStateMachine.getDecoder().ReadFrame(20);
             for (int i = 0; i < PCMReceivers.Count; i++)
             {
                 PCMStream.Seek(0, 0);

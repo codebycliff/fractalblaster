@@ -8,6 +8,11 @@ namespace Common
 {
     public interface IPCMReceiver
     {
-        void receiveFrames(MemoryStream PCM);
+        PCMReceiver Generate();
+    }
+
+    public abstract class PCMReceiver
+    {
+        public abstract void receiveFrames(MemoryStream PCM);
     }
 }

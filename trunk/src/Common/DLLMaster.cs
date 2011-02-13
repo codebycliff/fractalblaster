@@ -81,5 +81,20 @@ namespace Common
 
             return rval;
         }
+
+        public static List<PCMReceiver> getPCMReceivers()
+        {
+            List<PCMReceiver> rval = new List<PCMReceiver>();
+
+            foreach (IDLL dll in ValidDLL)
+            {
+                if (dll.GetGenericType() == typeof(PCMReceiver))
+                {
+                    rval.Add(((IPCMReceiver)dll).Generate());
+                }
+            }
+
+            return rval;
+        }
     }
 }
