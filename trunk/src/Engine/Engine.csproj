@@ -50,6 +50,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="PlaybackStateMachine.cs" />
+    <Compile Include="Playlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

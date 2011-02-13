@@ -4,10 +4,29 @@ using System.Linq;
 using System.Text;
 using Common;
 
+using System.Collections;
+
 namespace Engine
 {
     public class Metadata
     {
+        public static Dictionary<String, Type> TAGS = new Dictionary<String, Type>();
+
+        static Metadata()
+        {
+            TAGS.Add("Album", Type.GetType("System.String"));
+            TAGS.Add("Artist", Type.GetType("System.String"));
+            TAGS.Add("BitRate", Type.GetType("System.Int32"));
+            TAGS.Add("Channels", Type.GetType("System.Int32"));
+            TAGS.Add("Codec", Type.GetType("System.String"));
+            TAGS.Add("Duration", Type.GetType("System.TimeSpan"));
+            TAGS.Add("SampleRate", Type.GetType("System.Int32"));
+            TAGS.Add("Title", Type.GetType("System.String"));
+            TAGS.Add("TrackNum", Type.GetType("System.Int32"));
+            TAGS.Add("Year", Type.GetType("System.Int32"));
+            TAGS.Add("File", Type.GetType("System.String"));
+        }
+
         public static AudioMetadata RetrieveMetadata(string filename)
         {
             AudioMetadata a = new AudioMetadata();
@@ -23,6 +42,7 @@ namespace Engine
             a.Title = file.Tag.Title;
             a.TrackNum = (int)file.Tag.Track;
             a.Year = (int)file.Tag.Year;
+            a.File = filename;
 
             return a;
         }

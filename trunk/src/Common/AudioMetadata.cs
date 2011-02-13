@@ -8,6 +8,7 @@ namespace Common
         public string Title;
         public string Album;
         public string Codec;
+        public string File;
 
         public int TrackNum;
         public int Year;
