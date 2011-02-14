@@ -8,14 +8,24 @@ using System.Windows.Forms;
 
 namespace FractalBlaster.Plugins.ChopperEffect {
 
-    public class Receiver : IEffectPlugin, IViewPlugin {
+    public class ChopperEffectPlugin : IEffectPlugin, IViewPlugin {
+
+        public void ChangeEffect(Int32 i) {
+            Effect = i;
+        }
         
         #region [ IPlugin ]
 
-        public static IPlugin Initialize(IEngine engine) {
-            Instance = new Receiver();
+        public static IPlugin CreateInstance(IEngine engine) {
+            Instance = new ChopperEffectPlugin();
+            Instance.Initialize(engine);
+            return Instance;
+        }
+
+        public IPlugin Initialize(IEngine engine) {
+            Instance = new ChopperEffectPlugin();
             Instance.Engine = engine;
-            Instance.UI = new Form1();
+            Instance.UI = new ChopperEffectUI();
             return Instance;
         }
 
@@ -35,11 +45,11 @@ namespace FractalBlaster.Plugins.ChopperEffect {
         
         #region [ IEffectPlugin ]
         
-        public void ProcessStream(ref MemoryStream stream) {
+        public MemoryStream ProcessStream(MemoryStream stream) {
             long l = stream.Length;
-            if (effect != 0) {
+            if (Effect != 0) {
                 for (int i = 0; i < l; i++) {
-                    if ((i % effect) > effect / 2)
+                    if ((i % Effect) > Effect / 2)
                         stream.WriteByte(0);
                     else
                         stream.ReadByte();
@@ -53,18 +63,19 @@ namespace FractalBlaster.Plugins.ChopperEffect {
             }
             UI.rewindBuffer();
             UI.unlockBuffer();
+            return stream;
         }
         
         #endregion
 
-        public void ChangeEffect(Int32 i) {
-            Effect = i;
-        }
+        #region [ Private ]
 
-        private static Receiver Instance { private get; private set; }
-        private IEngine Engine { private get; private set; }
-        private Int32 Effect { private get; private set; }
-        private Form1 UI { private get; private set; }
+        private static ChopperEffectPlugin Instance { get; set; }
+        private IEngine Engine { get; set; }
+        private Int32 Effect { get; set; }
+        private ChopperEffectUI UI { get; set; }
+        
+        #endregion
 
     }
 }

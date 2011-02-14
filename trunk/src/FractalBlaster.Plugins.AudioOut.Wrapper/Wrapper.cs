@@ -4,14 +4,97 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
-using FractalBlaster.Universe.Legacy;
+using FractalBlaster.Universe;
 
-namespace FractalBlaster.Plugins.AudioOut.Wrapper
-{
-    public class Wrapper : Output
-    {
-        internal class AudioOut
-        {
+namespace FractalBlaster.Plugins.AudioOut.Wrapper {
+
+    public delegate Int32 BufferSizeHandler();
+    
+    public delegate IntPtr BufferHandler(bool gc);
+
+    public struct NativeBufferPair {
+        public GCHandle handle;
+        public IntPtr array;
+    }
+
+    public class Wrapper : IOutputPlugin {
+
+        public MemoryStream Pcm { get; private set; }
+        
+        public IntPtr Stream { get; private set; }
+
+        public Wrapper() {
+            BufferSize = new BufferSizeHandler(GetBufferSize);
+            Buffer = new BufferHandler(GetBuffer);
+            Stream = new IntPtr();
+            NativeBuffers = new LinkedList<NativeBufferPair>();
+        }
+
+        #region [ IPlugin ]
+
+        public string Author {
+            get { return "Fractal Blasters"; }
+        }
+
+        public Version Version {
+            get { return new Version(); }
+        }
+
+        public string Id {
+            get { return typeof(Wrapper).Assembly.FullName; }
+        }
+
+        public IPlugin Initialize(IEngine engine) {
+            Instance = new Wrapper();
+            Instance.Engine = engine;
+            Instance.Effects = Engine.AllPlugins.OfType<IEffectPlugin>().ToList();
+            return Instance;
+        }
+
+        #endregion
+        
+        #region [ IOutputPlugin ]
+
+        public bool IsPlaying { get; private set; }
+
+        public bool IsPaused { get; private set; }
+
+        public void Play() {
+            Stream = AudioOut.CreateOutputStream(Buffer, BufferSize, 2);
+            AudioOut.ChangeOutputStream(Stream);
+            IsPlaying = true;
+        }
+
+        public void Stop() {
+            AudioOut.Stop();
+            IsPlaying = false;
+            // Clean up Remaining Native Arrays
+            for (int i = 0; i < NativeBuffers.Count; i++) {
+                NativeBuffers.First.Value.handle.Free();
+                Marshal.FreeHGlobal(NativeBuffers.First.Value.array);
+                NativeBuffers.RemoveFirst();
+                GC.Collect();
+            }
+            AudioOut.WaveInterfaceInstance();
+        }
+
+        public void Pause() {
+            AudioOut.Pause();
+            IsPaused = true;
+            IsPlaying = false;
+        }
+
+        public void Resume() {
+            AudioOut.UnPause();
+            IsPaused = false;
+            IsPlaying = true;
+        }
+
+        #endregion
+
+        #region [ Private ]
+        
+        private class AudioOut {
             [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern IntPtr WaveInterfaceInstance();
 
@@ -19,7 +102,7 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper
             public static extern IntPtr ChangeOutputStream(IntPtr OutputStream);
 
             [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern IntPtr CreateOutputStream([MarshalAs(UnmanagedType.FunctionPtr)]Buffer bufferfill, [MarshalAs(UnmanagedType.FunctionPtr)]BufferSize buffersize, int channels);
+            public static extern IntPtr CreateOutputStream([MarshalAs(UnmanagedType.FunctionPtr)]BufferHandler bufferfill, [MarshalAs(UnmanagedType.FunctionPtr)]BufferSizeHandler buffersize, int channels);
 
             [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void Pause();
@@ -30,105 +113,57 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper
             [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void Stop();
         }
-
-        MemoryStream pcm;
-        BufferSize b;
-        Buffer g;
-        IntPtr stream;
-
-        struct NativeBufferPair
-        {
-            public GCHandle handle;
-            public IntPtr array;
-        }
-
-        public Wrapper()
-        {
-            b = new BufferSize(getBufferSize);
-            g = new Buffer(getBuffer);
-            stream = new IntPtr();
-        }
-
-        LinkedList<NativeBufferPair> native = new LinkedList<NativeBufferPair>();
-
-        public delegate int BufferSize();
-        public delegate IntPtr Buffer(bool gc);
         
-        /*
-        public override void Open(string path)
-        {
-            
-        }
-        */
-
-        public override void Play()
-        {
-            stream = AudioOut.CreateOutputStream(g, b, 2);
-            AudioOut.ChangeOutputStream(stream);
-        }
-
-        public override void Stop()
-        {
-            AudioOut.Stop();
-
-            // Clean up Remaining Native Arrays
-            for (int i = 0; i < native.Count; i++)
-            {
-                native.First.Value.handle.Free();
-                Marshal.FreeHGlobal(native.First.Value.array);
-                native.RemoveFirst();
-                GC.Collect();
-            }
-            AudioOut.WaveInterfaceInstance();
-        }
-
-        public override void Pause()
-        {
-            AudioOut.Pause();
-        }
-
-        public override void Resume()
-        {
-            AudioOut.UnPause();
-        }
-
-        public IntPtr getStream()
-        {
-            return stream;
-        }
-
-        public int getBufferSize()
-        {
-            if (pcm == null)
+        private int GetBufferSize() {
+            if (Pcm == null)
                 return 0;
-            return (int)pcm.Length;
+            return (int)Pcm.Length;
         }
 
-        public IntPtr getBuffer(bool gc)
-        {
-            if (gc)
-            {
-                native.First.Value.handle.Free();
-                Marshal.FreeHGlobal(native.First.Value.array);
-                native.RemoveFirst();
+        private IntPtr GetBuffer(Boolean gc) {
+            
+            if (gc) {
+                NativeBuffers.First.Value.handle.Free();
+                Marshal.FreeHGlobal(NativeBuffers.First.Value.array);
+                NativeBuffers.RemoveFirst();
                 GC.Collect();
             }
-            pcm = Engine.getNextFrameset();
-            if (pcm == null)
-            {
+
+            Pcm = Engine.InputPlugin.ReadFrames(20);
+            
+            if (Pcm == null) {
                 return IntPtr.Zero;
             }
-            byte[] data = pcm.ToArray();
-            GCHandle dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            IntPtr p = Marshal.AllocHGlobal((int)pcm.Length);
-            Marshal.Copy(pcm.ToArray(), 0, p, (int)pcm.Length);
 
-            NativeBufferPair pair = new NativeBufferPair();
-            pair.array = p;
-            pair.handle = dataHandle;
-            native.AddLast(pair);
+            ApplyEffects();
+            GCHandle dataHandle = GCHandle.Alloc(Pcm.ToArray(), GCHandleType.Pinned);
+            IntPtr p = Marshal.AllocHGlobal((int)Pcm.Length);
+            Marshal.Copy(Pcm.ToArray(), 0, p, (int)Pcm.Length);
+            NativeBuffers.AddLast(new NativeBufferPair() {handle = dataHandle, array = p});
 
             return p;
         }
+
+        private void ApplyEffects() {
+            if (Pcm == null) {
+                return;
+            }
+            foreach (IEffectPlugin effect in Effects) {
+                Pcm.Seek(0, 0);
+                effect.ProcessStream(Pcm);
+            }
+            Pcm.Seek(0, 0);
+        }
+
+        private Wrapper Instance { get; set; }
+        private IEngine Engine { get; set; }
+        private List<IEffectPlugin> Effects { get; set; }
+        private BufferSizeHandler BufferSize { get; set; }
+        private BufferHandler Buffer { get; set; }
+        private LinkedList<NativeBufferPair> NativeBuffers { get; set; }
+        
+        #endregion
+    
     }
+
 }

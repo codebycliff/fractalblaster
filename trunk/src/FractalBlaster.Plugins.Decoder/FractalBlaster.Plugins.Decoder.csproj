@@ -66,8 +66,6 @@
     <Compile Include="AVFormat.cs" />
     <Compile Include="AVUtil.cs" />
     <Compile Include="DecoderInterop.cs" />
-    <Compile Include="AudioFile.cs" />
-    <Compile Include="DLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

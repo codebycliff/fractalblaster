@@ -42,8 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\IniPreferenceReader.cs" />
-    <Compile Include="IO\IPreferenceReader.cs" />
+    <Compile Include="Runtime\Application.cs" />
     <Compile Include="Runtime\AudioEngine.cs" />
     <Compile Include="Runtime\FamilyKernel.cs" />
     <Compile Include="Runtime\PlaybackStateMachine.cs" />
@@ -60,13 +59,7 @@
     <Compile Include="UI\ProductForm.designer.cs">
       <DependentUpon>ProductForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\UI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\UI.Designer.cs">
-      <DependentUpon>UI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Configuration\UserPreferences.cs" />
+    <Compile Include="Runtime\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
@@ -81,10 +74,8 @@
     <EmbeddedResource Include="UI\ProductForm.resx">
       <DependentUpon>ProductForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\UI.resx">
-      <DependentUpon>UI.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

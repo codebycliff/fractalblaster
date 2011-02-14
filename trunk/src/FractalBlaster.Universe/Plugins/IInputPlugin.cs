@@ -45,7 +45,7 @@ namespace FractalBlaster.Universe {
         /// Memory stream representing the frames that were read or decoded from
         /// the current media file.
         /// </returns>
-        MemoryStream ReadFrame(Int32 numFramesToRead);
+        MemoryStream ReadFrames(Int32 numFramesToRead);
 
     }
 

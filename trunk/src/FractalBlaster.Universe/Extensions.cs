@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Configuration;
 
 namespace FractalBlaster.Universe {
 
@@ -40,7 +41,25 @@ namespace FractalBlaster.Universe {
 
         #endregion
 
+        #region [ System.Configuration.AppSettingsReader ]
 
+        public static String GetString(this AppSettingsReader settings, String key) {
+            return settings.GetValue(key, typeof(String)) as String;
+        }
+
+        #endregion
+
+        #region [ FractalBlaster.Universe.Metadata ]
+
+        public static AudioMetadata GetAudioMetadata(this Metadata metadata) {
+            return new AudioMetadata() {
+                Album = metadata["Album"].Value.ToString(),
+                Artist = metadata["Artists"].Value.ToString()
+            };
+        }
+
+        #endregion
+    
     }
 
 }

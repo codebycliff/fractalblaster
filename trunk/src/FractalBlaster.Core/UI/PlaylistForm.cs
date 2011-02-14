@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Common;
+using App = FractalBlaster.Core.Runtime.Application;
+using FractalBlaster.Universe;
 
 namespace FractalBlaster.Core.UI
 {
     public partial class PlaylistForm : Form
     {
+        private IEngine Engine { get; set; }
         private List<String> filenames;
         private List<String> displaynames;
         private Point mouse_offset;
@@ -19,12 +21,12 @@ namespace FractalBlaster.Core.UI
         private int length;
         private bool repeat;
 
-        public PlaylistForm()
-        {
+        public PlaylistForm(IEngine engine) {
             filenames = new List<String>();
             displaynames = new List<String>();
             length = 0;
             InitializeComponent();
+            Engine = engine;
         }
 
         public void addFile(string filename, string displayname)
@@ -106,7 +108,8 @@ namespace FractalBlaster.Core.UI
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             selected = listBox1.SelectedItem.ToString();
-            ((UI)this.Owner).PlaylistDoubleClicked();
+            MediaFile selectedFile = Engine.CurrentPlaylist.Where(f => f.Info.FullName.CompareTo(selected) == 0).First();
+            Engine.Load(selectedFile);
         }
 
     }

@@ -7,7 +7,7 @@ namespace FractalBlaster.Universe {
     
     public interface IRuntimeKernel {
 
-        IRuntimeKernel Instance { get;  }
+        IEngine Engine { get; }
 
         IEnumerable<IPlugin> GetPlugins();
 

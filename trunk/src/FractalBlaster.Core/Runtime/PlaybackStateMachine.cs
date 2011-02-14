@@ -2,97 +2,82 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FractalBlaster.Core.Legacy;
-namespace FractalBlaster.Core.Runtime
-{
-    public static class PlaybackStateMachine
-    {
-        enum PlaybackState { Playing, Paused, Stopped };
+using FractalBlaster.Universe;
 
-        static PlaybackState state;
-        static Output output;
-        static string CurrentlyPlaying;
+namespace FractalBlaster.Core.Runtime {
+    
+    enum PlaybackState { 
+        Playing, 
+        Paused, 
+        Stopped 
+    };
 
-        static PlaybackStateMachine()
-        {
-            state = PlaybackState.Stopped;
-            output = DLLMaster.getOutput();
+    public static class PlaybackStateMachine {
+        
+
+        private static PlaybackState State { get; set; }
+        private static IOutputPlugin Output { get; set; }
+
+        static PlaybackStateMachine() {
+            State = PlaybackState.Stopped;
+            Output = Application.Kernel.Engine.OutputPlugin;
+            State = PlaybackState.Stopped;
         }
 
-        public static void Open(string file)
-        {
-            output.Open(file);
-            state = PlaybackState.Stopped;
-            CurrentlyPlaying = file;
-        }
-
-        public static void Play()
-        {
-            switch (state)
-            {
-                case PlaybackState.Paused:
-                    output.Resume();
-                    state = PlaybackState.Playing;
-                    break;
-                case PlaybackState.Playing:
-                    break;
-                case PlaybackState.Stopped:
-                    state = PlaybackState.Playing;
-                    output.Play();
-                    break;
+        public static void Play() {
+            switch (State) {
+            case PlaybackState.Paused:
+                Output.Resume();
+                State = PlaybackState.Playing;
+                break;
+            case PlaybackState.Playing:
+                break;
+            case PlaybackState.Stopped:
+                State = PlaybackState.Playing;
+                Output.Play();
+                break;
             }
         }
 
-        public static void Pause()
-        {
-            switch (state)
-            {
-                case PlaybackState.Paused:
-                    output.Resume();
-                    state = PlaybackState.Playing;
-                    break;
-                case PlaybackState.Playing:
-                    output.Pause();
-                    state = PlaybackState.Paused;
-                    break;
-                case PlaybackState.Stopped:
-                    break;
+        public static void Pause() {
+            switch (State) {
+            case PlaybackState.Paused:
+                Output.Resume();
+                State = PlaybackState.Playing;
+                break;
+            case PlaybackState.Playing:
+                Output.Pause();
+                State = PlaybackState.Paused;
+                break;
+            case PlaybackState.Stopped:
+                break;
             }
         }
 
-        public static void Stop()
-        {
-            switch (state)
-            {
-                case PlaybackState.Paused:
-                    output.Stop();
-                    state = PlaybackState.Stopped;
-                    break;
-                case PlaybackState.Playing:
-                    output.Stop();
-                    state = PlaybackState.Stopped;
-                    break;
-                case PlaybackState.Stopped:
-                    break;
+        public static void Stop() {
+            switch (State) {
+            case PlaybackState.Paused:
+                Output.Stop();
+                State = PlaybackState.Stopped;
+                break;
+            case PlaybackState.Playing:
+                Output.Stop();
+                State = PlaybackState.Stopped;
+                break;
+            case PlaybackState.Stopped:
+                break;
             }
         }
 
-        public static void Back()
-        {
+        public static void Back() {
         }
 
-        public static void Forward()
-        {
+        public static void Forward() {
         }
 
-        public static bool isPlaying()
-        {
-            return (state == PlaybackState.Playing);
+        public static bool isPlaying() {
+            return (State == PlaybackState.Playing);
         }
 
-        public static string SongPlaying()
-        {
-            return CurrentlyPlaying;
-        }
     }
 }

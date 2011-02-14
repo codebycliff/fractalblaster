@@ -1,6 +1,6 @@
 ﻿namespace FractalBlaster.Plugins.ChopperEffect
 {
-    partial class Form1
+    partial class ChopperEffectUI
     {
         /// <summary>
         /// Required designer variable.
@@ -42,6 +42,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(664, 607);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 

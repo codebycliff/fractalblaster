@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using FractalBlaster.Core.UI;
 using FractalBlaster.Universe;
 
@@ -10,78 +10,40 @@ namespace FractalBlaster.Core.Runtime {
     
     public class FamilyKernel : IRuntimeKernel {
 
-        public IEngine Engine { get; private set; }
-
-        public IProductModel Product { get; private set; }
-
-        public Boolean IsProductLoaded { get; private set; }
-
-        public Boolean LoadProduct(IProductModel product) {
-            Product = product;
-            
-            try {
-                //CurrentEngine = (IEngine)Activator.CreateInstance(product.EngineTypes.First());
-                //HACK: Just hard coding the value of the engine to be audio since that's all we're using right now.
-                
-                IsProductLoaded = true;
-                return true;
-            }
-            catch (Exception e) {
-                return false;
-            }
+        static FamilyKernel() {
+            Instance = new FamilyKernel();
         }
 
-        public void RunLoadedProduct() {
-            if(!IsProductLoaded) {
-                throw new Exception("No Product Loaded");
-            }
-
-            ProductForm mainwindow = new ProductForm();
-            mainwindow.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
-
-            if (Application.OpenForms.Count == 0) {
-                Application.Run(mainwindow);
-            }
-            else {
-                mainwindow.Show();
-            }
-        }
+        public static IRuntimeKernel Instance { get; private set; }
 
         #region [ IRuntimeKernel ]
 
-        public static FamilyKernel Instance {
-            get {
-                if (mInstance == null) {
-                    mInstance = new FamilyKernel();
-                }
-                return mInstance;
-            }
-        }
+        public IEngine Engine { get; private set; }
 
         public IEnumerable<IPlugin> GetPlugins() {
             return PluginManager.AllPlugins;
         }
 
         public IPlugin GetDefaultPlugin(Type type) {
-            String configKey = UserPreferences.GetDefaultPluginKey(type);
+            String key = Constants.GetDefaultPluginKey(type);
             return PluginManager.GetPlugins(type).Where(p =>
-                p.Id.CompareTo(Preferences.GetString(configKey)) == 0
+                p.Id.CompareTo(
+                    Application.Settings.GetString(Constants.GetDefaultPluginKey(type))
+                ) == 0
             ).First();
+        }
+
+        public IEnumerable<IPlugin> GetPlugins(Type type) {
+            return PluginManager.GetPlugins(type);
         }
 
         #endregion
 
         #region [ Private ]
 
-        private UserPreferences Preferences { private get; private set; }
-
         private FamilyKernel() {
-            Preferences = UserPreferences.Initialize(new IniPreferenceReader("FractalBlaster.ini"));
-            
             Engine = AudioEngine.Instance;
-            Engine.Initialize(this);
-
-            MediaFile.Initialize(this);
+            MediaFile.MetadataPlugins.AddRange(Engine.AllPlugins.OfType<IMetadataPlugin>());
         }
 
         private static class PluginManager {
@@ -109,8 +71,6 @@ namespace FractalBlaster.Core.Runtime {
             #endregion
 
         }
-
-        private static FamilyKernel mInstance;
 
         #endregion
 

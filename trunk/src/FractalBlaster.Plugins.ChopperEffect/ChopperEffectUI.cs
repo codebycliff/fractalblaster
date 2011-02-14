@@ -11,7 +11,7 @@ using System.IO;
 
 namespace FractalBlaster.Plugins.ChopperEffect
 {
-    public partial class Form1 : Form
+    public partial class ChopperEffectUI : Form
     {
         long bytesReceived;
         Thread windowThread;
@@ -19,9 +19,9 @@ namespace FractalBlaster.Plugins.ChopperEffect
         MemoryStream myStream;
         bool bufferlock;
         String windowText;
-        Receiver rec;
+        ChopperEffectPlugin rec;
 
-        public Form1()
+        public ChopperEffectUI()
         {
             bytesReceived = 0;
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace FractalBlaster.Plugins.ChopperEffect
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
         }
 
-        public void setReciever(Receiver r)
+        public void setReciever(ChopperEffectPlugin r)
         {
             this.rec = r;
         }
@@ -116,6 +116,10 @@ namespace FractalBlaster.Plugins.ChopperEffect
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             rec.ChangeEffect(trackBar1.Value);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace FractalBlaster.Universe {
     /// provides operations for working with the collection as a whole,
     /// including serialization support.
     /// </remarks>
-    public class Playlist {
+    public class Playlist : IEnumerable<MediaFile> {
 
         /// <summary>
         /// Enumeration of media files that represents the playlist's items.
@@ -166,6 +167,17 @@ namespace FractalBlaster.Universe {
         
         #endregion    
          
+        #region [ IEnumerable ]
+
+        public IEnumerator<MediaFile> GetEnumerator() {
+            return MediaList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return MediaList.GetEnumerator();
+        } 
+
+        #endregion
     }
 
 }

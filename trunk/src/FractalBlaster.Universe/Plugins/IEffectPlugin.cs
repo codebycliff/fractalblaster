@@ -20,7 +20,7 @@ namespace FractalBlaster.Universe {
         /// <param name="stream">
         /// Reference to the media file's input stream.
         /// </param>
-        void ProcessStream(ref MemoryStream stream);
+        MemoryStream ProcessStream(MemoryStream stream);
     
     }
 
