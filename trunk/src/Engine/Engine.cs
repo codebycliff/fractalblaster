@@ -30,6 +30,7 @@ namespace Engine
         public static MemoryStream getNextFrameset()
         {
             PCMStream = PlaybackStateMachine.getDecoder().ReadFrame(20);
+            if (PCMStream == null) return null;
             for (int i = 0; i < PCMReceivers.Count; i++)
             {
                 PCMStream.Seek(0, 0);

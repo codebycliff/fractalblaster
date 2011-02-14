@@ -46,11 +46,11 @@ namespace UI
                 for (int i = 0; i < filenames.Length; i++)
                 {
                     am = Metadata.RetrieveMetadata(filenames[i]);
-                    if (am.Artist.Equals("") && am.Title.Equals(""))
+                    if ((am.Artist == null) && (am.Title == null))
                     {
                         displayInfo = openFileDialog1.FileName;
                     }
-                    else if (am.Artist.Equals("") && !am.Title.Equals(""))
+                    else if ((am.Artist == null) && !(am.Title == null))
                     {
                         displayInfo = am.Title;
                     }
