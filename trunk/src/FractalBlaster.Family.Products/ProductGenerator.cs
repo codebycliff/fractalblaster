@@ -4,7 +4,7 @@ using FractalBlaster.Core;
 using FractalBlaster.Core.UI;
 using System.Windows.Forms;
 
-namespace FractalBlaster {
+namespace FractalBlaster.Family {
 
     public class ProductGenerator {
 

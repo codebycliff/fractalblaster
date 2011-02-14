@@ -73,7 +73,7 @@
       <Name>FractalBlaster.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FractalBlaster.Family.Products\FractalBlaster.Family.Products.csproj">
-      <Project>{A1FC4551-1E32-4143-8738-61A182716337}</Project>
+      <Project>{AA6B47A2-E37A-42FE-B520-660FA4E779DD}</Project>
       <Name>FractalBlaster.Family.Products</Name>
     </ProjectReference>
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">

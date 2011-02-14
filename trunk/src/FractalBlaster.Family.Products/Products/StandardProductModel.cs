@@ -3,11 +3,12 @@ using FractalBlaster.Core;
 using FractalBlaster.Core.UI;
 using System.Windows.Forms;
 using System.Configuration;
-using FractalBlaster.Runtime;
+using FractalBlaster.Core.Runtime;
 using System.Resources;
+using FractalBlaster.Universe;
 using System.Collections.Generic;
 
-namespace FractalBlaster.Products {
+namespace FractalBlaster.Family.Products {
 
     public class StandardProductModel : IProductModel {
 
@@ -17,10 +18,9 @@ namespace FractalBlaster.Products {
 
         public IContainerControl DefaultUI { get { return new ContainerControl(); } }
 
-        public  IEnumerable<Type> EngineTypes { get { return new Type[] { typeof(AudioEngine), typeof(VideoEngine), typeof(PhotoEngine) }; } }
-
-        public Boolean AllowsCustomEngines { get { return false; } }
-
+        public IEnumerable<string> SupportedFileExtensions {
+            get { return new String[] { "mp3", "mp4" }; }
+        }
     }
 
 }

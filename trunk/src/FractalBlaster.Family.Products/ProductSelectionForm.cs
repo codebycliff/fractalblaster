@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FractalBlaster.Core;
-using FractalBlaster.Runtime;
-using FractalBlaster.Products;
+using FamilyApplication = FractalBlaster.Core.Runtime.Application;
+using FractalBlaster.Universe;
 
-namespace FractalBlaster {
+namespace FractalBlaster.Family {
 
     public partial class ProductSelectionForm : Form {
 
@@ -33,34 +33,19 @@ namespace FractalBlaster {
             
             switch (ChosenProductName) {
             case ProductName.Express:
-                IEngine engine = null;
-                
-                String engineName = mExpressEngineComboBox.SelectedText;
-                engineName = engineName.Replace("Engine", "").Trim();
-                if (engineName.Equals("Video")) {
-                    engine = VideoEngine.Instance;
-                }
-                else if (engineName.Equals("Photo")) {
-                    engine = PhotoEngine.Instance;
-                }
-                else {
-                    engine = AudioEngine.Instance;
-                }
-                product = new ExpressProductModel(engine);
+                product = new Products.ExpressProductModel();
                 break;
             case ProductName.Standard:
-                product = new StandardProductModel();
+                product = new Products.StandardProductModel();
                 break;
             case ProductName.Enterprise:
-                product = new EnterpriseProductModel();
+                product = new Products.EnterpriseProductModel();
                 break;
             }
 
             Application.EnableVisualStyles();
-            
-            if (FamilyKernel.Instance.LoadProduct(product)) {
-                FamilyKernel.Instance.RunLoadedProduct();
-            }
+            FamilyApplication.LoadProduct(product);
+            FamilyApplication.Start();
         }
 
         private void mExpressGroupBox_MouseCaptureChanged(object sender, EventArgs e) {

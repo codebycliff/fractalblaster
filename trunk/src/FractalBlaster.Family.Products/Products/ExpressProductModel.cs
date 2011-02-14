@@ -5,32 +5,23 @@ using System.Resources;
 using FractalBlaster.Core;
 using FractalBlaster.Core.UI;
 using System.Collections.Generic;
+using FractalBlaster.Universe;
 
-namespace FractalBlaster.Products {
+namespace FractalBlaster.Family.Products {
 
     public class ExpressProductModel : IProductModel {
 
-        public ExpressProductModel(IEngine engine) {
-            Engine = engine;
-        }
-
         public String Name {
             get { return "Express";  }
-        }
-
-        public IEnumerable<Type> EngineTypes {
-            get { return new Type[] { Engine.GetType() }; }
         }
 
         public IContainerControl DefaultUI {
             get { return new ContainerControl(); }
         }
 
-        public bool AllowsCustomEngines {
-            get { return false; }
+        public IEnumerable<string> SupportedFileExtensions {
+            get { return new String[] { "mp3" }; }
         }
-
-        public IEngine Engine { get; set; }
 
     }
 

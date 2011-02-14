@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FamilyApplication = FractalBlaster.Core.Runtime.Application;
 
-namespace FractalBlaster.Family.Products {
+namespace FractalBlaster.Family {
 
     static class Program {
         /// <summary>
@@ -14,7 +14,7 @@ namespace FractalBlaster.Family.Products {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            FamilyApplication.LoadProduct(new StandardProductModel());
+            FamilyApplication.LoadProduct(new Products.StandardProductModel());
             FamilyApplication.Start();
         }
     }
