@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Core", "Frac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Universe", "FractalBlaster.Universe\FractalBlaster.Universe.csproj", "{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Family.Products", "FractalBlaster.Family.Products\FractalBlaster.Family.Products.csproj", "{AA6B47A2-E37A-42FE-B520-660FA4E779DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Family", "FractalBlaster.Family\FractalBlaster.Family.csproj", "{AA6B47A2-E37A-42FE-B520-660FA4E779DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Decoder", "FractalBlaster.Plugins.Decoder\FractalBlaster.Plugins.Decoder.csproj", "{5463BEED-E8FF-46D0-B132-2229A126A350}"
 EndProject
@@ -19,7 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Chop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.AudioOut.Wrapper", "FractalBlaster.Plugins.AudioOut.Wrapper\FractalBlaster.Plugins.AudioOut.Wrapper.csproj", "{A712BA55-C338-4184-93B2-406771FCA169}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Family", "FractalBlaster.Family\FractalBlaster.Family.csproj", "{A1FC4551-1E32-4143-8738-61A182716337}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster", "FractalBlaster\FractalBlaster.csproj", "{A1FC4551-1E32-4143-8738-61A182716337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.ManagedAudioOut", "FractalBlaster.Plugins.ManagedAudioOut\FractalBlaster.Plugins.ManagedAudioOut.csproj", "{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -148,6 +150,18 @@ Global
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|Win32.ActiveCfg = Release|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|x86.ActiveCfg = Release|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|x86.Build.0 = Release|x86
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

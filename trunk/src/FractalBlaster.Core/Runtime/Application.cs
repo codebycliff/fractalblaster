@@ -6,6 +6,7 @@ using FractalBlaster.Universe;
 using FractalBlaster.Core.UI;
 using WinApplication = System.Windows.Forms.Application;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace FractalBlaster.Core.Runtime {
     
@@ -37,7 +38,7 @@ namespace FractalBlaster.Core.Runtime {
             }
         }
 
-        public static void Start() {
+        public static Form Start() {
             if (!IsProductLoaded) {
                 throw new Exception("No Product Loaded");
             }
@@ -45,12 +46,12 @@ namespace FractalBlaster.Core.Runtime {
             ProductForm mainwindow = new ProductForm();
             mainwindow.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
 
-            if (WinApplication.OpenForms.Count == 0) {
-                WinApplication.Run(mainwindow);
-            }
-            else {
-                mainwindow.Show();
-            }
+            //if (WinApplication.OpenForms.Count == 0) {
+            //    WinApplication.Run(mainwindow);
+            //}
+            //else {
+            return mainwindow;
+            //}
         }
     
     }

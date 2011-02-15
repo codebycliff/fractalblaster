@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using FamilyApplication = FractalBlaster.Core.Runtime.Application;
-
+using FamilyRuntime = FractalBlaster.Core.Runtime;
+using FractalBlaster.Universe;
 namespace FractalBlaster.Family {
 
     static class Program {
@@ -14,8 +14,9 @@ namespace FractalBlaster.Family {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            FamilyApplication.LoadProduct(new Products.StandardProductModel());
-            FamilyApplication.Start();
+            IProductModel product = new Products.StandardProductModel();
+            FamilyRuntime.Application.LoadProduct(product);
+            Application.Run(FamilyRuntime.Application.Start());
         }
     }
 }

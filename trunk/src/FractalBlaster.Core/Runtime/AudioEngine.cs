@@ -39,14 +39,6 @@ namespace FractalBlaster.Core.Runtime {
 
         public bool IsPlaylistLoaded { get; private set; }
 
-        public bool Initialize(IRuntimeKernel kernel) {
-            InputPlugin = Application.Kernel.GetDefaultPlugin(typeof(IInputPlugin)) as IInputPlugin;
-            OutputPlugin = Application.Kernel.GetDefaultPlugin(typeof(IOutputPlugin)) as IOutputPlugin;
-            AllPlugins = Application.Kernel.GetPlugins();
-
-            return true;
-        }
-
         public void Load(MediaFile file) {
             CurrentMedia = file;
             IsMediaLoaded = true;
@@ -93,11 +85,13 @@ namespace FractalBlaster.Core.Runtime {
         #region [ Private ]
 
         public AudioEngine() {
-
+            IInputPlugin input = Application.Kernel.GetDefaultPlugin(typeof(IInputPlugin)) as IInputPlugin;
+            InputPlugin = new EffectsProcessor(input);
+            OutputPlugin = Application.Kernel.GetDefaultPlugin(typeof(IOutputPlugin)) as IOutputPlugin;
+            AllPlugins = Application.Plugins;
         }
 
         private static AudioEngine mInstance;
-        private MediaFile mMediaFile;
         
         #endregion
 

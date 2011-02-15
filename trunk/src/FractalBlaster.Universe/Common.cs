@@ -27,6 +27,20 @@ namespace FractalBlaster.Universe {
     /// </param>
     public delegate void PlaylistChangeHandler(IPlaylistPlugin playlist);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public delegate Int32 BufferSizeHandler();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gc"></param>
+    /// <returns></returns>
+    public delegate IntPtr BufferHandler(bool gc);
+
+
     #endregion
 
     #region [ Structs ]

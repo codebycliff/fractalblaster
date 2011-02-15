@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Runtime\Application.cs" />
     <Compile Include="Runtime\AudioEngine.cs" />
+    <Compile Include="Runtime\EffectsProcessor.cs" />
     <Compile Include="Runtime\FamilyKernel.cs" />
     <Compile Include="Runtime\PlaybackStateMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

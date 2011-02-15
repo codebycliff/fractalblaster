@@ -8,10 +8,6 @@ using FractalBlaster.Universe;
 
 namespace FractalBlaster.Plugins.AudioOut.Wrapper {
 
-    public delegate Int32 BufferSizeHandler();
-    
-    public delegate IntPtr BufferHandler(bool gc);
-
     public struct NativeBufferPair {
         public GCHandle handle;
         public IntPtr array;
@@ -47,7 +43,6 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
         public IPlugin Initialize(IEngine engine) {
             Instance = new Wrapper();
             Instance.Engine = engine;
-            Instance.Effects = Engine.AllPlugins.OfType<IEffectPlugin>().ToList();
             return Instance;
         }
 
@@ -135,7 +130,6 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
                 return IntPtr.Zero;
             }
 
-            ApplyEffects();
             GCHandle dataHandle = GCHandle.Alloc(Pcm.ToArray(), GCHandleType.Pinned);
             IntPtr p = Marshal.AllocHGlobal((int)Pcm.Length);
             Marshal.Copy(Pcm.ToArray(), 0, p, (int)Pcm.Length);
@@ -144,20 +138,8 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
             return p;
         }
 
-        private void ApplyEffects() {
-            if (Pcm == null) {
-                return;
-            }
-            foreach (IEffectPlugin effect in Effects) {
-                Pcm.Seek(0, 0);
-                effect.ProcessStream(Pcm);
-            }
-            Pcm.Seek(0, 0);
-        }
-
         private Wrapper Instance { get; set; }
         private IEngine Engine { get; set; }
-        private List<IEffectPlugin> Effects { get; set; }
         private BufferSizeHandler BufferSize { get; set; }
         private BufferHandler Buffer { get; set; }
         private LinkedList<NativeBufferPair> NativeBuffers { get; set; }
