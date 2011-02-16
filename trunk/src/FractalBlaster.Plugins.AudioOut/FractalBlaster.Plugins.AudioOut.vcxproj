@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\bin\Debug\</OutDir>
-    <IntDir>..\..\obj\AudioOut\</IntDir>
+    <OutDir>..\build\debug\bin\Plugins</OutDir>
+    <IntDir>..\build\debug\obj\Plugins</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\bin\Release\</OutDir>

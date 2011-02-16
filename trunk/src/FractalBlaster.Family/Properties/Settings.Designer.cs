@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FractalBlaster.Family.Products.Properties {
+namespace FractalBlaster.Family.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

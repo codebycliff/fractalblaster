@@ -8,8 +8,8 @@
     <ProjectGuid>{AA6B47A2-E37A-42FE-B520-660FA4E779DD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FractalBlaster.Family.Products</RootNamespace>
-    <AssemblyName>FractalBlaster.Family.Products</AssemblyName>
+    <RootNamespace>FractalBlaster.Family</RootNamespace>
+    <AssemblyName>FractalBlaster.Family.ProductGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\build\debug\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

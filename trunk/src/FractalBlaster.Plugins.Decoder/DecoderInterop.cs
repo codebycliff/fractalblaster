@@ -16,7 +16,9 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
     };
 
     public class DecoderInterop : IInputPlugin {
-        
+
+        public AppContext Context { get; private set; }
+
         public Int32 SampleSize { get; private set; }
 
         public Int32 CurrentFrameNumber { get; private set; }
@@ -192,6 +194,22 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         
         #endregion
 
+
+        public string Author {
+            get { return "Fractal Blaster"; }
+        }
+
+        public Version Version {
+            get { return new Version(); }
+        }
+
+        public string Id {
+            get { return this.GetType().Assembly.FullName; }
+        }
+
+        public void Initialize(AppContext context) {
+            Context = context;
+        }
     }
 
 }

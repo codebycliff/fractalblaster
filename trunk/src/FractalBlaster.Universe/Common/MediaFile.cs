@@ -29,7 +29,7 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// Property containing the list of available metdata plugins.
         /// </summary>
-        public static List<IMetadataPlugin> MetadataPlugins { get; set; }
+        public static IEnumerable<IMetadataPlugin> MetadataPlugins { get; set; }
 
         /// <summary>
         /// The media file's information represented as an instance of <see 

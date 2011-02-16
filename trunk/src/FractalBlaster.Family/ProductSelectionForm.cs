@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FractalBlaster.Core;
-using FamilyApplication = FractalBlaster.Core.Runtime.Application;
+using FamilyRuntime = FractalBlaster.Core.Runtime;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Family {
@@ -44,8 +44,8 @@ namespace FractalBlaster.Family {
             }
 
             Application.EnableVisualStyles();
-            FamilyApplication.LoadProduct(product);
-            FamilyApplication.Start();
+            FamilyRuntime.FamilyKernel.Instance.LoadProduct(product);
+            Application.Run(FamilyRuntime.FamilyKernel.Instance.BuildProduct());
         }
 
         private void mExpressGroupBox_MouseCaptureChanged(object sender, EventArgs e) {

@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Audi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster", "FractalBlaster\FractalBlaster.csproj", "{A1FC4551-1E32-4143-8738-61A182716337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.ManagedAudioOut", "FractalBlaster.Plugins.ManagedAudioOut\FractalBlaster.Plugins.ManagedAudioOut.csproj", "{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}"
-EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -150,18 +148,6 @@ Global
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|Win32.ActiveCfg = Release|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|x86.ActiveCfg = Release|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Release|x86.Build.0 = Release|x86
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|Win32.ActiveCfg = Release|Any CPU
-		{2044EBC5-DDA6-44AD-8B1D-3F0D5391AF1C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

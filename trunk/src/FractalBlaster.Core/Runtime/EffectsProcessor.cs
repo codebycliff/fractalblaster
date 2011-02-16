@@ -9,13 +9,15 @@ namespace FractalBlaster.Core.Runtime {
     
     class EffectsProcessor : IInputPlugin {
 
+        public AppContext Context { get; private set; }
+
         public IEnumerable<IEffectPlugin> Effects { get; private set; }
 
         public IInputPlugin InputStream { get; private set; }
 
-        public EffectsProcessor(IInputPlugin input) {
+        public EffectsProcessor(IInputPlugin input, AppContext ctx) {
             InputStream = input;
-            Effects = Application.Plugins.OfType<IEffectPlugin>();
+            Effects = ctx.Plugins.OfType<IEffectPlugin>();
         }
 
         public MediaFile OpenMedia(String path) {
@@ -40,7 +42,21 @@ namespace FractalBlaster.Core.Runtime {
             return frames;
         }
 
+        public void Initialize(AppContext context) {
+            Context = context;
+        }
 
+        public string Author {
+            get { return "Fractal Blaster"; }
+        }
+
+        public Version Version {
+            get { return new Version(); }
+        }
+
+        public string Id {
+            get { return this.GetType().Assembly.FullName; }
+        }
     }
 
 }

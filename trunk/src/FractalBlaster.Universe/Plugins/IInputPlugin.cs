@@ -7,7 +7,7 @@ namespace FractalBlaster.Universe {
     /// Defines the members for any plugin wishing to handle the input or
     /// decoding of a media file.
     /// </remarks>
-    public interface IInputPlugin {
+    public interface IInputPlugin : IPlugin {
         
         /// <summary>
         /// Handles the opening of a media file from the specified path.

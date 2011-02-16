@@ -5,36 +5,40 @@ using System.Linq;
 using System.Text;
 using FractalBlaster.Core.UI;
 using FractalBlaster.Universe;
+using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
 
 namespace FractalBlaster.Core.Runtime {
     
     public class FamilyKernel : IRuntimeKernel {
 
-        static FamilyKernel() {
-            Instance = new FamilyKernel();
+        public static FamilyKernel Instance {
+            get {
+                if (mInstance == null) {
+                    mInstance = new FamilyKernel();
+                }
+                return mInstance;
+            }
         }
-
-        public static IRuntimeKernel Instance { get; private set; }
 
         #region [ IRuntimeKernel ]
 
-        public IEngine Engine { get; private set; }
+        public AppContext Context { get; private set; }
 
-        public IEnumerable<IPlugin> GetPlugins() {
-            return PluginManager.AllPlugins;
+        public IProductModel Product { get; private set; }
+
+        public bool IsProductLoaded { get; private set; }
+
+        public void LoadProduct(IProductModel model) {
+            Product = model;
+            IsProductLoaded = true;
         }
 
-        public IPlugin GetDefaultPlugin(Type type) {
-            String key = Constants.GetDefaultPluginKey(type);
-            return PluginManager.GetPlugins(type).Where(p =>
-                p.Id.CompareTo(
-                    Application.Settings.GetString(Constants.GetDefaultPluginKey(type))
-                ) == 0
-            ).First();
-        }
-
-        public IEnumerable<IPlugin> GetPlugins(Type type) {
-            return PluginManager.GetPlugins(type);
+        public Form BuildProduct() {
+            Form form = new ProductForm();
+            form.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
+            return form;
         }
 
         #endregion
@@ -42,37 +46,18 @@ namespace FractalBlaster.Core.Runtime {
         #region [ Private ]
 
         private FamilyKernel() {
-            Engine = AudioEngine.Instance;
-            MediaFile.MetadataPlugins.AddRange(Engine.AllPlugins.OfType<IMetadataPlugin>());
+            Context = new AppContext(); 
+            Context.Plugins = PluginManager.AllPlugins;
+            Context.DefaultPlugins = PluginManager.AllPlugins;
+            Context.Settings = new AppSettingsReader();
+            Context.Engine = new AudioEngine(Context);
+            MediaFile.MetadataPlugins = Context.Plugins.OfType<IMetadataPlugin>();
         }
 
-        private static class PluginManager {
-
-            static PluginManager() {
-                mPlugins = new List<IPlugin>();
-            }
-
-            public static IEnumerable<IPlugin> AllPlugins {
-                get {
-                    return mPlugins.AsEnumerable();
-                }
-            }
-
-            public static IEnumerable<IPlugin> GetPlugins(Type t) {
-                return AllPlugins.Where(p =>
-                    p.GetType() == t
-                ).AsEnumerable();
-            }
-
-            #region [ Private ]
-
-            private static List<IPlugin> mPlugins;
-
-            #endregion
-
-        }
+        private static FamilyKernel mInstance;
 
         #endregion
+
 
     }
 }

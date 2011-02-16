@@ -22,13 +22,11 @@ namespace FractalBlaster.Plugins.Taglib {
             get { return this.GetType().Assembly.FullName;  }
         }
 
-        public IEngine Engine { get; private set; }
+        public AppContext Context { get; private set; }
 
-        public IPlugin Initialize(IEngine engine) {
-            Engine = engine;
-            return this;
+        public void Initialize(AppContext context) {
+            Context = context;
         }
-
         public Boolean IsFileSupported(MediaFile file) {
             return true;
         }

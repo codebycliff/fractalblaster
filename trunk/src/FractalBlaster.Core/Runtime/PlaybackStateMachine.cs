@@ -20,7 +20,7 @@ namespace FractalBlaster.Core.Runtime {
 
         static PlaybackStateMachine() {
             State = PlaybackState.Stopped;
-            Output = Application.Kernel.Engine.OutputPlugin;
+            Output = FamilyKernel.Instance.Context.Engine.OutputPlugin;
             State = PlaybackState.Stopped;
         }
 

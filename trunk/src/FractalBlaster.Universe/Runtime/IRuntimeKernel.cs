@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace FractalBlaster.Universe {
     
     public interface IRuntimeKernel {
 
-        IEngine Engine { get; }
+        IProductModel Product { get; }
 
-        IEnumerable<IPlugin> GetPlugins();
+        Boolean IsProductLoaded { get; }
 
-        IEnumerable<IPlugin> GetPlugins(Type type);
+        void LoadProduct(IProductModel model);
 
-        IPlugin GetDefaultPlugin(Type type);
+        Form BuildProduct();
+        
     }
 
 }

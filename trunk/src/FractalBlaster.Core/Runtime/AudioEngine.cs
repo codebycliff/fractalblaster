@@ -10,15 +10,6 @@ namespace FractalBlaster.Core.Runtime {
 
     public class AudioEngine : IEngine {
 
-        public static AudioEngine Instance {
-            get {
-                if (mInstance == null) {
-                    mInstance = new AudioEngine();
-                }
-                return mInstance;
-            }
-        }
-
         #region [ IEngine ]
 
         public event MediaChangeHandler OnMediaChanged;
@@ -58,7 +49,7 @@ namespace FractalBlaster.Core.Runtime {
 
         public void LoadPlaylist(String path) {
             FileInfo file = new FileInfo(path);
-            IPlaylistPlugin plugin = Application.Plugins.Select(i =>
+            IPlaylistPlugin plugin = FamilyKernel.Instance.Context.Plugins.Select(i =>
                 i as IPlaylistPlugin
             ).Where(p =>
                 p.IsFileExtensionSupported(file.Extension)
@@ -84,11 +75,14 @@ namespace FractalBlaster.Core.Runtime {
         
         #region [ Private ]
 
-        public AudioEngine() {
-            IInputPlugin input = Application.Kernel.GetDefaultPlugin(typeof(IInputPlugin)) as IInputPlugin;
-            InputPlugin = new EffectsProcessor(input);
-            OutputPlugin = Application.Kernel.GetDefaultPlugin(typeof(IOutputPlugin)) as IOutputPlugin;
-            AllPlugins = Application.Plugins;
+        public AudioEngine(AppContext ctx) {
+            IInputPlugin input = ctx.DefaultPlugins.OfType<IInputPlugin>().First();
+            if (input == null) {
+                return;
+            }
+            InputPlugin = new EffectsProcessor(input,ctx);
+            //OutputPlugin = AppContext.DefaultPlugins.OfType<IOutputPlugin>().First() ?? null;
+            //AllPlugins = FamilyKernel.Instance.Context.Plugins;
         }
 
         private static AudioEngine mInstance;

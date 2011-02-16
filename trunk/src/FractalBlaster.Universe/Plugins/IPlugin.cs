@@ -37,21 +37,7 @@ namespace FractalBlaster.Universe {
         /// </summary>
         String Id { get; }
 
-        /// <summary>
-        /// Method where initialization operations are performed. The engine
-        /// the plugin will being running under is passed as a parameter.
-        /// This allows for the plugin to register itself with the 
-        /// appropriate event handlers defined in the <see cref=
-        /// "FractalBlaster.Universe.IEngine"/> interface.
-        /// </summary>
-        /// <param name="engine">
-        /// The engine the plugin will be running under.
-        /// </param>
-        /// <returns>
-        /// The instance of the IPlugin after initialization.
-        /// </returns>
-        IPlugin Initialize(IEngine engine);
-
+        void Initialize(AppContext context);
     }
 
 }

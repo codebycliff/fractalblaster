@@ -19,16 +19,24 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
         
         public IntPtr Stream { get; private set; }
 
-        public Wrapper() {
-            BufferSize = new BufferSizeHandler(GetBufferSize);
-            Buffer = new BufferHandler(GetBuffer);
-            Stream = new IntPtr();
-            NativeBuffers = new LinkedList<NativeBufferPair>();
+        public AppContext Context { get; private set; }
+
+        public static IPlugin Instance {
+            get {
+                if (instance == null) {
+                    instance = new Wrapper();
+                }
+                return instance;
+            }
+        }
+
+        public void Initialize(AppContext context) {
+            instance.Context = context;
         }
 
         #region [ IPlugin ]
 
-        public string Author {
+        public String Author {
             get { return "Fractal Blasters"; }
         }
 
@@ -36,14 +44,8 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
             get { return new Version(); }
         }
 
-        public string Id {
+        public String Id {
             get { return typeof(Wrapper).Assembly.FullName; }
-        }
-
-        public IPlugin Initialize(IEngine engine) {
-            Instance = new Wrapper();
-            Instance.Engine = engine;
-            return Instance;
         }
 
         #endregion
@@ -108,7 +110,14 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
             [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void Stop();
         }
-        
+
+        private Wrapper() {
+            BufferSize = new BufferSizeHandler(GetBufferSize);
+            Buffer = new BufferHandler(GetBuffer);
+            Stream = new IntPtr();
+            NativeBuffers = new LinkedList<NativeBufferPair>();
+        }
+
         private int GetBufferSize() {
             if (Pcm == null)
                 return 0;
@@ -138,14 +147,14 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
             return p;
         }
 
-        private Wrapper Instance { get; set; }
+        private static Wrapper instance { get; set; }
         private IEngine Engine { get; set; }
         private BufferSizeHandler BufferSize { get; set; }
         private BufferHandler Buffer { get; set; }
         private LinkedList<NativeBufferPair> NativeBuffers { get; set; }
         
         #endregion
-    
+
     }
 
 }
