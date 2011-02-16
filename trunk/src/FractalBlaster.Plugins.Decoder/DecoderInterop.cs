@@ -15,6 +15,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         End = 2 
     };
 
+    [PluginAttribute(Name="Audio DecoderInterop", Description="Decodes audio streams")]
     public class DecoderInterop : IInputPlugin {
 
         public AppContext Context { get; private set; }
@@ -29,7 +30,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             // FractalBlaster.Plugins.Decoder.FFMPEG Register All Encoders/Decoders
             FFMPEG.av_register_all();
         }
-
+        
         public DecoderInterop() {
             audioCodecContext = new FFMPEG.AVCodecContext();
             formatContext = new FFMPEG.AVFormatContext();
@@ -43,6 +44,10 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
             CurrentFrameNumber = -1;
             SampleSize = -1;
+        }
+
+        public void Initialize(AppContext context) {
+            Context = context;
         }
 
         ~DecoderInterop() {
@@ -194,22 +199,6 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         
         #endregion
 
-
-        public string Author {
-            get { return "Fractal Blaster"; }
-        }
-
-        public Version Version {
-            get { return new Version(); }
-        }
-
-        public string Id {
-            get { return this.GetType().Assembly.FullName; }
-        }
-
-        public void Initialize(AppContext context) {
-            Context = context;
-        }
     }
 
 }

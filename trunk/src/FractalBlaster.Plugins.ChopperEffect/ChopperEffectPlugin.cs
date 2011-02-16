@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace FractalBlaster.Plugins.ChopperEffect {
 
+    [PluginAttribute(Name="Chopper Effect", Author="Fractal Blasters", Description="Chops stuff")]
     public class ChopperEffectPlugin : IEffectPlugin, IViewPlugin {
 
         public AppContext Context { get; private set; }
@@ -18,22 +19,10 @@ namespace FractalBlaster.Plugins.ChopperEffect {
         
         #region [ IPlugin ]
 
-        public static IPlugin Instance { 
-            get{
-                if (instance == null) {
-                    instance = new ChopperEffectPlugin();
-                    instance.UI = new ChopperEffectUI();
-                }
-                return instance;
-            }
+        public ChopperEffectPlugin() {
+            UI = new ChopperEffectUI();
         }
-
-        public String Author { get { return "Fractal Blasters"; } }
-
-        public Version Version { get { return new Version(); } }
-
-        public String Id { get { return this.GetType().Assembly.FullName; } }
-
+        
         public void Initialize(AppContext context) {
             Context = context;
         }
@@ -42,7 +31,7 @@ namespace FractalBlaster.Plugins.ChopperEffect {
 
         #region [ IViewPlugin ]
 
-        public IContainerControl UserInterface { get { return UI; } }
+        public Form UserInterface { get { return UI; } }
         
         #endregion
         

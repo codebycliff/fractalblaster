@@ -36,8 +36,13 @@ namespace FractalBlaster.Core.Runtime {
         }
 
         public Form BuildProduct() {
-            Form form = new ProductForm();
+            ProductForm form = new ProductForm();
+            
             form.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
+
+            foreach (IViewPlugin v in Context.Plugins.OfType<IViewPlugin>()) {
+                form.AddViewPlugin(v);
+            }
             return form;
         }
 
@@ -51,6 +56,10 @@ namespace FractalBlaster.Core.Runtime {
             Context.DefaultPlugins = PluginManager.AllPlugins;
             Context.Settings = new AppSettingsReader();
             Context.Engine = new AudioEngine(Context);
+
+            foreach (IPlugin plugin in Context.Plugins) {
+                plugin.Initialize(Context);
+            }
             MediaFile.MetadataPlugins = Context.Plugins.OfType<IMetadataPlugin>();
         }
 

@@ -6,24 +6,13 @@ using FractalBlaster.Universe;
 
 namespace FractalBlaster.Plugins.Taglib {
     
+    [PluginAttribute(Name="TagLib Metadata Plugin", Description="Reads metadata from audio files using TagLib")]
     public class TaglibAudioMetadata : IMetadataPlugin {
-        
-        #region [ IMetadataPlugin ]
-        
-        public string Author {
-            get { return "Fractal Blasters"; }
-        }
-
-        public Version Version {
-            get { return new Version(0, 1); }
-        }
-
-        public string Id {
-            get { return this.GetType().Assembly.FullName;  }
-        }
 
         public AppContext Context { get; private set; }
 
+        #region [ IMetadataPlugin ]
+     
         public void Initialize(AppContext context) {
             Context = context;
         }

@@ -46,6 +46,7 @@ namespace FractalBlaster.Core.Runtime {
                     foreach (Type t in asm.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IPlugin)))) {
                         try {
                             IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
+                            
                             plugins.Add(plugin);
                         }
                         catch (Exception e) {

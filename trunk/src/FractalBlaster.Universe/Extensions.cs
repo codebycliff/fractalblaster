@@ -59,7 +59,24 @@ namespace FractalBlaster.Universe {
         }
 
         #endregion
-    
+
+
+        #region [ FractalBlaster.Universe.IPlugin ]
+
+        public static PluginAttribute GetInfo(this IPlugin plugin) {
+            PluginAttribute attr = plugin.GetType().GetCustomAttributes(typeof(PluginAttribute), false).First() as PluginAttribute;
+            if (attr == null) {
+                attr = new PluginAttribute() {
+                    Name = "n/a",
+                    Author = "n/a",
+                    Description = "n/a",
+                    Version = "n/a"
+                };
+            }
+            return attr;
+        }
+
+        #endregion
     }
 
 }

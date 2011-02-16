@@ -24,13 +24,13 @@
         /// </summary>
         private void InitializeComponent() {
             this.mMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mFileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mEditMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mHelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mFileMenuExitItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mViewMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mEditMenuOptionsItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mViewMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mHelpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,14 +47,6 @@
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             // 
-            // mStatusStrip
-            // 
-            this.mStatusStrip.Location = new System.Drawing.Point(0, 581);
-            this.mStatusStrip.Name = "mStatusStrip";
-            this.mStatusStrip.Size = new System.Drawing.Size(784, 22);
-            this.mStatusStrip.TabIndex = 1;
-            this.mStatusStrip.Text = "statusStrip1";
-            // 
             // mFileMenu
             // 
             this.mFileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -62,6 +54,12 @@
             this.mFileMenu.Name = "mFileMenu";
             this.mFileMenu.Size = new System.Drawing.Size(37, 20);
             this.mFileMenu.Text = "File";
+            // 
+            // mFileMenuExitItem
+            // 
+            this.mFileMenuExitItem.Name = "mFileMenuExitItem";
+            this.mFileMenuExitItem.Size = new System.Drawing.Size(92, 22);
+            this.mFileMenuExitItem.Text = "Exit";
             // 
             // mEditMenu
             // 
@@ -71,17 +69,11 @@
             this.mEditMenu.Size = new System.Drawing.Size(39, 20);
             this.mEditMenu.Text = "Edit";
             // 
-            // mHelpMenu
+            // mEditMenuOptionsItem
             // 
-            this.mHelpMenu.Name = "mHelpMenu";
-            this.mHelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.mHelpMenu.Text = "Help";
-            // 
-            // mFileMenuExitItem
-            // 
-            this.mFileMenuExitItem.Name = "mFileMenuExitItem";
-            this.mFileMenuExitItem.Size = new System.Drawing.Size(152, 22);
-            this.mFileMenuExitItem.Text = "Exit";
+            this.mEditMenuOptionsItem.Name = "mEditMenuOptionsItem";
+            this.mEditMenuOptionsItem.Size = new System.Drawing.Size(116, 22);
+            this.mEditMenuOptionsItem.Text = "Options";
             // 
             // mViewMenu
             // 
@@ -89,11 +81,19 @@
             this.mViewMenu.Size = new System.Drawing.Size(44, 20);
             this.mViewMenu.Text = "View";
             // 
-            // mEditMenuOptionsItem
+            // mHelpMenu
             // 
-            this.mEditMenuOptionsItem.Name = "mEditMenuOptionsItem";
-            this.mEditMenuOptionsItem.Size = new System.Drawing.Size(152, 22);
-            this.mEditMenuOptionsItem.Text = "Options";
+            this.mHelpMenu.Name = "mHelpMenu";
+            this.mHelpMenu.Size = new System.Drawing.Size(44, 20);
+            this.mHelpMenu.Text = "Help";
+            // 
+            // mStatusStrip
+            // 
+            this.mStatusStrip.Location = new System.Drawing.Point(0, 581);
+            this.mStatusStrip.Name = "mStatusStrip";
+            this.mStatusStrip.Size = new System.Drawing.Size(784, 22);
+            this.mStatusStrip.TabIndex = 1;
+            this.mStatusStrip.Text = "statusStrip1";
             // 
             // ProductForm
             // 
@@ -105,6 +105,7 @@
             this.MainMenuStrip = this.mMenuStrip;
             this.Name = "ProductForm";
             this.Text = "ProductForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductForm_FormClosing);
             this.mMenuStrip.ResumeLayout(false);
             this.mMenuStrip.PerformLayout();
             this.ResumeLayout(false);

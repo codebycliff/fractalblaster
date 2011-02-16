@@ -19,7 +19,7 @@ namespace FractalBlaster.Universe {
         /// and can be shown or hidden via the 'Views' menu in the main
         /// user interface.
         /// </summary>
-        IContainerControl UserInterface { get; }
+        Form UserInterface { get; }
 
     }
 
