@@ -9,20 +9,13 @@ namespace FractalBlaster.Universe {
     /// Defines the members that must be implemented by any plugin that wishes
     /// to provide support for a certain playlist format.
     /// </remarks>
-    public interface IPlaylistPlugin {
+    public interface IPlaylistPlugin : IPlugin {
 
         /// <summary>
-        /// Determines whether or not this plugin can create a <see 
-        /// cref="Playlist"/> instance from the specified file extension.
+        /// Determines the file extension this plugin can create a <see 
+        /// cref="Playlist"/> instance from.
         /// </summary>
-        /// <param name="extension">
-        /// String representing the file extension in question.
-        /// </param>
-        /// <returns>
-        /// Boolean value representing whether or not the file extension
-        /// is supported or not.
-        /// </returns>
-        Boolean IsFileExtensionSupported(String extension);
+        IEnumerable<String> SupportedFileExtensions { get;  }
 
         /// <summary>
         /// Attempts to read in the file at the specified path and create an
@@ -36,6 +29,13 @@ namespace FractalBlaster.Universe {
         /// file at the specified path.
         /// </returns>
         Playlist Read(String path);
+
+        /// <summary>
+        /// Method used to write a given playlist to the path specified.
+        /// </summary>
+        /// <param name="playlist">The playlist to write.</param>
+        /// <param name="path">The path to the file to written to.</param>
+        void Write(Playlist playlist, String path);
 
     }
 

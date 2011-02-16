@@ -31,6 +31,8 @@
             this.mViewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.openPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +52,8 @@
             // mFileMenu
             // 
             this.mFileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openPlaylistToolStripMenuItem,
+            this.toolStripSeparator1,
             this.mFileMenuExitItem});
             this.mFileMenu.Name = "mFileMenu";
             this.mFileMenu.Size = new System.Drawing.Size(37, 20);
@@ -58,7 +62,7 @@
             // mFileMenuExitItem
             // 
             this.mFileMenuExitItem.Name = "mFileMenuExitItem";
-            this.mFileMenuExitItem.Size = new System.Drawing.Size(92, 22);
+            this.mFileMenuExitItem.Size = new System.Drawing.Size(152, 22);
             this.mFileMenuExitItem.Text = "Exit";
             // 
             // mEditMenu
@@ -95,6 +99,18 @@
             this.mStatusStrip.TabIndex = 1;
             this.mStatusStrip.Text = "statusStrip1";
             // 
+            // openPlaylistToolStripMenuItem
+            // 
+            this.openPlaylistToolStripMenuItem.Name = "openPlaylistToolStripMenuItem";
+            this.openPlaylistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openPlaylistToolStripMenuItem.Text = "Open Playlist...";
+            this.openPlaylistToolStripMenuItem.Click += new System.EventHandler(this.openPlaylistToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +122,7 @@
             this.Name = "ProductForm";
             this.Text = "ProductForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProductForm_FormClosed);
             this.mMenuStrip.ResumeLayout(false);
             this.mMenuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -123,5 +140,7 @@
         private System.Windows.Forms.ToolStripMenuItem mViewMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelpMenu;
         private System.Windows.Forms.StatusStrip mStatusStrip;
+        private System.Windows.Forms.ToolStripMenuItem openPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

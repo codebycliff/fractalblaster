@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FractalBlaster.Universe;
+using FractalBlaster.Core.Runtime;
+using System.IO;
 
 namespace FractalBlaster.Core.UI {
     public partial class ProductForm : Form {
@@ -40,5 +42,31 @@ namespace FractalBlaster.Core.UI {
         }
 
         private List<Form> Views { get; set; }
+
+        private void ProductForm_FormClosed(object sender, FormClosedEventArgs e) {
+            Application.Exit();
+        }
+
+        private void openPlaylistToolStripMenuItem_Click(object sender, EventArgs e) {
+            Dictionary<String, IPlaylistPlugin> pluginMap = new Dictionary<String,IPlaylistPlugin>();
+            String filter = "";
+            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
+                foreach (String f in plugin.SupportedFileExtensions) {
+                    pluginMap.Add(f, plugin);
+                    filter += String.Format("Playlists (*{0})|*{0}", f);
+                }
+            }
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = filter;
+            DialogResult result = ofd.ShowDialog();
+            if (result == DialogResult.OK) {
+                FileInfo f = new FileInfo(ofd.FileName);
+                IPlaylistPlugin plugin = pluginMap[f.Extension];
+                Playlist playlist = plugin.Read(f.FullName);
+                PlaylistForm pform = new PlaylistForm(playlist);
+                pform.Show();
+            }
+            
+        }
     }
 }

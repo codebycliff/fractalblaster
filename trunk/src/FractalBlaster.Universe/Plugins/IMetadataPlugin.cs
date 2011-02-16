@@ -12,16 +12,9 @@ namespace FractalBlaster.Universe {
     public interface IMetadataPlugin : IPlugin {
 
         /// <summary>
-        /// Method for determining whether the specified <see cref="MediaFile"
-        /// /> is supported for reading metadata.
+        /// List of file extensions supported by this metadata handler.
         /// </summary>
-        /// <param name="file">
-        /// The media file that in question.
-        /// </param>
-        /// <returns>
-        /// True if the specified media file is supported; false otherwise.
-        /// </returns>
-        Boolean IsFileSupported(MediaFile file);
+        IEnumerable<String> SupportedFileExtensions { get; }
 
         /// <summary>
         /// Method that handles the reading of the metadata from a given media

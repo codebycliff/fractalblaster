@@ -20,14 +20,14 @@ namespace FractalBlaster.Core.UI
         private int length;
         private bool repeat;
 
-        public PlaylistForm(IEngine engine) {
+        public PlaylistForm(Playlist playlist) {
             filenames = new List<String>();
             displaynames = new List<String>();
             length = 0;
             InitializeComponent();
-            Engine = engine;
         }
 
+        public Playlist Playlist { get; private set; }
         public void addFile(string filename, string displayname)
         {
             filenames.Add(filename);

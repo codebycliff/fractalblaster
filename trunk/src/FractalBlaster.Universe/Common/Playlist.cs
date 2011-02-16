@@ -26,7 +26,7 @@ namespace FractalBlaster.Universe {
         /// </summary>
         public Playlist() {
             MediaData = new DataTable();
-
+            MediaList = new List<MediaFile>();
             DataColumn dc;
             foreach (KeyValuePair<String, Type> pair in new AudioMetadata().GetType().GetFields().Select(i =>
                 new KeyValuePair<String,Type>(i.Name, i.FieldType))
@@ -135,7 +135,7 @@ namespace FractalBlaster.Universe {
             foreach (MediaProperty prop in media.Metadata) {
                 row[prop.Name] = prop.Value;
             }
-            row["MediaFile"] = media;
+
             return row;
         }
 

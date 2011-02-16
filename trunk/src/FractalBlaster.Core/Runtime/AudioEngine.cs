@@ -51,8 +51,7 @@ namespace FractalBlaster.Core.Runtime {
             FileInfo file = new FileInfo(path);
             IPlaylistPlugin plugin = FamilyKernel.Instance.Context.Plugins.Select(i =>
                 i as IPlaylistPlugin
-            ).Where(p =>
-                p.IsFileExtensionSupported(file.Extension)
+            ).Where(p => p.SupportedFileExtensions.Contains(file.Extension)
             ).First();
             Load(plugin.Read(path));
         }
@@ -81,8 +80,7 @@ namespace FractalBlaster.Core.Runtime {
                 return;
             }
             InputPlugin = new EffectsProcessor(input,ctx);
-            //OutputPlugin = AppContext.DefaultPlugins.OfType<IOutputPlugin>().First() ?? null;
-            //AllPlugins = FamilyKernel.Instance.Context.Plugins;
+            OutputPlugin = ctx.DefaultPlugins.OfType<IOutputPlugin>().First();
         }
 
         private static AudioEngine mInstance;

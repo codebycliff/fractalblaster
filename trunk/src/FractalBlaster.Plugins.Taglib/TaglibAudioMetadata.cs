@@ -16,12 +16,11 @@ namespace FractalBlaster.Plugins.Taglib {
         public void Initialize(AppContext context) {
             Context = context;
         }
-        public Boolean IsFileSupported(MediaFile file) {
-            return true;
-        }
+
+        public IEnumerable<String> SupportedFileExtensions { get { return new String[] {".*"};  } }
 
         public IEnumerable<MediaProperty> Analyze(MediaFile media) {
-            if (!IsFileSupported(media)) {
+            if (!SupportedFileExtensions.Contains(media.Info.Extension)) {
                 return new MediaProperty[0];
             }
             
