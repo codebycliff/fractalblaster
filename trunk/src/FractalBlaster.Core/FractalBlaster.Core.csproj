@@ -42,12 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Runtime\AudioEngine.cs" />
     <Compile Include="Runtime\EffectsProcessor.cs" />
     <Compile Include="Runtime\FamilyKernel.cs" />
     <Compile Include="Runtime\PlaybackStateMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\PluginManager.cs" />
+    <Compile Include="UI\PlaylistControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PlaylistControl.Designer.cs">
+      <DependentUpon>PlaylistControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\PlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +80,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PlaylistControl.resx">
+      <DependentUpon>PlaylistControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\PlaylistForm.resx">
       <DependentUpon>PlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -76,7 +94,6 @@
       <DependentUpon>ProductForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

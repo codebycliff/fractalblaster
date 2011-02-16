@@ -20,9 +20,9 @@ namespace FractalBlaster.Plugins.Taglib {
         public IEnumerable<String> SupportedFileExtensions { get { return new String[] {".*"};  } }
 
         public IEnumerable<MediaProperty> Analyze(MediaFile media) {
-            if (!SupportedFileExtensions.Contains(media.Info.Extension)) {
-                return new MediaProperty[0];
-            }
+            //if (!SupportedFileExtensions.Contains(media.Info.Extension)) {
+            //    return new MediaProperty[0];
+            //}
             
             TagLib.File file = TagLib.File.Create(media.Info.FullName);
             List<MediaProperty> props = new List<MediaProperty>();

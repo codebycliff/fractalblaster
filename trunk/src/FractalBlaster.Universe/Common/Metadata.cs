@@ -12,7 +12,13 @@ namespace FractalBlaster.Universe {
         }
 
         public MediaProperty this[String key] {
-            get { return Properties.Where(p => p.Name.CompareTo(key) == 0).First(); }
+            get { 
+                var props = Properties.Where(p => p.Name.CompareTo(key) == 0);
+                if (props.Count() == 0) {
+                    return MediaProperty.Create("Not Available", "N/A", typeof(String));
+                }
+                return props.First();
+            }
             set { Properties.Add(value);  }
         }
 
