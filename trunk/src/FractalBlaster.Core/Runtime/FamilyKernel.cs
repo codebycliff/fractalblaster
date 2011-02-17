@@ -8,6 +8,7 @@ using FractalBlaster.Universe;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+//using log4net;
 
 namespace FractalBlaster.Core.Runtime {
     
@@ -21,6 +22,8 @@ namespace FractalBlaster.Core.Runtime {
                 return mInstance;
             }
         }
+
+        //public ILog Log { get; set; }
 
         #region [ IRuntimeKernel ]
 

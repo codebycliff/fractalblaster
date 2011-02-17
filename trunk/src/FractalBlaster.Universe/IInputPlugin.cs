@@ -10,16 +10,10 @@ namespace FractalBlaster.Universe {
     public interface IInputPlugin : IPlugin {
         
         /// <summary>
-        /// Handles the opening of a media file from the specified path.
+        /// Handles the opening of a media file and analyzing it.
         /// </summary>
-        /// <param name="path">
-        /// The path to the file to be opened as a <see cref="MediaFile"/>.
-        /// </param>
-        /// <returns>
-        /// An instance of <see cref="MediaFile"/> that is ready to be 
-        /// decoded by this plugin.
-        /// </returns>
-        MediaFile OpenMedia(String path);
+        /// <param name="media">The media file to open and analyze.</param>
+        void OpenMedia(MediaFile media);
         
         /// <summary>
         /// Closes the media file that was previously opened by this input

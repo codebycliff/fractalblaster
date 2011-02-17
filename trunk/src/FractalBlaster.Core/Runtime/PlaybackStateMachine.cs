@@ -5,48 +5,67 @@ using System.Text;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Core.Runtime {
-    
-    enum PlaybackState { 
-        Playing, 
-        Paused, 
-        Stopped 
-    };
 
-    public static class PlaybackStateMachine {
+    public enum PlaybackState {
+        Stopped,
+        Playing,
+        Paused
+    }
+
+    /// <summary>
+    /// TODO:  Add Forward() and Backward() methods.
+    /// </summary>
+    public class PlaybackStateMachine : IOutputPlugin {
+
+        public PlaybackState State { get; private set; }
         
-
-        private static PlaybackState State { get; set; }
-        private static IOutputPlugin Output { get; set; }
-
-        static PlaybackStateMachine() {
+        public PlaybackStateMachine(IOutputPlugin output) {
             State = PlaybackState.Stopped;
-            Output = FamilyKernel.Instance.Context.Engine.OutputPlugin;
-            State = PlaybackState.Stopped;
+            OutputStream = output;
+        }
+        
+        #region [ IOutputPlugin ]
+
+        public void Initialize(AppContext context) {
+            Context = context;
         }
 
-        public static void Play() {
-            switch (State) {
-            case PlaybackState.Paused:
-                Output.Resume();
-                State = PlaybackState.Playing;
-                break;
-            case PlaybackState.Playing:
-                break;
-            case PlaybackState.Stopped:
-                State = PlaybackState.Playing;
-                Output.Play();
-                break;
+        public void Play() {
+            if (Context.Engine.IsMediaLoaded) {
+                switch (State) {
+                case PlaybackState.Paused:
+                    OutputStream.Resume();
+                    State = PlaybackState.Playing;
+                    break;
+                case PlaybackState.Playing:
+                    break;
+                case PlaybackState.Stopped:
+                    State = PlaybackState.Playing;
+                    OutputStream.Play();
+                    break;
+                }
+            }
+            else {
+                //FamilyKernel.Log.Info("Attempt to Play in the PlaybackStateMachine without Engine being loaded with media.");
             }
         }
 
-        public static void Pause() {
+        public bool IsPlaying {
+            get { return State == PlaybackState.Playing && OutputStream.IsPlaying; }
+        }
+
+        public void Pause() {
+            if (Context.Engine.IsMediaLoaded) {
+                //FamilyKernel.Log.Info("Attempt to Play in the PlaybackStateMachine without Engine being loaded with media.");
+                return;
+            }
             switch (State) {
             case PlaybackState.Paused:
-                Output.Resume();
+                OutputStream.Resume();
                 State = PlaybackState.Playing;
                 break;
             case PlaybackState.Playing:
-                Output.Pause();
+                OutputStream.Pause();
                 State = PlaybackState.Paused;
                 break;
             case PlaybackState.Stopped:
@@ -54,30 +73,36 @@ namespace FractalBlaster.Core.Runtime {
             }
         }
 
-        public static void Stop() {
-            switch (State) {
-            case PlaybackState.Paused:
-                Output.Stop();
-                State = PlaybackState.Stopped;
-                break;
-            case PlaybackState.Playing:
-                Output.Stop();
-                State = PlaybackState.Stopped;
-                break;
-            case PlaybackState.Stopped:
-                break;
+        public bool IsPaused {
+            get { return State == PlaybackState.Paused && OutputStream.IsPaused; }
+        }
+
+        public void Stop() {
+            if (Context.Engine.IsMediaLoaded) {
+                switch (State) {
+                case PlaybackState.Paused:
+                case PlaybackState.Playing:
+                    OutputStream.Stop();
+                    State = PlaybackState.Stopped;
+                    break;
+                case PlaybackState.Stopped:
+                    break;
+                }
             }
+            //FamilyKernel.Log.Info("Attempt to Play in the PlaybackStateMachine without Engine being loaded with media.");
         }
 
-        public static void Back() {
+        public void Resume() {
+            Play();
         }
+        
+        #endregion
 
-        public static void Forward() {
-        }
+        #region [ Private ]
 
-        public static bool isPlaying() {
-            return (State == PlaybackState.Playing);
-        }
-
+        private IOutputPlugin OutputStream { get; set; }
+        private AppContext Context { get; set; }
+        
+        #endregion
     }
 }

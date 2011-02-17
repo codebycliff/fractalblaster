@@ -15,16 +15,18 @@ namespace FractalBlaster.Core.UI {
 
         public ProductForm() {
             InitializeComponent();
-
+            Context = FamilyKernel.Instance.Context;
+            Engine = Context.Engine;
             PluginViews = new List<Form>();
             PlaylistPluginMap = new Dictionary<String, IPlaylistPlugin>();
+
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
                 foreach (String f in plugin.SupportedFileExtensions) {
                     PlaylistPluginMap.Add(f, plugin);
                 }
             }
 
-            PlaylistControl control = CreatePlaylistControl(new Playlist());
+            PlaylistControl control = CreatePlaylistControl();
             mPlaylistTabControl.TabPages[0].Tag = control;
             mPlaylistTabControl.TabPages[0].Controls.Add(control);
                        
@@ -50,10 +52,42 @@ namespace FractalBlaster.Core.UI {
         
         #region  [ Private ]
 
-        private void PlaySelectedSong(object sender, EventArgs args) {
+        private void PlayMedia(object sender, EventArgs args) {
             MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);
-            FamilyKernel.Instance.Context.Engine.Load(media);
-            FamilyKernel.Instance.Context.Engine.OutputPlugin.Play();
+            if (Engine.IsMediaLoaded) {
+                if(Engine.CurrentMedia.Info.FullName.CompareTo(media.Info.FullName) != 0) {
+                    return;
+                }
+                Engine.Unload();
+            }
+            Engine.Load(media);
+            Engine.OutputPlugin.Play();
+        }
+
+        private void PauseMedia(object sender, EventArgs args) {
+            Engine.OutputPlugin.Pause();
+        }
+
+        private void StopMedia(object sender, EventArgs args) {
+            Engine.OutputPlugin.Stop();
+        }
+
+        private void SkipMediaForward(object sender, EventArgs args) {
+            if (Engine.IsMediaLoaded) {
+                CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex + 1);
+            }
+            else {
+                CurrentPlaylistControl.Playlist.SelectedIndex++;
+            }
+        }
+
+        private void SkipMediaBackward(object sender, EventArgs args) {
+            if (Engine.IsMediaLoaded) {
+                CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex - 1);
+            }
+            else {
+                CurrentPlaylistControl.Playlist.SelectedIndex--;
+            }
         }
 
         private void OpenPlaylist(object sender, EventArgs args) {
@@ -100,17 +134,20 @@ namespace FractalBlaster.Core.UI {
                     }
                 }
             };
-            playlist.MediaRequested += m => {
-                FamilyKernel.Instance.Context.Engine.Load(m);
-                FamilyKernel.Instance.Context.Engine.OutputPlugin.Play();
-            };
+            playlist.MediaRequested += m => { PlayMedia(null, new EventArgs()); };
             return playlist;
         }
 
-        private PlaylistControl CreatePlaylistControl(Playlist p) {
+        private PlaylistControl CreatePlaylistControl(Playlist p = null) {
+            if (p == null) {
+                p = CreatePlaylist();
+            }
             PlaylistControl pc = new PlaylistControl();
             pc.Playlist = p;
             pc.Dock = DockStyle.Fill;
+            pc.Playlist.MediaRequested += (m) => {
+
+            };
             return pc;
         }
 
@@ -126,6 +163,9 @@ namespace FractalBlaster.Core.UI {
             mPlaylistTabControl.TabPages.Add(CreateNewPlaylistTab());
         }
 
+
+        private AppContext Context { get; set; }
+        private IEngine Engine { get; set; }
         private List<Form> PluginViews { get; set; }
         private Dictionary<String, IPlaylistPlugin> PlaylistPluginMap { get; set; }
         private String PlaylistFilterString { get; set; }
@@ -136,5 +176,6 @@ namespace FractalBlaster.Core.UI {
         }
         
         #endregion
+
     }
 }

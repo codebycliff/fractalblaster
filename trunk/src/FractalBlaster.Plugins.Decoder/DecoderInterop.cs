@@ -112,15 +112,11 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             FFMPEG.avcodec_flush_buffers(pAudioCodecContext);
         }
 
-        public MediaFile OpenMedia(string path) {
-            FilePath = path;
-
-            MediaFile media = new MediaFile(FilePath);
+        public void OpenMedia(MediaFile media) {
 
             // Open Input Audio File
-            if (FFMPEG.av_open_input_file(out pFormatContext, FilePath, IntPtr.Zero, 0, IntPtr.Zero) < 0) {
-                throw new FileLoadException("Input File Not Found / Unable to Open");
-                // TODO: Error Log
+            if (FFMPEG.av_open_input_file(out pFormatContext, media.Info.FullName, IntPtr.Zero, 0, IntPtr.Zero) < 0) {
+                throw new FileLoadException("");
             }
 
             // Determine Audio Codec
@@ -159,12 +155,10 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
             SampleSize = audioCodecContext.frame_size;
 
-            return media;
         }
 
         public void CloseMedia() {
             //FractalBlaster.Plugins.Decoder.FFMPEG.av_freep(pAudioStream);
-
             //FractalBlaster.Plugins.Decoder.FFMPEG.avcodec_close(pAudioCodecContext);
 
             FFMPEG.av_close_input_file(pFormatContext);

@@ -49,13 +49,13 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mAudioControlToolBar = new System.Windows.Forms.ToolStrip();
             this.mPlayToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mStopToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mPauseToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipBackwardToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipForwardToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mPlaylistTabControl.SuspendLayout();
@@ -289,6 +289,11 @@
             this.mStatusStrip.TabIndex = 5;
             this.mStatusStrip.Text = "statusStrip1";
             // 
+            // mCurrentSelectedMediaLabel
+            // 
+            this.mCurrentSelectedMediaLabel.Name = "mCurrentSelectedMediaLabel";
+            this.mCurrentSelectedMediaLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // mAudioControlToolBar
             // 
             this.mAudioControlToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -313,6 +318,7 @@
             this.mPlayToolBarButton.Name = "mPlayToolBarButton";
             this.mPlayToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mPlayToolBarButton.Text = "toolStripButton1";
+            this.mPlayToolBarButton.Click += new System.EventHandler(this.PlayMedia);
             // 
             // mStopToolBarButton
             // 
@@ -322,6 +328,7 @@
             this.mStopToolBarButton.Name = "mStopToolBarButton";
             this.mStopToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mStopToolBarButton.Text = "toolStripButton2";
+            this.mStopToolBarButton.Click += new System.EventHandler(this.StopMedia);
             // 
             // mPauseToolBarButton
             // 
@@ -331,6 +338,7 @@
             this.mPauseToolBarButton.Name = "mPauseToolBarButton";
             this.mPauseToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mPauseToolBarButton.Text = "toolStripButton3";
+            this.mPauseToolBarButton.Click += new System.EventHandler(this.PauseMedia);
             // 
             // mSkipBackwardToolBarButton
             // 
@@ -340,6 +348,7 @@
             this.mSkipBackwardToolBarButton.Name = "mSkipBackwardToolBarButton";
             this.mSkipBackwardToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mSkipBackwardToolBarButton.Text = "toolStripButton4";
+            this.mSkipBackwardToolBarButton.Click += new System.EventHandler(this.SkipMediaBackward);
             // 
             // mSkipForwardToolBarButton
             // 
@@ -349,11 +358,7 @@
             this.mSkipForwardToolBarButton.Name = "mSkipForwardToolBarButton";
             this.mSkipForwardToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mSkipForwardToolBarButton.Text = "toolStripButton5";
-            // 
-            // mCurrentSelectedMediaLabel
-            // 
-            this.mCurrentSelectedMediaLabel.Name = "mCurrentSelectedMediaLabel";
-            this.mCurrentSelectedMediaLabel.Size = new System.Drawing.Size(0, 17);
+            this.mSkipForwardToolBarButton.Click += new System.EventHandler(this.SkipMediaForward);
             // 
             // ProductForm
             // 

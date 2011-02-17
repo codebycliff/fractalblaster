@@ -107,8 +107,8 @@ namespace FractalBlaster.Core.UI
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             selected = listBox1.SelectedItem.ToString();
-            MediaFile selectedFile = Engine.CurrentPlaylist.Where(f => f.Info.FullName.CompareTo(selected) == 0).First();
-            Engine.Load(selectedFile);
+            //MediaFile selectedFile = Engine.CurrentPlaylist.Where(f => f.Info.FullName.CompareTo(selected) == 0).First();
+            //Engine.Load(selectedFile);
         }
 
     }

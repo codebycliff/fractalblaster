@@ -10,15 +10,14 @@ namespace FractalBlaster.Core.Runtime {
 
     public class AudioEngine : IEngine {
 
+        public AppContext Context { get; private set; }
+
         #region [ IEngine ]
 
         public event MediaChangeHandler OnMediaChanged;
 
         public event PlaylistChangeHandler OnPlaylistChanged;
 
-        public MediaFile CurrentMedia { get; private set; }
-
-        public Playlist CurrentPlaylist { get; private set; }
 
         public IInputPlugin InputPlugin { get; private set; }
 
@@ -26,67 +25,63 @@ namespace FractalBlaster.Core.Runtime {
 
         public IEnumerable<IPlugin> AllPlugins { get; private set; }
 
+
+        public MediaFile CurrentMedia { get; private set; }
+
         public bool IsMediaLoaded { get; private set; }
 
-        public bool IsPlaylistLoaded { get; private set; }
-
         public void Load(MediaFile file) {
-            CurrentMedia = file;
-            IsMediaLoaded = true;
-            OnMediaChanged(CurrentMedia);
-        }
-
-        public void Load(Playlist playlist) {
-            CurrentPlaylist = playlist;
-            IsPlaylistLoaded = true;
-        }
-
-        public void LoadMedia(String path) {
-            CurrentMedia = InputPlugin.OpenMedia(path);
-            IsMediaLoaded = true;
-            OnMediaChanged(CurrentMedia);
-        }
-
-        public void LoadPlaylist(String path) {
-            FileInfo file = new FileInfo(path);
-            IPlaylistPlugin plugin = FamilyKernel.Instance.Context.Plugins.Select(i =>
-                i as IPlaylistPlugin
-            ).Where(p => p.SupportedFileExtensions.Contains(file.Extension)
-            ).First();
-            Load(plugin.Read(path));
-        }
-
-        public void UnloadMedia() {
-            if (OutputPlugin.IsPlaying) {
-                OutputPlugin.Stop();
+            try {
+                InputPlugin.OpenMedia(file);
+                CurrentMedia = file;
+                IsMediaLoaded = true;
+                if (OnMediaChanged != null) {
+                    OnMediaChanged(CurrentMedia);
+                }
             }
-            InputPlugin.CloseMedia();
-            CurrentMedia = null;
-            IsMediaLoaded = false;
+            catch (FileLoadException fe) {
+                //FamilyKernel.Log.Error("Could not load media file in engine", fe);
+            }
+            catch (Exception e) {
+                //FamilyKernel.Log.Error("Could not load media file in engine", e);
+            }
         }
 
-        public void UnloadPlaylist() {
-            CurrentPlaylist = null;
-            IsPlaylistLoaded = false;
+        public void Unload() {
+            if (IsMediaLoaded) {
+                if (OutputPlugin.IsPlaying) {
+                    OutputPlugin.Stop();
+                }
+                InputPlugin.CloseMedia();
+                CurrentMedia = null;
+                IsMediaLoaded = false;
+            }
         }
-        
+
         #endregion
         
         #region [ Private ]
 
         public AudioEngine(AppContext ctx) {
-            IInputPlugin input = ctx.DefaultPlugins.OfType<IInputPlugin>().First();
-            if (input == null) {
+            Context = ctx;
+            
+            IInputPlugin input = Context.DefaultPlugins.OfType<IInputPlugin>().First();
+            IOutputPlugin output = Context.DefaultPlugins.OfType<IOutputPlugin>().First();
+
+            if (input == null || output == null) {
                 return;
             }
-            InputPlugin = new EffectsProcessor(input,ctx);
-            OutputPlugin = ctx.DefaultPlugins.OfType<IOutputPlugin>().First();
+            
+            InputPlugin = new EffectsProcessor(input);
+            InputPlugin.Initialize(Context);
+            OutputPlugin = new PlaybackStateMachine(output);
+            OutputPlugin.Initialize(Context);
+            
         }
 
         private static AudioEngine mInstance;
         
         #endregion
-
 
     }
 

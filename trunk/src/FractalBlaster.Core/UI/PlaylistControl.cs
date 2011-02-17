@@ -21,6 +21,13 @@ namespace FractalBlaster.Core.UI {
                         mf.Metadata["Duration"].Value.ToString()
                     });
                     mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = mf;
+                    playlist.SelectedChanged += (o,ea) => {
+                        if(ExternalSelectionChange) {
+                            int index = Playlist.SelectedIndex;
+                            DataGridViewRow row = mPlaylistGridView.Rows[index];
+                            row.Selected = true;
+                        }
+                    };
                 }
             }
         }
@@ -40,18 +47,21 @@ namespace FractalBlaster.Core.UI {
             Playlist = playlist;
         }
 
-        private Playlist playlist;
-        private DataTable PlaylistData { get; set; }
-
         private void mPlaylistGridView_SelectionChanged(object sender, EventArgs e) {
             DataGridViewRow row = mPlaylistGridView.SelectedRows[0];
             if (row.Index <= Playlist.Items.Count()) {
                 Playlist.SelectedIndex = row.Index;
+                ExternalSelectionChange = false;
             }
         }
 
         private void mPlaylistGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             Playlist.RequestMediaAt(e.RowIndex);
         }
+
+        private Playlist playlist;
+        private DataTable PlaylistData { get; set; }
+        private Boolean ExternalSelectionChange { get; set; }
+
     }
 }

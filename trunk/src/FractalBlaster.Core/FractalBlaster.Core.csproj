@@ -50,8 +50,8 @@
     <Compile Include="Runtime\AudioEngine.cs" />
     <Compile Include="Runtime\EffectsProcessor.cs" />
     <Compile Include="Runtime\FamilyKernel.cs" />
-    <Compile Include="Runtime\PlaybackStateMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\PlaybackStateMachine.cs" />
     <Compile Include="Runtime\PluginManager.cs" />
     <Compile Include="UI\PlaylistControl.cs">
       <SubType>UserControl</SubType>

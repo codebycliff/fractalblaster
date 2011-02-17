@@ -9,7 +9,6 @@ namespace FractalBlaster.Universe {
 
     public class AppContext {
 
-
         public IEngine Engine { get; set; }
 
         public IEnumerable<IPlugin> DefaultPlugins { get; set; }
@@ -17,6 +16,7 @@ namespace FractalBlaster.Universe {
         public IEnumerable<IPlugin> Plugins { get; set; }
 
         public AppSettingsReader Settings { get; set; }
+
     }
 
 }

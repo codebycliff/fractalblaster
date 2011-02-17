@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FamilyRuntime = FractalBlaster.Core.Runtime;
 using FractalBlaster.Universe;
 using FractalBlaster.Core;
+//using log4net.Config;
 
 namespace FractalBlaster.Family {
 
@@ -15,16 +16,18 @@ namespace FractalBlaster.Family {
         [STAThread]
         static void Main() {
 
+            //BasicConfigurator.Configure();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IRuntimeKernel kernel = FamilyRuntime.FamilyKernel.Instance;
-            kernel.LoadProduct(new Products.StandardProductModel());
 
-            if (!kernel.IsProductLoaded) {
+            //FamilyRuntime.FamilyKernel.Log = log4net.LogManager.GetLogger(typeof(Program));
+            FamilyRuntime.FamilyKernel.Instance.LoadProduct(new Products.StandardProductModel());
+            if (!FamilyRuntime.FamilyKernel.Instance.IsProductLoaded) {
                 throw new Exception("Couldn't load product.");
             }
-            Form mainwindow = kernel.BuildProduct();
-            Application.Run(mainwindow);
+
+            Application.Run(FamilyRuntime.FamilyKernel.Instance.BuildProduct());
 
         }
 

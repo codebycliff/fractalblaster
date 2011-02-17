@@ -11,35 +11,20 @@ namespace FractalBlaster.Universe {
         event PlaylistChangeHandler OnPlaylistChanged;
 
 
-        MediaFile CurrentMedia { get; }
-
-        Playlist CurrentPlaylist { get; }
-
-        
         IEnumerable<IPlugin> AllPlugins { get; }
 
         IInputPlugin InputPlugin { get; }
 
         IOutputPlugin OutputPlugin { get; }
 
+
+        MediaFile CurrentMedia { get; }
         
         Boolean IsMediaLoaded { get; }
-        
-        Boolean IsPlaylistLoaded { get; }
-
 
         void Load(MediaFile file);
 
-        void Load(Playlist playlist);
-
-        void LoadMedia(String file);
-        
-        void LoadPlaylist(String path);
-
-
-        void UnloadMedia();
-
-        void UnloadPlaylist();
+        void Unload();
 
     }
 
