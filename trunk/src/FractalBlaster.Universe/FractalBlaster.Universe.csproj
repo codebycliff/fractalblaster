@@ -42,21 +42,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
-    <Compile Include="Common\Metadata.cs" />
+    <Compile Include="Metadata.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Common\Playlist.cs" />
-    <Compile Include="Plugins\IEffectPlugin.cs" />
-    <Compile Include="Runtime\AppContext.cs" />
-    <Compile Include="Runtime\IEngine.cs" />
-    <Compile Include="Plugins\IInputPlugin.cs" />
-    <Compile Include="Plugins\IMetadataPlugin.cs" />
-    <Compile Include="Plugins\IOutputPlugin.cs" />
-    <Compile Include="Plugins\IPlaylistPlugin.cs" />
-    <Compile Include="Plugins\IPlugin.cs" />
-    <Compile Include="Runtime\IProductModel.cs" />
-    <Compile Include="Runtime\IRuntimeKernel.cs" />
-    <Compile Include="Plugins\IViewPlugin.cs" />
-    <Compile Include="Common\MediaFile.cs" />
+    <Compile Include="Playlist.cs" />
+    <Compile Include="IEffectPlugin.cs" />
+    <Compile Include="AppContext.cs" />
+    <Compile Include="IEngine.cs" />
+    <Compile Include="IInputPlugin.cs" />
+    <Compile Include="IMetadataPlugin.cs" />
+    <Compile Include="IOutputPlugin.cs" />
+    <Compile Include="IPlaylistPlugin.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IProductModel.cs" />
+    <Compile Include="IRuntimeKernel.cs" />
+    <Compile Include="IViewPlugin.cs" />
+    <Compile Include="MediaFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

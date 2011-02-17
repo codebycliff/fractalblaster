@@ -16,13 +16,11 @@ namespace FractalBlaster.Core.UI {
             set {
                 playlist = value;
                 foreach (MediaFile mf in Playlist) {
-                    
                     mPlaylistGridView.Rows.Add(new String[] {
                         mf.Metadata["Title"].Value.ToString(),
-                        mf.Metadata["Artist"].Value.ToString(),
-                        mf.Metadata["Album"].Value.ToString(),
                         mf.Metadata["Duration"].Value.ToString()
                     });
+                    mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = mf;
                 }
             }
         }

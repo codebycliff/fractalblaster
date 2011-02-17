@@ -44,7 +44,7 @@ namespace FractalBlaster.Core.UI {
                     form.Hide();
                 }
             };
-            mViewMenu.DropDownItems.Add(item);
+            mViewsMenu.DropDownItems.Add(item);
         }
 
         private void ProductForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -108,6 +108,10 @@ namespace FractalBlaster.Core.UI {
             IEngine engine = FamilyKernel.Instance.Context.Engine;
             engine.Load(media);
             engine.OutputPlugin.Play();
+        }
+
+        private void toolStripButton8_Click(object sender, EventArgs e) {
+
         }
     }
 }

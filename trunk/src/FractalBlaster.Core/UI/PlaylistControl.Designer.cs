@@ -25,8 +25,6 @@
         private void InitializeComponent() {
             this.mPlaylistGridView = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Artist = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Album = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.mPlaylistGridView)).BeginInit();
             this.SuspendLayout();
@@ -37,8 +35,6 @@
             this.mPlaylistGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mPlaylistGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
-            this.Artist,
-            this.Album,
             this.Length});
             this.mPlaylistGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mPlaylistGridView.Location = new System.Drawing.Point(0, 0);
@@ -54,21 +50,16 @@
             // 
             this.Title.HeaderText = "Title";
             this.Title.Name = "Title";
-            // 
-            // Artist
-            // 
-            this.Artist.HeaderText = "Artist";
-            this.Artist.Name = "Artist";
-            // 
-            // Album
-            // 
-            this.Album.HeaderText = "Album";
-            this.Album.Name = "Album";
+            this.Title.ReadOnly = true;
             // 
             // Length
             // 
+            this.Length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Length.HeaderText = "Length";
+            this.Length.MaxInputLength = 6;
             this.Length.Name = "Length";
+            this.Length.ReadOnly = true;
+            this.Length.Width = 65;
             // 
             // PlaylistControl
             // 
@@ -86,8 +77,6 @@
 
         private System.Windows.Forms.DataGridView mPlaylistGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Artist;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Album;
         private System.Windows.Forms.DataGridViewTextBoxColumn Length;
     }
 }
