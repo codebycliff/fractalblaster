@@ -17,16 +17,14 @@ namespace FractalBlaster.Family {
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-
             IRuntimeKernel kernel = FamilyRuntime.FamilyKernel.Instance;
             kernel.LoadProduct(new Products.StandardProductModel());
 
             if (!kernel.IsProductLoaded) {
                 throw new Exception("Couldn't load product.");
             }
-
-            Application.Run(kernel.BuildProduct());
+            Form mainwindow = kernel.BuildProduct();
+            Application.Run(mainwindow);
 
         }
 

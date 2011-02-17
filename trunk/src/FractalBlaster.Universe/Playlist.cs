@@ -16,28 +16,50 @@ namespace FractalBlaster.Universe {
     public class Playlist : IEnumerable<MediaFile> {
 
         /// <summary>
+        /// Event that is fired whenever the selected media file is changed.
+        /// </summary>
+        public event EventHandler SelectedChanged;
+
+        /// <summary>
+        /// Event that is fired whenever there is a request to play a media 
+        /// file.
+        /// </summary>
+        public event MediaChangeHandler MediaRequested;
+
+        /// <summary>
+        /// Event that is fired whenever a media file is added to this 
+        /// playlist.
+        /// </summary>
+        public event MediaChangeHandler MediaAdded;
+
+        /// <summary>
         /// Enumeration of media files that represents the playlist's items.
         /// </summary>
-        public IEnumerable<MediaFile> Items { get { return MediaList.AsEnumerable();  } }
+        public IEnumerable<MediaFile> Items { get { return MediaItems.AsEnumerable();  } }
+
+        /// <summary>
+        /// The currently selected index in the playlist. This represents a selection,
+        /// not a double-click or request to play the item.
+        /// </summary>
+        public Int32 SelectedIndex {
+            get {
+                return SelectionIndex;
+            }
+            set {
+                SelectionIndex = value;
+                if (SelectedChanged != null) {
+                    SelectedChanged(this, new EventArgs());
+                }
+            }
+        }
 
         /// <summary>
         /// Constructor that creates an empty playlist initialized with an
         /// empty collection of media files.
         /// </summary>
         public Playlist() {
-            MediaData = new DataTable();
-            MediaList = new List<MediaFile>();
-            DataColumn dc;
-            foreach (KeyValuePair<String, Type> pair in new AudioMetadata().GetType().GetFields().Select(i =>
-                new KeyValuePair<String,Type>(i.Name, i.FieldType))
-                ) {
-                dc = new DataColumn();
-
-                dc.ColumnName = pair.Key;
-                dc.DataType = pair.Value;
-
-                MediaData.Columns.Add(dc);
-            }
+            MediaItems = new List<MediaFile>();
+            SelectionIndex = 0;
         }
 
         /// <summary>
@@ -48,136 +70,50 @@ namespace FractalBlaster.Universe {
         /// The media file to be added to this playlist.
         /// </param>
         public void AddItem(MediaFile media) {
-            MediaList.Add(media);
-            MediaData.Rows.Add(CreateRow(media));
-        }
-
-        /// <summary>
-        /// Method that serializes this playlist to an xml file with the name 
-        /// "library.xml".
-        /// </summary>
-        public void Serialize() {
-            MediaData.WriteXml("library.xml");
-        }
-
-        /// <summary>
-        /// Looks for an xml file in the current directory with the name 
-        /// "library.xml" and attempts to deserialize it.
-        /// </summary>
-        public void Deserialize() {
-            if (File.Exists("library.xml")) {
-                MediaData.ReadXml("library.xml");
+            MediaItems.Add(media);
+            if (MediaAdded != null) {
+                MediaAdded(media);
             }
         }
 
         /// <summary>
-        /// Method that returns an enumeration of <see cref="AudioMetadata"/>
-        /// for each media file in this playlist, optionally shuffling the
-        /// order of the media files.
+        /// Requests the media file at the specified index to be played.
         /// </summary>
-        /// <param name="shuffle">
-        /// Whether or not the result enumeration should be shuffled.
+        /// <param name="index">
+        /// The index of the media file in the playlist.
         /// </param>
-        /// <returns>
-        /// An enumeration of AudioMetadata representing this playlist.
-        /// </returns>
-        public IEnumerable<AudioMetadata> GetEntries(Boolean shuffle) {
-            DataTable table = MediaData.Clone();
-
-            if (shuffle) {
-                table.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
-
-                Random random = new Random();
-
-                for (int i = 0; i < table.Rows.Count; i += 1) {
-                    table.Rows[i]["RandomNum"] = random.Next(1, table.Rows.Count);
-                }
-
-                table.DefaultView.Sort = "RandomNum";
+        public void RequestMediaAt(Int32 index) {
+            if (MediaRequested != null) {
+                MediaRequested(MediaItems[index]);
             }
-
-            DataRow[] songs = MediaData.Select();
-
-            AudioMetadata[] output = new AudioMetadata[songs.Length];
-
-            for (int i = 0; i < output.Length; i += 1) {
-                output[i] = this.AudioMetadataFromRow(songs[i]);
-            }
-
-            return output;
         }
+
+        #region [ IEnumerable ]
+
+        public IEnumerator<MediaFile> GetEnumerator() {
+            return MediaItems.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return MediaItems.GetEnumerator();
+        }
+
+        #endregion
 
         #region [ Private ]
 
         /// <summary>
-        /// DataTable containing the metadata for each media file in this 
-        /// playlist.
+        /// The currently selected index in the playlist.
         /// </summary>
-        private DataTable MediaData { get; set; }
+        private Int32 SelectionIndex { get; set; }
 
         /// <summary>
         /// List of media files contained in this playlist.
         /// </summary>
-        private List<MediaFile> MediaList { get; set; }
+        private List<MediaFile> MediaItems { get; set; }
 
-        /// <summary>
-        /// Private helper method that creates a <see cref="DataRow"/> from
-        /// the specified MediaFile.
-        /// </summary>
-        /// <param name="media">
-        /// The media file for which the resulting data row should represent.
-        /// </param>
-        /// <returns>
-        /// DataRow representing the specified media file.
-        /// </returns>
-        private DataRow CreateRow(MediaFile media) {
-            DataRow row = MediaData.NewRow();
-            foreach (MediaProperty prop in media.Metadata) {
-                row[prop.Name] = prop.Value;
-            }
-
-            return row;
-        }
-
-        /// <summary>
-        /// Private helper that returns an AudioMetadata structure that the
-        /// specified data row represents.
-        /// </summary>
-        /// <param name="row">
-        /// The data row containing the audio metdata that is to be returned.
-        /// </param>
-        /// <returns>
-        /// Audio metadata structure representing the specified row.
-        /// </returns>
-        private AudioMetadata AudioMetadataFromRow(DataRow row) {
-            return new AudioMetadata() {
-                Artist = (String)row["Artist"],
-                Title = (String)row["Title"],
-                Album = (String)row["Album"],
-                Codec = (String)row["Codec"],
-                Path = (String)row["Path"],
-                TrackNumber = (int)row["TrackNumber"],
-                Year = (int)row["Year"],
-                Channels = (int)row["Channels"],
-                SampleRate = (int)row["SampleRate"],
-                BitRate = (int)row["BitRate"],
-                Duration = (TimeSpan)row["Duration"],
-            };
-        }
-        
         #endregion    
-         
-        #region [ IEnumerable ]
-
-        public IEnumerator<MediaFile> GetEnumerator() {
-            return MediaList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-            return MediaList.GetEnumerator();
-        } 
-
-        #endregion
+     
     }
 
 }

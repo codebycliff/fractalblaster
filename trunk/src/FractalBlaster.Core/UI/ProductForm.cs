@@ -13,20 +13,21 @@ using System.IO;
 namespace FractalBlaster.Core.UI {
     public partial class ProductForm : Form {
 
-        public TabPage QueueTab { get; private set; }
-        public List<PlaylistControl> PlaylistViews { get; private set; }
-
-
-
         public ProductForm() {
             InitializeComponent();
-            Views = new List<Form>();
-            QueueTab = mPlaylistTabControl.TabPages[0];
-            PlaylistViews = new List<PlaylistControl>();
-            PlaylistControl pc = new PlaylistControl();
-            pc.Dock = DockStyle.Fill;
-            QueueTab.Controls.Add(pc);
-            PlaylistViews.Add(pc);
+
+            PluginViews = new List<Form>();
+            PlaylistPluginMap = new Dictionary<String, IPlaylistPlugin>();
+            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
+                foreach (String f in plugin.SupportedFileExtensions) {
+                    PlaylistPluginMap.Add(f, plugin);
+                }
+            }
+
+            PlaylistControl control = CreatePlaylistControl(new Playlist());
+            mPlaylistTabControl.TabPages[0].Tag = control;
+            mPlaylistTabControl.TabPages[0].Controls.Add(control);
+                       
         }
 
         public void AddViewPlugin(IViewPlugin view) {
@@ -34,7 +35,7 @@ namespace FractalBlaster.Core.UI {
             ToolStripMenuItem item = new ToolStripMenuItem(view.GetInfo().Name);
             item.CheckOnClick = true;
             Form form = view.UserInterface;
-            Views.Add(form);
+            PluginViews.Add(form);
             item.CheckedChanged += (o, e) => {
                 ToolStripMenuItem viewItem = o as ToolStripMenuItem;
                 if(viewItem.Checked) {
@@ -46,72 +47,94 @@ namespace FractalBlaster.Core.UI {
             };
             mViewsMenu.DropDownItems.Add(item);
         }
+        
+        #region  [ Private ]
 
-        private void ProductForm_FormClosing(object sender, FormClosingEventArgs e) {
-            foreach (Form f in Views) {
+        private void PlaySelectedSong(object sender, EventArgs args) {
+            MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);
+            FamilyKernel.Instance.Context.Engine.Load(media);
+            FamilyKernel.Instance.Context.Engine.OutputPlugin.Play();
+        }
+
+        private void OpenPlaylist(object sender, EventArgs args) {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = GetFilterString();
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                FileInfo f = new FileInfo(ofd.FileName);
+                IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                CurrentPlaylistControl.Playlist = CreatePlaylist(plugin.Read(f.FullName));
+            }
+        }
+
+        private void ExitApplication(object sender, EventArgs args) {
+            foreach (Form f in PluginViews) {
                 f.Close();
             }
-        }
-
-        private void ProductForm_FormClosed(object sender, FormClosedEventArgs e) {
+            Application.ExitThread();
             Application.Exit();
         }
 
-        private void openPlaylistToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenPlaylist();
-        }
-
-        private List<Form> Views { get; set; }
-
-        private void toolStripButton6_Click(object sender, EventArgs e) {
-            ExitApplication();
-        }
-
-        private void mFileMenuExitItem_Click(object sender, EventArgs e) {
-            ExitApplication();
-        }
-
-        private void OpenPlaylist() {
-            Dictionary<String, IPlaylistPlugin> pluginMap = new Dictionary<String, IPlaylistPlugin>();
-            String filter = "";
-            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
-                foreach (String f in plugin.SupportedFileExtensions) {
-                    pluginMap.Add(f, plugin);
-                    filter += String.Format("Playlists (*{0})|*{0}", f);
+        private String GetFilterString() {
+            if (PlaylistFilterString == null) {
+                IEnumerable<String> extensions = PlaylistPluginMap.Keys;
+                String extensionFilters = "";
+                foreach (String extension in extensions) {
+                    extensionFilters += String.Format("*{0} ", extension);
                 }
+                PlaylistFilterString = String.Format("Playlists ({0}) | {0}", extensionFilters.Remove(extensionFilters.Length - 1));
             }
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = filter;
-            DialogResult result = ofd.ShowDialog();
-            if (result == DialogResult.OK) {
-                FileInfo f = new FileInfo(ofd.FileName);
-                IPlaylistPlugin plugin = pluginMap[f.Extension];
-                Playlist playlist = plugin.Read(f.FullName);
-                PlaylistViews.First().Playlist = playlist;
+            return PlaylistFilterString;
+        }
+
+        private Playlist CreatePlaylist(Playlist playlist = null) {
+            if (playlist == null) {
+                playlist = new Playlist();
+            }
+            playlist.SelectedChanged += (o, ea) => {
+                if (playlist.SelectedIndex <= playlist.Items.Count() - 1) {
+                    MediaFile media = playlist.Items.ElementAt(playlist.SelectedIndex);
+                    if (media != null) {
+                        mCurrentSelectedMediaLabel.Text = String.Format("{0} - {1}",
+                        media.Metadata["Artist"].Value.ToString(),
+                        media.Metadata["Title"].Value.ToString());
+                    }
+                }
+            };
+            playlist.MediaRequested += m => {
+                FamilyKernel.Instance.Context.Engine.Load(m);
+                FamilyKernel.Instance.Context.Engine.OutputPlugin.Play();
+            };
+            return playlist;
+        }
+
+        private PlaylistControl CreatePlaylistControl(Playlist p) {
+            PlaylistControl pc = new PlaylistControl();
+            pc.Playlist = p;
+            pc.Dock = DockStyle.Fill;
+            return pc;
+        }
+
+        private TabPage CreateNewPlaylistTab(Playlist playlist = null) {
+            PlaylistControl pc = CreatePlaylistControl(CreatePlaylist(playlist));
+            TabPage tab = new TabPage(String.Format("New {0}", mPlaylistTabControl.TabCount));
+            tab.Tag = pc;
+            tab.Controls.Add(pc);
+            return tab;
+        }
+
+        private void AddNewPlaylistTab(object sender, EventArgs args) {
+            mPlaylistTabControl.TabPages.Add(CreateNewPlaylistTab());
+        }
+
+        private List<Form> PluginViews { get; set; }
+        private Dictionary<String, IPlaylistPlugin> PlaylistPluginMap { get; set; }
+        private String PlaylistFilterString { get; set; }
+        private PlaylistControl CurrentPlaylistControl {
+            get {
+                return mPlaylistTabControl.SelectedTab.Tag as PlaylistControl;
             }
         }
-        private void ExitApplication() {
-            this.Close();
-            Application.Exit();
-        }
-
-        private void openPlaylistToolStripMenuItem1_Click(object sender, EventArgs e) {
-            OpenPlaylist();
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e) {
-            OpenPlaylist();
-        }
-
-        private void PlaySelectedSong() {
-            MediaFile media = PlaylistViews.First().SelectedMediaFile;
-            IEngine engine = FamilyKernel.Instance.Context.Engine;
-            engine.Load(media);
-            engine.OutputPlugin.Play();
-        }
-
-        private void toolStripButton8_Click(object sender, EventArgs e) {
-
-        }
+        
+        #endregion
     }
 }

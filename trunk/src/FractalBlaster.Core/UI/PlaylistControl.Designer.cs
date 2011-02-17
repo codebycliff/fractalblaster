@@ -45,6 +45,8 @@
             this.mPlaylistGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mPlaylistGridView.Size = new System.Drawing.Size(344, 269);
             this.mPlaylistGridView.TabIndex = 0;
+            this.mPlaylistGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mPlaylistGridView_CellMouseDoubleClick);
+            this.mPlaylistGridView.SelectionChanged += new System.EventHandler(this.mPlaylistGridView_SelectionChanged);
             // 
             // Title
             // 

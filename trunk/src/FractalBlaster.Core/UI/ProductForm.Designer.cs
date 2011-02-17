@@ -48,15 +48,18 @@
             this.mExitToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
+            this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mAudioControlToolBar = new System.Windows.Forms.ToolStrip();
             this.mPlayToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mStopToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mPauseToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipBackwardToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipForwardToolBarButton = new System.Windows.Forms.ToolStripButton();
+            this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mPlaylistTabControl.SuspendLayout();
+            this.mStatusStrip.SuspendLayout();
             this.mAudioControlToolBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,7 +72,7 @@
             this.mHelpMenu});
             this.mMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mMenuStrip.Name = "mMenuStrip";
-            this.mMenuStrip.Size = new System.Drawing.Size(287, 24);
+            this.mMenuStrip.Size = new System.Drawing.Size(318, 24);
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             // 
@@ -102,7 +105,7 @@
             this.mOpenPlaylistMenuItem.Name = "mOpenPlaylistMenuItem";
             this.mOpenPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mOpenPlaylistMenuItem.Text = "Open Playlist...";
-            this.mOpenPlaylistMenuItem.Click += new System.EventHandler(this.openPlaylistToolStripMenuItem_Click);
+            this.mOpenPlaylistMenuItem.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // toolStripSeparator2
             // 
@@ -146,7 +149,7 @@
             this.mExitMenuItem.Name = "mExitMenuItem";
             this.mExitMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mExitMenuItem.Text = "Exit";
-            this.mExitMenuItem.Click += new System.EventHandler(this.mFileMenuExitItem_Click);
+            this.mExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
             // mViewsMenu
             // 
@@ -194,7 +197,7 @@
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 24);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(287, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(318, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             // 
@@ -214,7 +217,7 @@
             this.mOpenPlaylistToolBarButton.Name = "mOpenPlaylistToolBarButton";
             this.mOpenPlaylistToolBarButton.Size = new System.Drawing.Size(152, 22);
             this.mOpenPlaylistToolBarButton.Text = "Open Playlist...";
-            this.mOpenPlaylistToolBarButton.Click += new System.EventHandler(this.openPlaylistToolStripMenuItem1_Click);
+            this.mOpenPlaylistToolBarButton.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // mNewToolBarButton
             // 
@@ -224,6 +227,7 @@
             this.mNewToolBarButton.Name = "mNewToolBarButton";
             this.mNewToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mNewToolBarButton.Text = "toolStripButton9";
+            this.mNewToolBarButton.Click += new System.EventHandler(this.AddNewPlaylistTab);
             // 
             // mSaveToolBarButton
             // 
@@ -242,7 +246,6 @@
             this.mConfigureToolBarButton.Name = "mConfigureToolBarButton";
             this.mConfigureToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mConfigureToolBarButton.Text = "toolStripButton8";
-            this.mConfigureToolBarButton.Click += new System.EventHandler(this.toolStripButton8_Click);
             // 
             // mExitToolBarButton
             // 
@@ -252,14 +255,14 @@
             this.mExitToolBarButton.Name = "mExitToolBarButton";
             this.mExitToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mExitToolBarButton.Text = "toolStripButton6";
-            this.mExitToolBarButton.Click += new System.EventHandler(this.toolStripButton6_Click);
+            this.mExitToolBarButton.Click += new System.EventHandler(this.ExitApplication);
             // 
             // tabPage1
             // 
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(279, 156);
+            this.tabPage1.Size = new System.Drawing.Size(310, 201);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Queue";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -273,8 +276,18 @@
             this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 82);
             this.mPlaylistTabControl.Name = "mPlaylistTabControl";
             this.mPlaylistTabControl.SelectedIndex = 0;
-            this.mPlaylistTabControl.Size = new System.Drawing.Size(287, 182);
+            this.mPlaylistTabControl.Size = new System.Drawing.Size(318, 227);
             this.mPlaylistTabControl.TabIndex = 3;
+            // 
+            // mStatusStrip
+            // 
+            this.mStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mCurrentSelectedMediaLabel});
+            this.mStatusStrip.Location = new System.Drawing.Point(0, 345);
+            this.mStatusStrip.Name = "mStatusStrip";
+            this.mStatusStrip.Size = new System.Drawing.Size(318, 22);
+            this.mStatusStrip.TabIndex = 5;
+            this.mStatusStrip.Text = "statusStrip1";
             // 
             // mAudioControlToolBar
             // 
@@ -286,10 +299,10 @@
             this.mPauseToolBarButton,
             this.mSkipBackwardToolBarButton,
             this.mSkipForwardToolBarButton});
-            this.mAudioControlToolBar.Location = new System.Drawing.Point(0, 267);
+            this.mAudioControlToolBar.Location = new System.Drawing.Point(0, 290);
             this.mAudioControlToolBar.Name = "mAudioControlToolBar";
-            this.mAudioControlToolBar.Size = new System.Drawing.Size(287, 55);
-            this.mAudioControlToolBar.TabIndex = 4;
+            this.mAudioControlToolBar.Size = new System.Drawing.Size(318, 55);
+            this.mAudioControlToolBar.TabIndex = 6;
             this.mAudioControlToolBar.Text = "toolStrip1";
             // 
             // mPlayToolBarButton
@@ -337,25 +350,33 @@
             this.mSkipForwardToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mSkipForwardToolBarButton.Text = "toolStripButton5";
             // 
+            // mCurrentSelectedMediaLabel
+            // 
+            this.mCurrentSelectedMediaLabel.Name = "mCurrentSelectedMediaLabel";
+            this.mCurrentSelectedMediaLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 322);
+            this.ClientSize = new System.Drawing.Size(318, 367);
             this.Controls.Add(this.mAudioControlToolBar);
+            this.Controls.Add(this.mStatusStrip);
             this.Controls.Add(this.mPlaylistTabControl);
             this.Controls.Add(this.mStandardToolBar);
             this.Controls.Add(this.mMenuStrip);
             this.MainMenuStrip = this.mMenuStrip;
             this.Name = "ProductForm";
             this.Text = "ProductForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductForm_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProductForm_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExitApplication);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ExitApplication);
             this.mMenuStrip.ResumeLayout(false);
             this.mMenuStrip.PerformLayout();
             this.mStandardToolBar.ResumeLayout(false);
             this.mStandardToolBar.PerformLayout();
             this.mPlaylistTabControl.ResumeLayout(false);
+            this.mStatusStrip.ResumeLayout(false);
+            this.mStatusStrip.PerformLayout();
             this.mAudioControlToolBar.ResumeLayout(false);
             this.mAudioControlToolBar.PerformLayout();
             this.ResumeLayout(false);
@@ -384,17 +405,19 @@
         private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mEffectsMenu;
         private System.Windows.Forms.ToolStripButton mNewToolBarButton;
-        private System.Windows.Forms.ToolStrip mAudioControlToolBar;
         private System.Windows.Forms.ToolStripButton mConfigureToolBarButton;
-        private System.Windows.Forms.ToolStripButton mPlayToolBarButton;
-        private System.Windows.Forms.ToolStripButton mStopToolBarButton;
-        private System.Windows.Forms.ToolStripButton mPauseToolBarButton;
-        private System.Windows.Forms.ToolStripButton mSkipBackwardToolBarButton;
-        private System.Windows.Forms.ToolStripButton mSkipForwardToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mNewPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mSaveMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mSaveAsMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.StatusStrip mStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel mCurrentSelectedMediaLabel;
+        private System.Windows.Forms.ToolStrip mAudioControlToolBar;
+        private System.Windows.Forms.ToolStripButton mPlayToolBarButton;
+        private System.Windows.Forms.ToolStripButton mStopToolBarButton;
+        private System.Windows.Forms.ToolStripButton mPauseToolBarButton;
+        private System.Windows.Forms.ToolStripButton mSkipBackwardToolBarButton;
+        private System.Windows.Forms.ToolStripButton mSkipForwardToolBarButton;
     }
 }
