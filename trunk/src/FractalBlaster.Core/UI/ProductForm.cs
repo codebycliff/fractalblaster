@@ -47,7 +47,19 @@ namespace FractalBlaster.Core.UI {
                     form.Hide();
                 }
             };
+            form.FormClosed += (o, ea) => {
+                item.CheckState = CheckState.Unchecked;
+            };
             mViewsMenu.DropDownItems.Add(item);
+        }
+
+        public void AddEffectPlugin(IEffectPlugin plugin) {
+            ToolStripMenuItem item = new ToolStripMenuItem(plugin.GetInfo().Name);
+            item.CheckOnClick = true;
+            item.CheckStateChanged += (o, ea) => {
+                plugin.Enabled = item.CheckState == CheckState.Checked ? true : false;
+            };
+            mEffectsMenu.DropDownItems.Add(item);
         }
         
         #region  [ Private ]

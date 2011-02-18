@@ -36,7 +36,9 @@ namespace FractalBlaster.Plugins.ChopperEffect {
         #endregion
         
         #region [ IEffectPlugin ]
-        
+
+        public Boolean Enabled { get; set; }
+
         public MemoryStream ProcessStream(MemoryStream stream) {
             long l = stream.Length;
             if (Effect != 0) {

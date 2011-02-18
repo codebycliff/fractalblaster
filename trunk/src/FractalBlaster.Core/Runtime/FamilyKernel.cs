@@ -38,15 +38,21 @@ namespace FractalBlaster.Core.Runtime {
             IsProductLoaded = true;
         }
 
-        public Form BuildProduct() {
+        public ApplicationContext BuildContext() {
             ProductForm form = new ProductForm();
             
             form.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
 
+            foreach(IEffectPlugin effect in Context.Plugins.OfType<IEffectPlugin>()) {
+                effect.Enabled = false;
+                form.AddEffectPlugin(effect);
+            }
+
             foreach (IViewPlugin v in Context.Plugins.OfType<IViewPlugin>()) {
                 form.AddViewPlugin(v);
             }
-            return form;
+
+            return new ApplicationContext(form);
         }
 
         #endregion

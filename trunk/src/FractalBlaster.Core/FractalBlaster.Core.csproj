@@ -59,12 +59,6 @@
     <Compile Include="UI\PlaylistControl.Designer.cs">
       <DependentUpon>PlaylistControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\PlaylistForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\PlaylistForm.Designer.cs">
-      <DependentUpon>PlaylistForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\ProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,9 +80,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PlaylistControl.resx">
       <DependentUpon>PlaylistControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\PlaylistForm.resx">
-      <DependentUpon>PlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ProductForm.resx">
       <DependentUpon>ProductForm.cs</DependentUpon>

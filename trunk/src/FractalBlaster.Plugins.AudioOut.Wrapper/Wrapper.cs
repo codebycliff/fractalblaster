@@ -75,22 +75,22 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
         #region [ Private ]
         
         private class AudioOut {
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern IntPtr WaveInterfaceInstance();
 
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern IntPtr ChangeOutputStream(IntPtr OutputStream);
 
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern IntPtr CreateOutputStream([MarshalAs(UnmanagedType.FunctionPtr)]BufferHandler bufferfill, [MarshalAs(UnmanagedType.FunctionPtr)]BufferSizeHandler buffersize, int channels);
 
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void Pause();
 
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void UnPause();
 
-            [DllImport("AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("FractalBlaster.Plugins.AudioOut.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern void Stop();
         }
 
@@ -109,7 +109,7 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
                 GC.Collect();
             }
 
-            Pcm = Engine.InputPlugin.ReadFrames(20);
+            Pcm = Context.Engine.InputPlugin.ReadFrames(20);
             
             if (Pcm == null) {
                 return IntPtr.Zero;
@@ -123,7 +123,6 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
             return p;
         }
 
-        private IEngine Engine { get; set; }
         private BufferSizeHandler BufferSize { get; set; }
         private BufferHandler Buffer { get; set; }
         private LinkedList<NativeBufferPair> NativeBuffers { get; set; }

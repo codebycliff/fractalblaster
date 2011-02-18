@@ -45,7 +45,7 @@ namespace FractalBlaster.Family {
 
             Application.EnableVisualStyles();
             FamilyRuntime.FamilyKernel.Instance.LoadProduct(product);
-            Application.Run(FamilyRuntime.FamilyKernel.Instance.BuildProduct());
+            Application.Run(FamilyRuntime.FamilyKernel.Instance.BuildContext());
         }
 
         private void mExpressGroupBox_MouseCaptureChanged(object sender, EventArgs e) {

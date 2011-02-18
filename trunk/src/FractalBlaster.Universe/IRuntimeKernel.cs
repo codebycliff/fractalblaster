@@ -14,7 +14,7 @@ namespace FractalBlaster.Universe {
 
         void LoadProduct(IProductModel model);
 
-        Form BuildProduct();
+        ApplicationContext BuildContext();
         
     }
 
