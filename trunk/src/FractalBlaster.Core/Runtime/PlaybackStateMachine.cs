@@ -19,9 +19,10 @@ namespace FractalBlaster.Core.Runtime {
 
         public PlaybackState State { get; private set; }
         
-        public PlaybackStateMachine(IOutputPlugin output) {
+        public PlaybackStateMachine(IOutputPlugin output, IInputPlugin input) {
             State = PlaybackState.Stopped;
             OutputStream = output;
+            InputController = input;
         }
         
         #region [ IOutputPlugin ]
@@ -83,6 +84,7 @@ namespace FractalBlaster.Core.Runtime {
                 case PlaybackState.Paused:
                 case PlaybackState.Playing:
                     OutputStream.Stop();
+                    InputController.SeekBeginning();
                     State = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Stopped:
@@ -101,6 +103,7 @@ namespace FractalBlaster.Core.Runtime {
         #region [ Private ]
 
         private IOutputPlugin OutputStream { get; set; }
+        private IInputPlugin InputController { get; set; }
         private AppContext Context { get; set; }
         
         #endregion

@@ -74,7 +74,7 @@ namespace FractalBlaster.Core.Runtime {
             
             InputPlugin = new EffectsProcessor(input);
             InputPlugin.Initialize(Context);
-            OutputPlugin = new PlaybackStateMachine(output);
+            OutputPlugin = new PlaybackStateMachine(output, input);
             OutputPlugin.Initialize(Context);
             
         }

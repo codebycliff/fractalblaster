@@ -106,6 +106,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             long newTimestamp = (long)(0 * FFMPEG.AV_TIME_BASE);
 
             if (FFMPEG.av_seek_frame(pFormatContext, -1, newTimestamp, flags) < 0) {
+                // Look into replacing with avformat_seek_file to seek to more locations
                 // Error?
             }
 

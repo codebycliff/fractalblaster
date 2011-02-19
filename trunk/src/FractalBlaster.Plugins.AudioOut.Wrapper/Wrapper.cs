@@ -55,7 +55,6 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
                 NativeBuffers.RemoveFirst();
                 GC.Collect();
             }
-            AudioOut.WaveInterfaceInstance();
         }
 
         public void Pause() {

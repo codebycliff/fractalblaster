@@ -66,14 +66,19 @@ namespace FractalBlaster.Core.UI {
 
         private void PlayMedia(object sender, EventArgs args) {
             MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);
-            if (Engine.IsMediaLoaded) {
-                if(Engine.CurrentMedia.Info.FullName.CompareTo(media.Info.FullName) != 0) {
-                    return;
+            if (Engine.IsMediaLoaded)
+            {
+                if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName))
+                {
+                    Engine.Unload();
                 }
-                Engine.Unload();
+                Engine.OutputPlugin.Play();
             }
-            Engine.Load(media);
-            Engine.OutputPlugin.Play();
+            else
+            {
+                Engine.Load(media);
+                Engine.OutputPlugin.Play();
+            }
         }
 
         private void PauseMedia(object sender, EventArgs args) {
