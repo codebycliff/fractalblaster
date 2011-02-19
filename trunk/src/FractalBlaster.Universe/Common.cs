@@ -38,7 +38,7 @@ namespace FractalBlaster.Universe {
     /// </summary>
     /// <param name="gc"></param>
     /// <returns></returns>
-    public delegate IntPtr BufferHandler(bool gc);
+    public delegate IntPtr BufferHandler(Boolean gc);
 
 
     #endregion

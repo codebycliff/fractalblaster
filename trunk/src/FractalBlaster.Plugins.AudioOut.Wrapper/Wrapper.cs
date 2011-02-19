@@ -108,7 +108,7 @@ namespace FractalBlaster.Plugins.AudioOut.Wrapper {
                 GC.Collect();
             }
 
-            Pcm = Context.Engine.InputPlugin.ReadFrames(20);
+            Pcm = Context.Engine.InputPlugin.ReadFrames(100);
             
             if (Pcm == null) {
                 return IntPtr.Zero;

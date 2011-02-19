@@ -30,8 +30,8 @@ namespace FractalBlaster.Core.Runtime {
             InputStream.CloseMedia();
         }
 
-        public void SeekBeginning() {
-            InputStream.SeekBeginning();
+        public void Seek(int seconds) {
+            InputStream.Seek(seconds);
         }
 
         public MemoryStream ReadFrames(int numFramesToRead) {

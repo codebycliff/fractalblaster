@@ -84,7 +84,7 @@ namespace FractalBlaster.Core.Runtime {
                 case PlaybackState.Paused:
                 case PlaybackState.Playing:
                     OutputStream.Stop();
-                    InputController.SeekBeginning();
+                    InputController.Seek(0);
                     State = PlaybackState.Stopped;
                     break;
                 case PlaybackState.Stopped:

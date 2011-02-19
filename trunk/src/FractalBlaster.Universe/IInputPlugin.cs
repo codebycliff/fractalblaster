@@ -22,11 +22,10 @@ namespace FractalBlaster.Universe {
         void CloseMedia();
         
         /// <summary>
-        /// Seeks to the beginning of the media file currently being inputted
-        /// or decoded by this input plugin.
+        /// Seeks to the location in the file specified by the number of seconds
         /// </summary>
-        void SeekBeginning();
-        
+        void Seek(Int32 Seconds);
+
         /// <summary>
         /// Reads or decodes the specified number of frames from the media file
         /// currently beining inputted / decoded and returns the frames as a 

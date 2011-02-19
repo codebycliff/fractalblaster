@@ -101,13 +101,14 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         
         #region [ IInputPlugin ]
 
-        public void SeekBeginning() {
-            int flags = FFMPEG.AVSEEK_FLAG_ANY | FFMPEG.AVSEEK_FLAG_BACKWARD;
-            long newTimestamp = (long)(0 * FFMPEG.AV_TIME_BASE);
+        public void Seek(int seconds)
+        {
+            Int64 AVSeekAmt = seconds * FFMPEG.AV_TIME_BASE;
+            int flags = FFMPEG.AVSEEK_FLAG_ANY;
 
-            if (FFMPEG.av_seek_frame(pFormatContext, -1, newTimestamp, flags) < 0) {
-                // Look into replacing with avformat_seek_file to seek to more locations
-                // Error?
+            if (FFMPEG.av_seek_frame(pFormatContext, -1, AVSeekAmt, flags) < 0)
+            {
+                // Error
             }
 
             FFMPEG.avcodec_flush_buffers(pAudioCodecContext);
