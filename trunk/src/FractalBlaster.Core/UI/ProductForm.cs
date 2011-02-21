@@ -66,7 +66,7 @@ namespace FractalBlaster.Core.UI {
         }
 
         public void AddPlaylistPlugin(IPlaylistPlugin plugin) {
-            ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} playlist...", plugin.GetInfo().Name));
+            ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} ...", plugin.GetInfo().Name));
             item.Click += new EventHandler(SavePlaylist);
             mSaveAsToolBarDropDown.DropDownItems.Add(item);
         }
