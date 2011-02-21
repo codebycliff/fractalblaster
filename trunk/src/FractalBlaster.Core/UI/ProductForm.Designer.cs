@@ -26,7 +26,6 @@
             this.mMenuStrip = new System.Windows.Forms.MenuStrip();
             this.mFileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mNewPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mOpenPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,27 +39,25 @@
             this.mTutorialsMenuDropDown = new System.Windows.Forms.ToolStripMenuItem();
             this.mTutorialsWritingPluginsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mStandardToolBar = new System.Windows.Forms.ToolStrip();
-            this.mOpenToolBarDropDown = new System.Windows.Forms.ToolStripSplitButton();
-            this.mOpenPlaylistToolBarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.mNewToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.mSaveToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.mConfigureToolBarButton = new System.Windows.Forms.ToolStripButton();
+            this.mOpenToolBarDropDown = new System.Windows.Forms.ToolStripSplitButton();
+            this.mSaveAsToolBarDropDown = new System.Windows.Forms.ToolStripSplitButton();
             this.mExitToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mAudioControlToolBar = new System.Windows.Forms.ToolStrip();
-            this.mPlayToolBarButton = new System.Windows.Forms.ToolStripButton();
+            this.mSkipForwardToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mStopToolBarButton = new System.Windows.Forms.ToolStripButton();
+            this.mPlayToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mPauseToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipBackwardToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.mSkipForwardToolBarButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mPlaylistTabControl.SuspendLayout();
             this.mStatusStrip.SuspendLayout();
-            this.mAudioControlToolBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // mMenuStrip
@@ -72,7 +69,7 @@
             this.mHelpMenu});
             this.mMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mMenuStrip.Name = "mMenuStrip";
-            this.mMenuStrip.Size = new System.Drawing.Size(318, 24);
+            this.mMenuStrip.Size = new System.Drawing.Size(523, 24);
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             // 
@@ -80,7 +77,6 @@
             // 
             this.mFileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mNewPlaylistMenuItem,
-            this.mOpenPlaylistMenuItem,
             this.toolStripSeparator2,
             this.mSaveMenuItem,
             this.mSaveAsMenuItem,
@@ -98,14 +94,6 @@
             this.mNewPlaylistMenuItem.Name = "mNewPlaylistMenuItem";
             this.mNewPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mNewPlaylistMenuItem.Text = "New Playlist";
-            // 
-            // mOpenPlaylistMenuItem
-            // 
-            this.mOpenPlaylistMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
-            this.mOpenPlaylistMenuItem.Name = "mOpenPlaylistMenuItem";
-            this.mOpenPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.mOpenPlaylistMenuItem.Text = "Open Playlist...";
-            this.mOpenPlaylistMenuItem.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // toolStripSeparator2
             // 
@@ -190,34 +178,22 @@
             // 
             this.mStandardToolBar.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.mStandardToolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mOpenToolBarDropDown,
             this.mNewToolBarButton,
-            this.mSaveToolBarButton,
-            this.mConfigureToolBarButton,
+            this.mOpenToolBarDropDown,
+            this.mSaveAsToolBarDropDown,
+            this.toolStripSeparator4,
+            this.mPlayToolBarButton,
+            this.mStopToolBarButton,
+            this.mPauseToolBarButton,
+            this.mSkipBackwardToolBarButton,
+            this.mSkipForwardToolBarButton,
+            this.toolStripSeparator5,
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 24);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(318, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(523, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
-            // 
-            // mOpenToolBarDropDown
-            // 
-            this.mOpenToolBarDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mOpenToolBarDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mOpenPlaylistToolBarButton});
-            this.mOpenToolBarDropDown.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
-            this.mOpenToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mOpenToolBarDropDown.Name = "mOpenToolBarDropDown";
-            this.mOpenToolBarDropDown.Size = new System.Drawing.Size(64, 52);
-            this.mOpenToolBarDropDown.Text = "toolStripSplitButton1";
-            // 
-            // mOpenPlaylistToolBarButton
-            // 
-            this.mOpenPlaylistToolBarButton.Name = "mOpenPlaylistToolBarButton";
-            this.mOpenPlaylistToolBarButton.Size = new System.Drawing.Size(152, 22);
-            this.mOpenPlaylistToolBarButton.Text = "Open Playlist...";
-            this.mOpenPlaylistToolBarButton.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // mNewToolBarButton
             // 
@@ -229,23 +205,23 @@
             this.mNewToolBarButton.Text = "toolStripButton9";
             this.mNewToolBarButton.Click += new System.EventHandler(this.AddNewPlaylistTab);
             // 
-            // mSaveToolBarButton
+            // mOpenToolBarDropDown
             // 
-            this.mSaveToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mSaveToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.document_save;
-            this.mSaveToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mSaveToolBarButton.Name = "mSaveToolBarButton";
-            this.mSaveToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mSaveToolBarButton.Text = "toolStripButton7";
+            this.mOpenToolBarDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mOpenToolBarDropDown.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
+            this.mOpenToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mOpenToolBarDropDown.Name = "mOpenToolBarDropDown";
+            this.mOpenToolBarDropDown.Size = new System.Drawing.Size(64, 52);
+            this.mOpenToolBarDropDown.Text = "toolStripSplitButton1";
             // 
-            // mConfigureToolBarButton
+            // mSaveAsToolBarDropDown
             // 
-            this.mConfigureToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mConfigureToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.configure;
-            this.mConfigureToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mConfigureToolBarButton.Name = "mConfigureToolBarButton";
-            this.mConfigureToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mConfigureToolBarButton.Text = "toolStripButton8";
+            this.mSaveAsToolBarDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mSaveAsToolBarDropDown.Image = global::FractalBlaster.Core.Properties.Resources.document_save_as;
+            this.mSaveAsToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mSaveAsToolBarDropDown.Name = "mSaveAsToolBarDropDown";
+            this.mSaveAsToolBarDropDown.Size = new System.Drawing.Size(64, 52);
+            this.mSaveAsToolBarDropDown.Text = "toolStripSplitButton1";
             // 
             // mExitToolBarButton
             // 
@@ -262,7 +238,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(310, 201);
+            this.tabPage1.Size = new System.Drawing.Size(515, 219);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Queue";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -276,16 +252,16 @@
             this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 82);
             this.mPlaylistTabControl.Name = "mPlaylistTabControl";
             this.mPlaylistTabControl.SelectedIndex = 0;
-            this.mPlaylistTabControl.Size = new System.Drawing.Size(318, 227);
+            this.mPlaylistTabControl.Size = new System.Drawing.Size(523, 245);
             this.mPlaylistTabControl.TabIndex = 3;
             // 
             // mStatusStrip
             // 
             this.mStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCurrentSelectedMediaLabel});
-            this.mStatusStrip.Location = new System.Drawing.Point(0, 345);
+            this.mStatusStrip.Location = new System.Drawing.Point(0, 330);
             this.mStatusStrip.Name = "mStatusStrip";
-            this.mStatusStrip.Size = new System.Drawing.Size(318, 22);
+            this.mStatusStrip.Size = new System.Drawing.Size(523, 22);
             this.mStatusStrip.TabIndex = 5;
             this.mStatusStrip.Text = "statusStrip1";
             // 
@@ -293,62 +269,6 @@
             // 
             this.mCurrentSelectedMediaLabel.Name = "mCurrentSelectedMediaLabel";
             this.mCurrentSelectedMediaLabel.Size = new System.Drawing.Size(0, 17);
-            // 
-            // mAudioControlToolBar
-            // 
-            this.mAudioControlToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.mAudioControlToolBar.ImageScalingSize = new System.Drawing.Size(48, 48);
-            this.mAudioControlToolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mPlayToolBarButton,
-            this.mStopToolBarButton,
-            this.mPauseToolBarButton,
-            this.mSkipBackwardToolBarButton,
-            this.mSkipForwardToolBarButton});
-            this.mAudioControlToolBar.Location = new System.Drawing.Point(0, 290);
-            this.mAudioControlToolBar.Name = "mAudioControlToolBar";
-            this.mAudioControlToolBar.Size = new System.Drawing.Size(318, 55);
-            this.mAudioControlToolBar.TabIndex = 6;
-            this.mAudioControlToolBar.Text = "toolStrip1";
-            // 
-            // mPlayToolBarButton
-            // 
-            this.mPlayToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mPlayToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_start;
-            this.mPlayToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mPlayToolBarButton.Name = "mPlayToolBarButton";
-            this.mPlayToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mPlayToolBarButton.Text = "toolStripButton1";
-            this.mPlayToolBarButton.Click += new System.EventHandler(this.PlayMedia);
-            // 
-            // mStopToolBarButton
-            // 
-            this.mStopToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mStopToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_stop;
-            this.mStopToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mStopToolBarButton.Name = "mStopToolBarButton";
-            this.mStopToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mStopToolBarButton.Text = "toolStripButton2";
-            this.mStopToolBarButton.Click += new System.EventHandler(this.StopMedia);
-            // 
-            // mPauseToolBarButton
-            // 
-            this.mPauseToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mPauseToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_pause;
-            this.mPauseToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mPauseToolBarButton.Name = "mPauseToolBarButton";
-            this.mPauseToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mPauseToolBarButton.Text = "toolStripButton3";
-            this.mPauseToolBarButton.Click += new System.EventHandler(this.PauseMedia);
-            // 
-            // mSkipBackwardToolBarButton
-            // 
-            this.mSkipBackwardToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mSkipBackwardToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_seek_backward;
-            this.mSkipBackwardToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mSkipBackwardToolBarButton.Name = "mSkipBackwardToolBarButton";
-            this.mSkipBackwardToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mSkipBackwardToolBarButton.Text = "toolStripButton4";
-            this.mSkipBackwardToolBarButton.Click += new System.EventHandler(this.SkipMediaBackward);
             // 
             // mSkipForwardToolBarButton
             // 
@@ -358,14 +278,58 @@
             this.mSkipForwardToolBarButton.Name = "mSkipForwardToolBarButton";
             this.mSkipForwardToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mSkipForwardToolBarButton.Text = "toolStripButton5";
-            this.mSkipForwardToolBarButton.Click += new System.EventHandler(this.SkipMediaForward);
+            // 
+            // mStopToolBarButton
+            // 
+            this.mStopToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mStopToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_stop;
+            this.mStopToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mStopToolBarButton.Name = "mStopToolBarButton";
+            this.mStopToolBarButton.Size = new System.Drawing.Size(52, 52);
+            this.mStopToolBarButton.Text = "toolStripButton2";
+            // 
+            // mPlayToolBarButton
+            // 
+            this.mPlayToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mPlayToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_start;
+            this.mPlayToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mPlayToolBarButton.Name = "mPlayToolBarButton";
+            this.mPlayToolBarButton.Size = new System.Drawing.Size(52, 52);
+            this.mPlayToolBarButton.Text = "toolStripButton1";
+            // 
+            // mPauseToolBarButton
+            // 
+            this.mPauseToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mPauseToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_playback_pause;
+            this.mPauseToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mPauseToolBarButton.Name = "mPauseToolBarButton";
+            this.mPauseToolBarButton.Size = new System.Drawing.Size(52, 52);
+            this.mPauseToolBarButton.Text = "toolStripButton3";
+            // 
+            // mSkipBackwardToolBarButton
+            // 
+            this.mSkipBackwardToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mSkipBackwardToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.media_seek_backward;
+            this.mSkipBackwardToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mSkipBackwardToolBarButton.Name = "mSkipBackwardToolBarButton";
+            this.mSkipBackwardToolBarButton.Size = new System.Drawing.Size(52, 52);
+            this.mSkipBackwardToolBarButton.Text = "toolStripButton4";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
             // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 367);
-            this.Controls.Add(this.mAudioControlToolBar);
+            this.ClientSize = new System.Drawing.Size(523, 352);
             this.Controls.Add(this.mStatusStrip);
             this.Controls.Add(this.mPlaylistTabControl);
             this.Controls.Add(this.mStandardToolBar);
@@ -382,8 +346,6 @@
             this.mPlaylistTabControl.ResumeLayout(false);
             this.mStatusStrip.ResumeLayout(false);
             this.mStatusStrip.PerformLayout();
-            this.mAudioControlToolBar.ResumeLayout(false);
-            this.mAudioControlToolBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,21 +358,17 @@
         private System.Windows.Forms.ToolStripMenuItem mExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mViewsMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelpMenu;
-        private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStrip mStandardToolBar;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl mPlaylistTabControl;
         private System.Windows.Forms.ToolStripSplitButton mOpenToolBarDropDown;
-        private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistToolBarButton;
         private System.Windows.Forms.ToolStripButton mExitToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mConfigureMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mTutorialsMenuDropDown;
         private System.Windows.Forms.ToolStripMenuItem mTutorialsWritingPluginsMenuItem;
-        private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mEffectsMenu;
         private System.Windows.Forms.ToolStripButton mNewToolBarButton;
-        private System.Windows.Forms.ToolStripButton mConfigureToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mNewPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mSaveMenuItem;
@@ -418,11 +376,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.StatusStrip mStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel mCurrentSelectedMediaLabel;
-        private System.Windows.Forms.ToolStrip mAudioControlToolBar;
+        private System.Windows.Forms.ToolStripSplitButton mSaveAsToolBarDropDown;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton mPlayToolBarButton;
         private System.Windows.Forms.ToolStripButton mStopToolBarButton;
         private System.Windows.Forms.ToolStripButton mPauseToolBarButton;
         private System.Windows.Forms.ToolStripButton mSkipBackwardToolBarButton;
         private System.Windows.Forms.ToolStripButton mSkipForwardToolBarButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }

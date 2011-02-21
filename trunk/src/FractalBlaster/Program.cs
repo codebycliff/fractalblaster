@@ -10,23 +10,39 @@ using FractalBlaster.Core;
 namespace FractalBlaster.Family {
 
     static class Program {
+
+        static IProductModel Product { get; set; }
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        static void Main(String[] args) {
 
             //BasicConfigurator.Configure();
             //FamilyRuntime.FamilyKernel.Log = log4net.LogManager.GetLogger(typeof(Program));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            FamilyKernel.Instance.LoadProduct(new Products.StandardProductModel());
+            Application.Run(ParseArguments(args));
+
+        }
+
+        static ApplicationContext ParseArguments(String[] args) {
+                
+            foreach (String arg in args) {
+                if (arg.CompareTo("--generator") == 0 || arg.CompareTo("-g") == 0) {
+                    ApplicationContext context = new ApplicationContext(new ProductSelectionForm());
+                    return context;
+                }
+            }
+
+            Product = new Products.StandardProductModel();
+            FamilyKernel.Instance.LoadProduct(Product);
             if (!FamilyKernel.Instance.IsProductLoaded) {
                 throw new Exception("Couldn't load product.");
             }
-            Application.Run(FamilyKernel.Instance.BuildContext());
-
+            return FamilyKernel.Instance.BuildContext();
         }
 
     }

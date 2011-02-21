@@ -29,7 +29,10 @@ namespace FractalBlaster.Core.UI {
             PlaylistControl control = CreatePlaylistControl();
             mPlaylistTabControl.TabPages[0].Tag = control;
             mPlaylistTabControl.TabPages[0].Controls.Add(control);
-                       
+
+            ToolStripMenuItem item = new ToolStripMenuItem("Open playlist...");
+            item.Click += new EventHandler(OpenPlaylist);
+            mOpenToolBarDropDown.DropDownItems.Add(item);           
         }
 
         public void AddViewPlugin(IViewPlugin view) {
@@ -61,7 +64,13 @@ namespace FractalBlaster.Core.UI {
             };
             mEffectsMenu.DropDownItems.Add(item);
         }
-        
+
+        public void AddPlaylistPlugin(IPlaylistPlugin plugin) {
+            ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} playlist...", plugin.GetInfo().Name));
+            item.Click += new EventHandler(SavePlaylist);
+            mSaveAsToolBarDropDown.DropDownItems.Add(item);
+        }
+
         #region  [ Private ]
 
         private void PlayMedia(object sender, EventArgs args) {
@@ -117,6 +126,16 @@ namespace FractalBlaster.Core.UI {
             }
         }
 
+        private void SavePlaylist(object sender, EventArgs args) {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = GetFilterString();
+            if (sfd.ShowDialog() == DialogResult.OK) {
+                FileInfo f = new FileInfo(sfd.FileName);
+                IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                plugin.Write(CurrentPlaylistControl.Playlist, f.FullName);
+            }
+        }
+
         private void ExitApplication(object sender, EventArgs args) {
             foreach (Form f in PluginViews) {
                 f.Close();
@@ -130,7 +149,7 @@ namespace FractalBlaster.Core.UI {
                 IEnumerable<String> extensions = PlaylistPluginMap.Keys;
                 String extensionFilters = "";
                 foreach (String extension in extensions) {
-                    extensionFilters += String.Format("*{0} ", extension);
+                    extensionFilters += String.Format("*{0};", extension);
                 }
                 PlaylistFilterString = String.Format("Playlists ({0}) | {0}", extensionFilters.Remove(extensionFilters.Length - 1));
             }

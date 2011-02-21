@@ -8,7 +8,7 @@ using System.IO;
 namespace FractalBlaster.Plugins.M3UPlaylist {
     
     [PluginAttribute(
-        Name="M3U Playlist Support", 
+        Name="M3U Playlist", 
         Description="Provides support for reading and writing the M3U Playlist file format",
         Author="Cliff Braton @ Fractal Blasters",
         Version="0.1beta"

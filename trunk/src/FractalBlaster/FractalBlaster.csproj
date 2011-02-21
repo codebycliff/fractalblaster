@@ -46,8 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Family\EnterpriseProductModel.cs" />
+    <Compile Include="Family\ExpressProductModel.cs" />
+    <Compile Include="Family\StandardProductModel.cs" />
+    <Compile Include="ProductSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductSelectionForm.Designer.cs">
+      <DependentUpon>ProductSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ProductSelectionForm.resx">
+      <DependentUpon>ProductSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,10 +84,6 @@
     <ProjectReference Include="..\FractalBlaster.Core\FractalBlaster.Core.csproj">
       <Project>{D57C564F-4ACC-4319-8D20-06285C9283B7}</Project>
       <Name>FractalBlaster.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FractalBlaster.Family\FractalBlaster.Family.csproj">
-      <Project>{AA6B47A2-E37A-42FE-B520-660FA4E779DD}</Project>
-      <Name>FractalBlaster.Family</Name>
     </ProjectReference>
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
       <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>

@@ -52,6 +52,10 @@ namespace FractalBlaster.Core.Runtime {
                 form.AddViewPlugin(v);
             }
 
+            foreach (IPlaylistPlugin p in Context.Plugins.OfType<IPlaylistPlugin>()) {
+                form.AddPlaylistPlugin(p);
+            }
+
             return new ApplicationContext(form);
         }
 

@@ -1,4 +1,4 @@
-﻿ namespace FractalBlaster {
+﻿ namespace FractalBlaster.Family {
     partial class ProductSelectionForm {
         /// <summary>
         /// Required designer variable.
