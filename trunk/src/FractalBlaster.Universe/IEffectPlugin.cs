@@ -20,7 +20,7 @@ namespace FractalBlaster.Universe {
         /// <param name="stream">
         /// Reference to the media file's input stream.
         /// </param>
-        MemoryStream ProcessStream(MemoryStream stream);
+        void ProcessStream(MemoryStream stream);
 
         /// <summary>
         /// Determines whether this effect is enabled.

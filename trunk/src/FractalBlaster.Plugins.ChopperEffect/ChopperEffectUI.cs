@@ -17,9 +17,9 @@ namespace FractalBlaster.Plugins.ChopperEffect
         Thread windowThread;
         Thread textThread;
         MemoryStream myStream;
-        bool bufferlock;
         String windowText;
         ChopperEffectPlugin rec;
+        Mutex bufferlock;
 
         public ChopperEffectUI()
         {
@@ -31,6 +31,7 @@ namespace FractalBlaster.Plugins.ChopperEffect
             textThread = new Thread(new ThreadStart(updateText));
             textThread.Start();
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
+            bufferlock = new Mutex();
         }
 
         public void setReciever(ChopperEffectPlugin r)
@@ -51,12 +52,12 @@ namespace FractalBlaster.Plugins.ChopperEffect
 
         public void lockBuffer()
         {
-            bufferlock = true;
+            bufferlock.WaitOne();
         }
 
         public void unlockBuffer()
         {
-            bufferlock = false;
+            bufferlock.ReleaseMutex();
         }
 
         public void addByte(byte b)
@@ -91,7 +92,7 @@ namespace FractalBlaster.Plugins.ChopperEffect
 
         private String getAudioData()
         {
-            if (bufferlock) return null;
+            bufferlock.WaitOne();
             byte[] byteArray = new byte[441];
             for (int i = 0; i < 441; i++)
             {
@@ -110,6 +111,7 @@ namespace FractalBlaster.Plugins.ChopperEffect
             {
                 s = s + "\r\n" + byteArray[i].ToString();
             }
+            bufferlock.ReleaseMutex();
             return s;
         }
 

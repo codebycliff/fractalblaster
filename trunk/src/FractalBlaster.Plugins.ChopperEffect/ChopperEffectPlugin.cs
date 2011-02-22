@@ -21,6 +21,7 @@ namespace FractalBlaster.Plugins.ChopperEffect {
 
         public ChopperEffectPlugin() {
             UI = new ChopperEffectUI();
+            UI.setReciever(this);
         }
         
         public void Initialize(AppContext context) {
@@ -39,7 +40,7 @@ namespace FractalBlaster.Plugins.ChopperEffect {
 
         public Boolean Enabled { get; set; }
 
-        public MemoryStream ProcessStream(MemoryStream stream) {
+        public void ProcessStream(MemoryStream stream) {
             long l = stream.Length;
             if (Effect != 0) {
                 for (int i = 0; i < l; i++) {
@@ -57,7 +58,6 @@ namespace FractalBlaster.Plugins.ChopperEffect {
             }
             UI.rewindBuffer();
             UI.unlockBuffer();
-            return stream;
         }
         
         #endregion
