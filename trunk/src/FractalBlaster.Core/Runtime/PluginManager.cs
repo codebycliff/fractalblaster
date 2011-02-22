@@ -8,12 +8,11 @@ using System.Reflection;
 
 namespace FractalBlaster.Core.Runtime {
 
-    static class PluginManager {
+    public static class PluginManager {
 
         static PluginManager() {
             mPlugins = new List<IPlugin>();
             SearchPaths = new List<String>() { "Plugins" };
-            LoadPlugins();
         }
 
         public static List<String> SearchPaths { get; private set; }
@@ -30,13 +29,16 @@ namespace FractalBlaster.Core.Runtime {
             ).AsEnumerable();
         }
 
-        #region [ Private ]
 
-        private static void LoadPlugins() {
+        public static void Refresh() {
+            mPlugins.Clear();
             foreach (String path in SearchPaths) {
                 mPlugins.AddRange(GetPluginsFromDirectory(new DirectoryInfo(path)));
             }
         }
+
+        #region [ Private ]
+
 
         private static List<IPlugin> GetPluginsFromDirectory(DirectoryInfo dir) {
             List<IPlugin> plugins = new List<IPlugin>();

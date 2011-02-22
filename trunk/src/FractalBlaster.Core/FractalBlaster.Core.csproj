@@ -53,6 +53,42 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\PlaybackStateMachine.cs" />
     <Compile Include="Runtime\PluginManager.cs" />
+    <Compile Include="UI\CollectionView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CollectionView.Designer.cs">
+      <DependentUpon>CollectionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ConfigurationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConfigurationDialog.Designer.cs">
+      <DependentUpon>ConfigurationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FileSystemCollectionView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\FileSystemCollectionView.Designer.cs">
+      <DependentUpon>FileSystemCollectionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FileSystemConfigurationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FileSystemConfigurationDialog.Designer.cs">
+      <DependentUpon>FileSystemConfigurationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LibraryCollectionView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\LibraryCollectionView.Designer.cs">
+      <DependentUpon>LibraryCollectionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LibraryConfigurationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\LibraryConfigurationDialog.Designer.cs">
+      <DependentUpon>LibraryConfigurationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\PlaylistControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +113,24 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CollectionView.resx">
+      <DependentUpon>CollectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfigurationDialog.resx">
+      <DependentUpon>ConfigurationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FileSystemCollectionView.resx">
+      <DependentUpon>FileSystemCollectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FileSystemConfigurationDialog.resx">
+      <DependentUpon>FileSystemConfigurationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LibraryCollectionView.resx">
+      <DependentUpon>LibraryCollectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LibraryConfigurationDialog.resx">
+      <DependentUpon>LibraryConfigurationDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PlaylistControl.resx">
       <DependentUpon>PlaylistControl.cs</DependentUpon>
@@ -1056,6 +1110,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\wallet-open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-list-icons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\code-variable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\configure-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-list-icons-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-list-text-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-list-tree-32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-refresh-32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

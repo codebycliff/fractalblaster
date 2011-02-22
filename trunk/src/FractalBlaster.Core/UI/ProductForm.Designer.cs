@@ -46,8 +46,6 @@
             this.mSaveToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mConfigureToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mExitToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mAudioControlToolBar = new System.Windows.Forms.ToolStrip();
@@ -57,11 +55,22 @@
             this.mSkipBackwardToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSkipForwardToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.mCollectionTabControl = new System.Windows.Forms.TabControl();
+            this.mLibraryCollectionTabPage = new System.Windows.Forms.TabPage();
+            this.mFileSystemCollectionTabPage = new System.Windows.Forms.TabPage();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
-            this.mPlaylistTabControl.SuspendLayout();
             this.mStatusStrip.SuspendLayout();
             this.mAudioControlToolBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.mPlaylistTabControl.SuspendLayout();
+            this.mCollectionTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mMenuStrip
@@ -266,35 +275,13 @@
             this.mExitToolBarButton.Text = "toolStripButton6";
             this.mExitToolBarButton.Click += new System.EventHandler(this.ExitApplication);
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(310, 199);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Queue";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // mPlaylistTabControl
-            // 
-            this.mPlaylistTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.mPlaylistTabControl.Controls.Add(this.tabPage1);
-            this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 109);
-            this.mPlaylistTabControl.Name = "mPlaylistTabControl";
-            this.mPlaylistTabControl.SelectedIndex = 0;
-            this.mPlaylistTabControl.Size = new System.Drawing.Size(318, 225);
-            this.mPlaylistTabControl.TabIndex = 3;
-            // 
             // mStatusStrip
             // 
             this.mStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCurrentSelectedMediaLabel});
-            this.mStatusStrip.Location = new System.Drawing.Point(0, 370);
+            this.mStatusStrip.Location = new System.Drawing.Point(0, 481);
             this.mStatusStrip.Name = "mStatusStrip";
-            this.mStatusStrip.Size = new System.Drawing.Size(318, 22);
+            this.mStatusStrip.Size = new System.Drawing.Size(620, 22);
             this.mStatusStrip.TabIndex = 5;
             this.mStatusStrip.Text = "statusStrip1";
             // 
@@ -313,9 +300,9 @@
             this.mPauseToolBarButton,
             this.mSkipBackwardToolBarButton,
             this.mSkipForwardToolBarButton});
-            this.mAudioControlToolBar.Location = new System.Drawing.Point(0, 315);
+            this.mAudioControlToolBar.Location = new System.Drawing.Point(0, 426);
             this.mAudioControlToolBar.Name = "mAudioControlToolBar";
-            this.mAudioControlToolBar.Size = new System.Drawing.Size(318, 55);
+            this.mAudioControlToolBar.Size = new System.Drawing.Size(620, 55);
             this.mAudioControlToolBar.TabIndex = 6;
             this.mAudioControlToolBar.Text = "toolStrip1";
             // 
@@ -372,26 +359,95 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Magneto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 19);
+            this.label1.Size = new System.Drawing.Size(229, 18);
             this.label1.TabIndex = 7;
             this.label1.Text = "Fractal Blasters Media Player";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
             this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseMove);
             this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseUp);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 109);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.mCollectionTabControl);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.mPlaylistTabControl);
+            this.splitContainer1.Size = new System.Drawing.Size(596, 314);
+            this.splitContainer1.SplitterDistance = 198;
+            this.splitContainer1.TabIndex = 8;
+            // 
+            // mPlaylistTabControl
+            // 
+            this.mPlaylistTabControl.Controls.Add(this.tabPage1);
+            this.mPlaylistTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 0);
+            this.mPlaylistTabControl.Name = "mPlaylistTabControl";
+            this.mPlaylistTabControl.SelectedIndex = 0;
+            this.mPlaylistTabControl.Size = new System.Drawing.Size(394, 314);
+            this.mPlaylistTabControl.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(386, 288);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Queue";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // mCollectionTabControl
+            // 
+            this.mCollectionTabControl.Controls.Add(this.mLibraryCollectionTabPage);
+            this.mCollectionTabControl.Controls.Add(this.mFileSystemCollectionTabPage);
+            this.mCollectionTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mCollectionTabControl.Location = new System.Drawing.Point(0, 0);
+            this.mCollectionTabControl.Name = "mCollectionTabControl";
+            this.mCollectionTabControl.SelectedIndex = 0;
+            this.mCollectionTabControl.Size = new System.Drawing.Size(198, 314);
+            this.mCollectionTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.mCollectionTabControl.TabIndex = 0;
+            // 
+            // mLibraryCollectionTabPage
+            // 
+            this.mLibraryCollectionTabPage.Location = new System.Drawing.Point(4, 22);
+            this.mLibraryCollectionTabPage.Name = "mLibraryCollectionTabPage";
+            this.mLibraryCollectionTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.mLibraryCollectionTabPage.Size = new System.Drawing.Size(151, 177);
+            this.mLibraryCollectionTabPage.TabIndex = 0;
+            this.mLibraryCollectionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // mFileSystemCollectionTabPage
+            // 
+            this.mFileSystemCollectionTabPage.Location = new System.Drawing.Point(4, 22);
+            this.mFileSystemCollectionTabPage.Name = "mFileSystemCollectionTabPage";
+            this.mFileSystemCollectionTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.mFileSystemCollectionTabPage.Size = new System.Drawing.Size(190, 288);
+            this.mFileSystemCollectionTabPage.TabIndex = 1;
+            this.mFileSystemCollectionTabPage.UseVisualStyleBackColor = true;
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 392);
+            this.ClientSize = new System.Drawing.Size(620, 503);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mAudioControlToolBar);
             this.Controls.Add(this.mStatusStrip);
-            this.Controls.Add(this.mPlaylistTabControl);
             this.Controls.Add(this.mStandardToolBar);
             this.Controls.Add(this.mMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -408,11 +464,16 @@
             this.mMenuStrip.PerformLayout();
             this.mStandardToolBar.ResumeLayout(false);
             this.mStandardToolBar.PerformLayout();
-            this.mPlaylistTabControl.ResumeLayout(false);
             this.mStatusStrip.ResumeLayout(false);
             this.mStatusStrip.PerformLayout();
             this.mAudioControlToolBar.ResumeLayout(false);
             this.mAudioControlToolBar.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.mPlaylistTabControl.ResumeLayout(false);
+            this.mCollectionTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,8 +489,6 @@
         private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStrip mStandardToolBar;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabControl mPlaylistTabControl;
         private System.Windows.Forms.ToolStripSplitButton mOpenToolBarDropDown;
         private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistToolBarButton;
         private System.Windows.Forms.ToolStripButton mExitToolBarButton;
@@ -454,5 +513,11 @@
         private System.Windows.Forms.ToolStripButton mSkipBackwardToolBarButton;
         private System.Windows.Forms.ToolStripButton mSkipForwardToolBarButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TabControl mCollectionTabControl;
+        private System.Windows.Forms.TabPage mLibraryCollectionTabPage;
+        private System.Windows.Forms.TabPage mFileSystemCollectionTabPage;
+        private System.Windows.Forms.TabControl mPlaylistTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }

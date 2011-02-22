@@ -14,7 +14,7 @@ namespace FractalBlaster.Universe {
     /// </remarks>
     public static class Extensions {
 
-        #region [ System.IO.Info ]
+        #region [ System.IO.FileInfo ]
 
         /// <summary>
         /// Extension method that determines whether an instance of <see 
@@ -29,6 +29,10 @@ namespace FractalBlaster.Universe {
         /// </returns>
         public static Boolean IsDll(this FileInfo file) {
             return file.Extension.ToLower().CompareTo("dll") == 0;
+        }
+
+        public static MediaFile CreateMediaFile(this FileInfo file) {
+            return new MediaFile(file.FullName);
         }
 
         #endregion

@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0B6DAF3-A24B-456E-AF80-CD346858520F}"
+	ProjectSection(SolutionItems) = preProject
+		FractalBlaster.vsmdi = FractalBlaster.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FractalBlaster.Plugins.AudioOut", "FractalBlaster.Plugins.AudioOut\FractalBlaster.Plugins.AudioOut.vcxproj", "{816E457D-3036-4212-BA8F-D29F60674161}"
 	ProjectSection(ProjectDependencies) = postProject

@@ -64,7 +64,8 @@ namespace FractalBlaster.Core.Runtime {
         #region [ Private ]
 
         private FamilyKernel() {
-            Context = new AppContext(); 
+            Context = new AppContext();
+            PluginManager.Refresh();
             Context.Plugins = PluginManager.AllPlugins;
             Context.DefaultPlugins = PluginManager.AllPlugins;
             Context.Settings = new AppSettingsReader();

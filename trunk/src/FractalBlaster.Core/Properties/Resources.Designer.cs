@@ -438,6 +438,13 @@ namespace FractalBlaster.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap configure_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("configure_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap dialog_cancel {
             get {
                 object obj = ResourceManager.GetObject("dialog_cancel", resourceCulture);
@@ -2076,23 +2083,51 @@ namespace FractalBlaster.Core.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap view_list_details {
+        internal static System.Drawing.Bitmap view_list_details_48x48 {
             get {
-                object obj = ResourceManager.GetObject("view_list_details", resourceCulture);
+                object obj = ResourceManager.GetObject("view_list_details_48x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap view_list_text {
+        internal static System.Drawing.Bitmap view_list_icons_32x32 {
             get {
-                object obj = ResourceManager.GetObject("view_list_text", resourceCulture);
+                object obj = ResourceManager.GetObject("view_list_icons_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap view_list_tree {
+        internal static System.Drawing.Bitmap view_list_icons_32x321 {
             get {
-                object obj = ResourceManager.GetObject("view_list_tree", resourceCulture);
+                object obj = ResourceManager.GetObject("view_list_icons_32x321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_list_text_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("view_list_text_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_list_text_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("view_list_text_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_list_tree_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("view_list_tree_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_list_tree_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("view_list_tree_48x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2146,9 +2181,16 @@ namespace FractalBlaster.Core.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap view_refresh {
+        internal static System.Drawing.Bitmap view_refresh_32x32 {
             get {
-                object obj = ResourceManager.GetObject("view_refresh", resourceCulture);
+                object obj = ResourceManager.GetObject("view_refresh_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap view_refresh_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("view_refresh_48x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

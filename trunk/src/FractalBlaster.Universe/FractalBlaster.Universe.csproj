@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="Library.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Playlist.cs" />

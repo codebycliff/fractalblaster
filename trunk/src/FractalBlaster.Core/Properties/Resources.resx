@@ -982,13 +982,13 @@
   <data name="view_left_close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-left-close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_list_details" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="view_list_details_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-list-details.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_list_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="view_list_text_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-list-text.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_list_tree" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="view_list_tree_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-list-tree.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_media_artist" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -1012,7 +1012,7 @@
   <data name="view_preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="view_refresh_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view-refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -1089,5 +1089,23 @@
   </data>
   <data name="zoom_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoom-out.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="configure_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\configure-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_list_icons_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-list-icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_list_icons_32x321" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-list-icons-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_list_text_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-list-text-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_list_tree_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-list-tree-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_refresh_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-refresh-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

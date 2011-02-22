@@ -41,6 +41,11 @@ namespace FractalBlaster.Core.UI {
         public PlaylistControl() {
             InitializeComponent();
             PlaylistData = new DataTable();
+            DragDrop += (sender, args) => {
+                if (sender is MediaFile) {
+                    Playlist.AddItem(sender as MediaFile);
+                }
+            };
         }
 
         public PlaylistControl(Playlist playlist) : this() {

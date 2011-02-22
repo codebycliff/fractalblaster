@@ -26,16 +26,16 @@ namespace FractalBlaster.Plugins.Taglib {
             
             TagLib.File file = TagLib.File.Create(media.Info.FullName);
             List<MediaProperty> props = new List<MediaProperty>();
-            props.Add(MediaProperty.Create("Album", file.Tag.Album, file.Tag.Album.GetType()));
-            props.Add(MediaProperty.Create("Artist", file.Tag.FirstPerformer, file.Tag.FirstPerformer.GetType()));
-            props.Add(MediaProperty.Create("BitRate", file.Properties.AudioBitrate, file.Properties.AudioBitrate.GetType()));
-            props.Add(MediaProperty.Create("Channels", file.Properties.AudioChannels, file.Properties.AudioChannels.GetType()));
-            props.Add(MediaProperty.Create("Codec", file.Properties.Codecs.First().Description, file.Properties.Codecs.First().Description.GetType()));
-            props.Add(MediaProperty.Create("Duration", file.Properties.Duration, file.Properties.Duration.GetType()));
-            props.Add(MediaProperty.Create("SampleRate", file.Properties.AudioSampleRate, file.Properties.AudioSampleRate.GetType()));
-            props.Add(MediaProperty.Create("Title", file.Tag.Title, file.Tag.Title.GetType()));
-            props.Add(MediaProperty.Create("Duration", (Int32)file.Tag.Track, typeof(Int32)));
-            props.Add(MediaProperty.Create("Duration", (Int32)file.Tag.Year, typeof(Int32)));
+            props.Add(MediaProperty.Create(Metadata.ALBUM, file.Tag.Album, file.Tag.Album.GetType()));
+            props.Add(MediaProperty.Create(Metadata.ARTIST, file.Tag.FirstPerformer, file.Tag.FirstPerformer.GetType()));
+            props.Add(MediaProperty.Create(Metadata.BITRATE, file.Properties.AudioBitrate, file.Properties.AudioBitrate.GetType()));
+            props.Add(MediaProperty.Create(Metadata.CHANNELS, file.Properties.AudioChannels, file.Properties.AudioChannels.GetType()));
+            props.Add(MediaProperty.Create(Metadata.CODEC, file.Properties.Codecs.First().Description, file.Properties.Codecs.First().Description.GetType()));
+            props.Add(MediaProperty.Create(Metadata.DURATION, file.Properties.Duration, file.Properties.Duration.GetType()));
+            props.Add(MediaProperty.Create(Metadata.SAMPLE_RATE, file.Properties.AudioSampleRate, file.Properties.AudioSampleRate.GetType()));
+            props.Add(MediaProperty.Create(Metadata.TITLE, file.Tag.Title, file.Tag.Title.GetType()));
+            props.Add(MediaProperty.Create(Metadata.TRACK, (Int32)file.Tag.Track, typeof(Int32)));
+            props.Add(MediaProperty.Create(Metadata.YEAR, (Int32)file.Tag.Year, typeof(Int32)));
 
             return props;
         }

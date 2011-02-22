@@ -32,13 +32,14 @@ namespace FractalBlaster.Core.UI {
 
             ToolStripMenuItem item = new ToolStripMenuItem("Open playlist...");
             item.Click += new EventHandler(OpenPlaylist);
-            mOpenToolBarDropDown.DropDownItems.Add(item);           
+            mOpenToolBarDropDown.DropDownItems.Add(item);
+
+            SetupCollectionTabs();
         }
 
         int newViewYOffset;
 
         public void AddViewPlugin(IViewPlugin view) {
-
 
             ToolStripMenuItem item = new ToolStripMenuItem(view.GetInfo().Name);
             item.CheckOnClick = true;
@@ -79,9 +80,23 @@ namespace FractalBlaster.Core.UI {
         public void AddPlaylistPlugin(IPlaylistPlugin plugin) {
             ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} ...", plugin.GetInfo().Name));
             item.Click += new EventHandler(SavePlaylist);
+            mSaveMenuItem.DropDownItems.Add(item);
         }
 
         #region  [ Private ]
+
+       private void SetupCollectionTabs() {
+            Library lib = Library.Load(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)));
+            LibraryCollectionView libraryView = new LibraryCollectionView(lib);
+            libraryView.Dock = DockStyle.Fill;
+            mLibraryCollectionTabPage.Controls.Add(libraryView);
+            mLibraryCollectionTabPage.Text = libraryView.Label;
+
+            FileSystemCollectionView fsView = new FileSystemCollectionView();
+            fsView.Dock = DockStyle.Fill;
+            mFileSystemCollectionTabPage.Controls.Add(fsView);
+            mFileSystemCollectionTabPage.Text = fsView.Label;
+        }
 
         private void PlayMedia(object sender, EventArgs args) {
             MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);

@@ -67,7 +67,7 @@ namespace FractalBlaster.Universe {
         /// </summary>
         public String Codec;
         /// <summary>
-        /// The track number with respect to the audio file's album.
+        /// The year number with respect to the audio file's album.
         /// </summary>
         public Int32 TrackNumber;
         /// <summary>
