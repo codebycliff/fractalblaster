@@ -36,6 +36,10 @@ namespace FractalBlaster.Core.Runtime {
 
         public MemoryStream ReadFrames(int numFramesToRead) {
             MemoryStream frames = InputStream.ReadFrames(numFramesToRead);
+            if (frames == null)
+            {
+                return null;
+            }
             foreach (IEffectPlugin effect in Effects.Where(e=>e.Enabled)) {
                 frames.Seek(0, 0);
                 effect.ProcessStream(frames);
