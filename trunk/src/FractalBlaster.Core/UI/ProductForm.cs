@@ -35,16 +35,27 @@ namespace FractalBlaster.Core.UI {
             mOpenToolBarDropDown.DropDownItems.Add(item);           
         }
 
+        int newViewYOffset;
+
         public void AddViewPlugin(IViewPlugin view) {
-            
+
+
             ToolStripMenuItem item = new ToolStripMenuItem(view.GetInfo().Name);
             item.CheckOnClick = true;
             Form form = view.UserInterface;
             PluginViews.Add(form);
+            form.Owner = this;
             item.CheckedChanged += (o, e) => {
                 ToolStripMenuItem viewItem = o as ToolStripMenuItem;
                 if(viewItem.Checked) {
                     form.Show();
+                    if (form.Location.IsEmpty)
+                    {
+                        Point nextLocation = this.Location;
+                        nextLocation.Offset(this.Width, newViewYOffset);
+                        newViewYOffset += form.Height;
+                        form.Location = nextLocation;
+                    }
                 }
                 else {
                     form.Hide();
@@ -68,7 +79,6 @@ namespace FractalBlaster.Core.UI {
         public void AddPlaylistPlugin(IPlaylistPlugin plugin) {
             ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} ...", plugin.GetInfo().Name));
             item.Click += new EventHandler(SavePlaylist);
-            mSaveAsToolBarDropDown.DropDownItems.Add(item);
         }
 
         #region  [ Private ]
@@ -199,7 +209,6 @@ namespace FractalBlaster.Core.UI {
             mPlaylistTabControl.TabPages.Add(CreateNewPlaylistTab());
         }
 
-
         private AppContext Context { get; set; }
         private IEngine Engine { get; set; }
         private List<Form> PluginViews { get; set; }
@@ -211,6 +220,47 @@ namespace FractalBlaster.Core.UI {
             }
         }
         
+        Point mouse_offset;
+        List<Point> window_offset = new List<Point>();
+        bool mouseDown = false;
+
+        private void ProductForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            mouse_offset = new Point(-e.X, -e.Y);
+            window_offset = new List<Point>();
+            for (int i = 0; i < OwnedForms.Length; i++)
+            {
+                Point subwindowLocation = OwnedForms.ElementAt(i).Location;
+                window_offset.Insert(i, new Point(subwindowLocation.X - this.Location.X, subwindowLocation.Y - this.Location.Y));
+            }
+        }
+
+        private void ProductForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouse_offset);
+                for (int i = 0; i < OwnedForms.Length; i++)
+                {
+                    if (!OwnedForms.ElementAt(i).Location.IsEmpty)
+                    {
+                        Point subwindowPos = Control.MousePosition;
+                        subwindowPos.Offset(mouse_offset);
+                        subwindowPos.Offset(window_offset.ElementAt(i));
+                        OwnedForms.ElementAt(i).Location = subwindowPos;
+                    }
+                }
+                this.Location = mousePos;
+            }
+        }
+
+        private void ProductForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
         #endregion
 
     }
