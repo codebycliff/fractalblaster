@@ -50,14 +50,6 @@ namespace FractalBlaster.Plugins.ChopperEffect {
                         stream.ReadByte();
                 }
             }
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
-            UI.lockBuffer();
-            UI.rewindBuffer();
-            for (int b = 0; b != -1; b = stream.ReadByte()) {
-                UI.addByte((byte)b);
-            }
-            UI.rewindBuffer();
-            UI.unlockBuffer();
         }
         
         #endregion
