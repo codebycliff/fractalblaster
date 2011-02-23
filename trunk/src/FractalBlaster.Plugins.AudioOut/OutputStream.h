@@ -1,19 +1,20 @@
 #ifndef OUTPUTSTREAM_H_
 #define OUTPUTSTREAM_H_
 
+using namespace FractalBlaster::Universe;
+
 #include "Windows.h"
 
-typedef char* (__stdcall *LOAD_BUFFER_FUNCTION)(int);  
-typedef int (__stdcall *LOAD_BUFFER_SIZE)();  
+//typedef char* (__stdcall *LOAD_BUFFER_FUNCTION)(bool);  
+//typedef int (__stdcall *LOAD_BUFFER_SIZE)();  
 
-class OutputStream
+ref class OutputStream
 {
 	public:
-		OutputStream(LOAD_BUFFER_FUNCTION, LOAD_BUFFER_SIZE, int);
+		OutputStream(FractalBlaster::Universe::BufferHandler^, FractalBlaster::Universe::BufferSizeHandler^, int);
 		~OutputStream();
 
 		char* LoadNextFrameSet(void);
-		static char* DeadStream(void); // Needed?
 
 		bool isStreamGood(void);
 		bool isDeviceBuffered(void);
@@ -27,8 +28,8 @@ class OutputStream
 		int BlocksLoaded;
 		char* BufferedFrameSet;
 
-		LOAD_BUFFER_FUNCTION loadfnc;
-		LOAD_BUFFER_SIZE loadsize;
+		FractalBlaster::Universe::BufferHandler^ loadfnc;
+		FractalBlaster::Universe::BufferSizeHandler^ loadsize;
 		
 };
 

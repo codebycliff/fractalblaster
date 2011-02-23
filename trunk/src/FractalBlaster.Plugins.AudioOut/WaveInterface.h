@@ -8,12 +8,12 @@
 
 enum PlaybackState {Playing, Paused, Stopped};
 
-class WaveInterface
+ref class WaveInterface
 {
 	
 	public:
-		static WaveInterface* WaveInterfaceInstance(void);
-		void ChangeStream(OutputStream* s);
+		static initonly WaveInterface^ instance = gcnew WaveInterface();
+		void ChangeStream(OutputStream^ s);
 		void BlockCompleted(void);
 
 		void Pause(void);
@@ -29,7 +29,7 @@ class WaveInterface
 		LPHWAVEOUT StereoOutputDevice;
 		LPHWAVEOUT MonoOutputDevice;
 
-		OutputStream* currentStream;
+		OutputStream^ currentStream;
 
 		WAVEHDR* Playing;
 		WAVEHDR* Queued;

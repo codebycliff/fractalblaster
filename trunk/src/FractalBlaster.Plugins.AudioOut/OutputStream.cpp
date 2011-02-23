@@ -1,6 +1,6 @@
 #include "OutputStream.h"
 
-OutputStream::OutputStream(LOAD_BUFFER_FUNCTION loadfnc, LOAD_BUFFER_SIZE loadsize, int channels)
+OutputStream::OutputStream(FractalBlaster::Universe::BufferHandler^ loadfnc,FractalBlaster::Universe::BufferSizeHandler^ loadsize, int channels)
 {
 	this->loadfnc = loadfnc;
 	this->loadsize = loadsize;
@@ -11,17 +11,10 @@ OutputStream::OutputStream(LOAD_BUFFER_FUNCTION loadfnc, LOAD_BUFFER_SIZE loadsi
 }
 char* OutputStream::LoadNextFrameSet()
 {
-	BufferedFrameSet = loadfnc(isDeviceBuffered());
-	BufferedFrameSize = loadsize();
+	BufferedFrameSet = (char*)loadfnc->Invoke(isDeviceBuffered()).ToPointer();
+	BufferedFrameSize = loadsize->Invoke();
 	BlocksLoaded++;
 	return BufferedFrameSet;
-}
-char* OutputStream::DeadStream()
-{
-	// This shouldn't leak any memory...
-	static char* DeadBuffer = new char[44100*2*2*60];
-	ZeroMemory(DeadBuffer, 44100*2*2*60);
-	return DeadBuffer;
 }
 
 OutputStream::~OutputStream()

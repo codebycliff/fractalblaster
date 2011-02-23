@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Tagl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.ChopperEffect", "FractalBlaster.Plugins.ChopperEffect\FractalBlaster.Plugins.ChopperEffect.csproj", "{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.AudioOut.Wrapper", "FractalBlaster.Plugins.AudioOut.Wrapper\FractalBlaster.Plugins.AudioOut.Wrapper.csproj", "{A712BA55-C338-4184-93B2-406771FCA169}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster", "FractalBlaster\FractalBlaster.csproj", "{A1FC4551-1E32-4143-8738-61A182716337}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.AvailablePluginsView", "FractalBlaster.Plugins.AvailablePluginsView\FractalBlaster.Plugins.AvailablePluginsView.csproj", "{A7733353-4B4B-4C27-B0C3-948A70A25414}"
@@ -31,6 +29,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.WaveView", "FractalBlaster.Plugins.WaveView\FractalBlaster.Plugins.WaveView.csproj", "{58528E6F-BFEB-4CC4-9CBA-04869D1B8454}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -114,18 +116,6 @@ Global
 		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|Win32.ActiveCfg = Release|x86
 		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|x86.ActiveCfg = Release|x86
 		{20BE2654-A5C5-41E0-A7F5-56844CCA93A2}.Release|x86.Build.0 = Release|x86
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|Win32.ActiveCfg = Release|Any CPU
-		{A712BA55-C338-4184-93B2-406771FCA169}.Release|x86.ActiveCfg = Release|Any CPU
 		{A1FC4551-1E32-4143-8738-61A182716337}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{A1FC4551-1E32-4143-8738-61A182716337}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -189,9 +179,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

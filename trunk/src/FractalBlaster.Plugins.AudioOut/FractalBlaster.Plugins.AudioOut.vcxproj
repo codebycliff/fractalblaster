@@ -21,12 +21,14 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -40,11 +42,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\build\debug\bin\Plugins</OutDir>
-    <IntDir>..\build\debug\obj\Plugins</IntDir>
+    <IntDir>..\build\debug\bin\Plugins</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\bin\Release\</OutDir>
-    <IntDir>..\..\obj\AudioOut</IntDir>
+    <OutDir>..\build\debug\bin\Plugins</OutDir>
+    <IntDir>..\build\debug\bin\Plugins</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -73,14 +75,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ExternalInterface.cpp" />
+    <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="OutputStream.cpp" />
     <ClCompile Include="WaveInterface.cpp" />
+    <ClCompile Include="Wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ExternalInterface.h" />
+    <ClInclude Include="Callbacks.h" />
     <ClInclude Include="OutputStream.h" />
     <ClInclude Include="WaveInterface.h" />
+    <ClInclude Include="Wrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
+      <Project>{055bd7f9-7075-4acb-aceb-410cb496c0f2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

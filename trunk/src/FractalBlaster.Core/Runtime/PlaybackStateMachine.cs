@@ -56,7 +56,7 @@ namespace FractalBlaster.Core.Runtime {
         }
 
         public void Pause() {
-            if (Context.Engine.IsMediaLoaded) {
+            if (!Context.Engine.IsMediaLoaded) {
                 //FamilyKernel.Log.Info("Attempt to Play in the PlaybackStateMachine without Engine being loaded with media.");
                 return;
             }
