@@ -161,9 +161,22 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
         public void CloseMedia() {
             //FractalBlaster.Plugins.Decoder.FFMPEG.av_freep(pAudioStream);
-            //FractalBlaster.Plugins.Decoder.FFMPEG.avcodec_close(pAudioCodecContext);
-
+            FFMPEG.avcodec_close(pAudioCodecContext);
             FFMPEG.av_close_input_file(pFormatContext);
+
+            audioCodecContext = new FFMPEG.AVCodecContext();
+            formatContext = new FFMPEG.AVFormatContext();
+
+            pAudioStream = IntPtr.Zero;
+            pAudioCodec = IntPtr.Zero;
+            pAudioCodecContext = IntPtr.Zero;
+            pFormatContext = IntPtr.Zero;
+
+            audioStartIndex = -1;
+
+            CurrentFrameNumber = -1;
+            SampleSize = -1;
+
         }
 
         public MemoryStream ReadFrames(int numFramesToRead) {

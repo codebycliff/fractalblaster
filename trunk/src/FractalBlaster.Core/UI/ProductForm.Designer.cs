@@ -212,7 +212,7 @@
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 51);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(284, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(315, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -415,7 +415,7 @@
             this.mFileSystemCollectionTabPage.Location = new System.Drawing.Point(4, 22);
             this.mFileSystemCollectionTabPage.Name = "mFileSystemCollectionTabPage";
             this.mFileSystemCollectionTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mFileSystemCollectionTabPage.Size = new System.Drawing.Size(190, 288);
+            this.mFileSystemCollectionTabPage.Size = new System.Drawing.Size(209, 288);
             this.mFileSystemCollectionTabPage.TabIndex = 1;
             this.mFileSystemCollectionTabPage.UseVisualStyleBackColor = true;
             // 

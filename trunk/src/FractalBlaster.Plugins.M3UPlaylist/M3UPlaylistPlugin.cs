@@ -39,6 +39,18 @@ namespace FractalBlaster.Plugins.M3UPlaylist {
                         if (line.StartsWith(".")) {
                             line = new FileInfo(path).Directory + line.Substring(1);
                         }
+                        if (!File.Exists(line))
+                        {
+                            string newpath = new FileInfo(path).Directory + "\\" + line;
+                            if (!File.Exists(newpath))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                line = newpath;
+                            }
+                        }
                         MediaFile file = new MediaFile(line);
                         playlist.AddItem(file);
                     }

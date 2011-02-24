@@ -30,10 +30,6 @@ namespace FractalBlaster.Core.UI {
             mPlaylistTabControl.TabPages[0].Tag = control;
             mPlaylistTabControl.TabPages[0].Controls.Add(control);
 
-            ToolStripMenuItem item = new ToolStripMenuItem("Open playlist...");
-            item.Click += new EventHandler(OpenPlaylist);
-            mOpenToolBarDropDown.DropDownItems.Add(item);
-
             SetupCollectionTabs();
         }
 
@@ -105,6 +101,7 @@ namespace FractalBlaster.Core.UI {
                 if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName))
                 {
                     Engine.Unload();
+                    Engine.Load(media);
                 }
                 Engine.OutputPlugin.Play();
             }
