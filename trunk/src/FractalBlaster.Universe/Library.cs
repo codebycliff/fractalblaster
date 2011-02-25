@@ -84,6 +84,19 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        public IEnumerable<MediaFile> MediaForArtist(String artist) {
+            
+            List<MediaFile> results = new List<MediaFile>();
+            foreach (List<MediaFile> mlist in MediaItems[artist].Values) {
+                results.AddRange(mlist);
+            }
+            return results.AsEnumerable<MediaFile>();
+        }
+
+        public IEnumerable<MediaFile> MediaForAlbum(String artist, String album) {
+            return MediaItems[artist][album].AsEnumerable<MediaFile>();
+        }
+
         #region [ Static ]
 
         static Library() {

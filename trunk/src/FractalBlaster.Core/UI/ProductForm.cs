@@ -31,6 +31,37 @@ namespace FractalBlaster.Core.UI {
             mPlaylistTabControl.TabPages[0].Controls.Add(control);
 
             SetupCollectionTabs();
+            mLibraryCollectionTabPage.MouseDown += new MouseEventHandler(MouseDownOnTreeView);
+
+            foreach (TabPage tp in mPlaylistTabControl.TabPages) {
+                tp.AllowDrop = true;
+                tp.DragOver += (o, e) => {
+                    e.Effect = DragDropEffects.Copy;
+                };
+            }
+            mPlaylistTabControl.DragEnter += (s,e) => {
+                if(e.Data.GetData(typeof(IEnumerable<MediaFile>)) != null) {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else {
+                    e.Effect = DragDropEffects.Link;
+                }
+            };
+            mPlaylistTabControl.DragDrop += (s, e) => {
+                IEnumerable<MediaFile> items = e.Data.GetData(typeof(IEnumerable<MediaFile>)) as IEnumerable<MediaFile>;
+                foreach(MediaFile media in items) {
+                    CurrentPlaylistControl.Playlist.AddItem(media);
+                }
+            };
+        }
+
+        private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
+            LibraryCollectionView view = (sender as LibraryCollectionView);
+            IEnumerable<MediaFile> items = view.Tree.GetNodeAt(args.X, args.Y).Tag as IEnumerable<MediaFile>;
+            if (items != null) {
+                //MessageBox.Show(String.Format("Name: {0}\nTag null?: {1}\nCount: {2}", node.Text, node.Tag == null ? "Yes" : "No", items.Count().ToString()));
+                DoDragDrop(items, DragDropEffects.Copy);
+            }
         }
 
         int newViewYOffset;

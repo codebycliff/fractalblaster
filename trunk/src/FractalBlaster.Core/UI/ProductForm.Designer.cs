@@ -212,7 +212,7 @@
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 51);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(315, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(284, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -421,6 +421,7 @@
             // 
             // mPlaylistTabControl
             // 
+            this.mPlaylistTabControl.AllowDrop = true;
             this.mPlaylistTabControl.Controls.Add(this.tabPage1);
             this.mPlaylistTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 0);

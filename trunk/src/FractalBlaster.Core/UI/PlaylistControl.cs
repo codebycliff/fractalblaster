@@ -15,19 +15,16 @@ namespace FractalBlaster.Core.UI {
             get { return playlist; }
             set {
                 playlist = value;
+                playlist.MediaAdded += new MediaChangeHandler(AddMediaToPlaylistData);
+                playlist.SelectedChanged += (o, ea) => {
+                    if (ExternalSelectionChange) {
+                        int index = Playlist.SelectedIndex;
+                        DataGridViewRow row = mPlaylistGridView.Rows[index];
+                        row.Selected = true;
+                    }
+                };
                 foreach (MediaFile mf in Playlist) {
-                    mPlaylistGridView.Rows.Add(new String[] {
-                        mf.Metadata["Title"].Value.ToString(),
-                        mf.Metadata["Duration"].Value.ToString()
-                    });
-                    mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = mf;
-                    playlist.SelectedChanged += (o,ea) => {
-                        if(ExternalSelectionChange) {
-                            int index = Playlist.SelectedIndex;
-                            DataGridViewRow row = mPlaylistGridView.Rows[index];
-                            row.Selected = true;
-                        }
-                    };
+                    AddMediaToPlaylistData(mf);
                 }
             }
         }
@@ -41,11 +38,15 @@ namespace FractalBlaster.Core.UI {
         public PlaylistControl() {
             InitializeComponent();
             PlaylistData = new DataTable();
-            DragDrop += (sender, args) => {
-                if (sender is MediaFile) {
-                    Playlist.AddItem(sender as MediaFile);
-                }
+           
+            AllowDrop = true;
+            
+            mPlaylistGridView.DragOver += (o, e) => {
+                e.Effect = DragDropEffects.Copy;
             };
+            mPlaylistGridView.DragEnter += new DragEventHandler(DragEnterHandler);
+            mPlaylistGridView.DragDrop += new DragEventHandler(DragDropHandler);
+
         }
 
         public PlaylistControl(Playlist playlist) : this() {
@@ -60,8 +61,32 @@ namespace FractalBlaster.Core.UI {
             }
         }
 
+        private void AddMediaToPlaylistData(MediaFile media) {
+            mPlaylistGridView.Rows.Add(new String[] {
+                media.Metadata.Title,
+                media.Metadata.Duration.ToString()
+            });
+            mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = media;
+        }
         private void mPlaylistGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             Playlist.RequestMediaAt(e.RowIndex);
+        }
+
+        private void DragEnterHandler(Object sender, DragEventArgs args) {
+            Object data = args.Data.GetData(typeof(Playlist));
+            if (data != null) {
+                args.Effect = DragDropEffects.Copy;
+            }
+            else {
+                args.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void DragDropHandler(Object sender, DragEventArgs e) {
+            Playlist playlist = e.Data.GetData(typeof(Playlist)) as Playlist;
+            foreach (MediaFile media in playlist) {
+                Playlist.AddItem(media);
+            }
         }
 
         private Playlist playlist;
