@@ -63,6 +63,7 @@ namespace FractalBlaster.Core.UI {
             
             TreeNode root = new TreeNode("Library Collection", 3,3);
             root.Tag = Library.AllMedia;
+
             foreach (String artist in Library.Artists) {
                 TreeNode artistNode = new TreeNode(artist, 0,0);
                 artistNode.Tag = Library.MediaForArtist(artist);
