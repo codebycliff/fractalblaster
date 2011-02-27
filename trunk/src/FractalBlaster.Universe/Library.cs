@@ -19,7 +19,7 @@ namespace FractalBlaster.Universe {
         public IEnumerable<String> Artists {
             get
             {
-                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Artists").Select();
+                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Artist").Select();
                 String[] dataout = new String[quer.Length];
 
                 for (int i = 0; i < quer.Length; i += 1)
@@ -34,7 +34,7 @@ namespace FractalBlaster.Universe {
         public IEnumerable<String> Albums { 
             get 
             {
-                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Albums").Select();
+                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Album").Select();
                 String[] dataout = new String[quer.Length];
 
                 for (int i = 0; i < quer.Length; i += 1)

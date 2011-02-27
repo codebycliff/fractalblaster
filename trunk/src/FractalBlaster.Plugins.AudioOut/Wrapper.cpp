@@ -90,7 +90,7 @@ namespace FractalBlaster
 					NativeData->RemoveAt(0);
 				}
 
-				PCM = appContext->Engine->InputPlugin->ReadFrames(10);
+				PCM = appContext->Engine->InputPlugin->ReadFrames(50);
 
 				if(PCM == nullptr)
 				{
