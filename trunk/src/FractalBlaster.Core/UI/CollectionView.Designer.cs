@@ -63,7 +63,7 @@
             this.mRefreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mRefreshButton.Name = "mRefreshButton";
             this.mRefreshButton.Size = new System.Drawing.Size(36, 36);
-            this.mRefreshButton.Text = "mRefreshButton";
+            this.mRefreshButton.Text = "Refresh";
             // 
             // mTreeViewButton
             // 
@@ -72,7 +72,7 @@
             this.mTreeViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mTreeViewButton.Name = "mTreeViewButton";
             this.mTreeViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mTreeViewButton.Text = "mTreeViewButton";
+            this.mTreeViewButton.Text = "Tree View";
             // 
             // mIconViewButton
             // 
@@ -81,7 +81,7 @@
             this.mIconViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mIconViewButton.Name = "mIconViewButton";
             this.mIconViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mIconViewButton.Text = "mIconViewButton";
+            this.mIconViewButton.Text = "Icon View";
             // 
             // mListViewButton
             // 
@@ -90,7 +90,7 @@
             this.mListViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mListViewButton.Name = "mListViewButton";
             this.mListViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mListViewButton.Text = "mListViewButton";
+            this.mListViewButton.Text = "List View";
             // 
             // mConfigureButton
             // 
@@ -99,7 +99,7 @@
             this.mConfigureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mConfigureButton.Name = "mConfigureButton";
             this.mConfigureButton.Size = new System.Drawing.Size(36, 36);
-            this.mConfigureButton.Text = "mConfigureButton";
+            this.mConfigureButton.Text = "Configure";
             // 
             // mMainToolStrip
             // 

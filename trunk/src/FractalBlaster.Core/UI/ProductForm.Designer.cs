@@ -228,7 +228,7 @@
             this.mOpenToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mOpenToolBarDropDown.Name = "mOpenToolBarDropDown";
             this.mOpenToolBarDropDown.Size = new System.Drawing.Size(64, 52);
-            this.mOpenToolBarDropDown.Text = "toolStripSplitButton1";
+            this.mOpenToolBarDropDown.Text = "Open";
             // 
             // mOpenPlaylistToolBarButton
             // 
@@ -244,7 +244,7 @@
             this.mNewToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mNewToolBarButton.Name = "mNewToolBarButton";
             this.mNewToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mNewToolBarButton.Text = "toolStripButton9";
+            this.mNewToolBarButton.Text = "New Playlist";
             this.mNewToolBarButton.Click += new System.EventHandler(this.AddNewPlaylistTab);
             // 
             // mSaveToolBarButton
@@ -254,7 +254,7 @@
             this.mSaveToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mSaveToolBarButton.Name = "mSaveToolBarButton";
             this.mSaveToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mSaveToolBarButton.Text = "toolStripButton7";
+            this.mSaveToolBarButton.Text = "Save";
             // 
             // mConfigureToolBarButton
             // 
@@ -263,7 +263,7 @@
             this.mConfigureToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mConfigureToolBarButton.Name = "mConfigureToolBarButton";
             this.mConfigureToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mConfigureToolBarButton.Text = "toolStripButton8";
+            this.mConfigureToolBarButton.Text = "Options";
             // 
             // mExitToolBarButton
             // 
@@ -272,7 +272,7 @@
             this.mExitToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mExitToolBarButton.Name = "mExitToolBarButton";
             this.mExitToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mExitToolBarButton.Text = "toolStripButton6";
+            this.mExitToolBarButton.Text = "Exit";
             this.mExitToolBarButton.Click += new System.EventHandler(this.ExitApplication);
             // 
             // mStatusStrip
@@ -313,7 +313,7 @@
             this.mPlayToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mPlayToolBarButton.Name = "mPlayToolBarButton";
             this.mPlayToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mPlayToolBarButton.Text = "toolStripButton1";
+            this.mPlayToolBarButton.Text = "Play";
             this.mPlayToolBarButton.Click += new System.EventHandler(this.PlayMedia);
             // 
             // mStopToolBarButton
@@ -323,7 +323,7 @@
             this.mStopToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mStopToolBarButton.Name = "mStopToolBarButton";
             this.mStopToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mStopToolBarButton.Text = "toolStripButton2";
+            this.mStopToolBarButton.Text = "Stop";
             this.mStopToolBarButton.Click += new System.EventHandler(this.StopMedia);
             // 
             // mPauseToolBarButton
@@ -333,7 +333,7 @@
             this.mPauseToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mPauseToolBarButton.Name = "mPauseToolBarButton";
             this.mPauseToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mPauseToolBarButton.Text = "toolStripButton3";
+            this.mPauseToolBarButton.Text = "Pause";
             this.mPauseToolBarButton.Click += new System.EventHandler(this.PauseMedia);
             // 
             // mSkipBackwardToolBarButton
@@ -343,7 +343,7 @@
             this.mSkipBackwardToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mSkipBackwardToolBarButton.Name = "mSkipBackwardToolBarButton";
             this.mSkipBackwardToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mSkipBackwardToolBarButton.Text = "toolStripButton4";
+            this.mSkipBackwardToolBarButton.Text = "Previous";
             this.mSkipBackwardToolBarButton.Click += new System.EventHandler(this.SkipMediaBackward);
             // 
             // mSkipForwardToolBarButton
@@ -353,7 +353,7 @@
             this.mSkipForwardToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.mSkipForwardToolBarButton.Name = "mSkipForwardToolBarButton";
             this.mSkipForwardToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mSkipForwardToolBarButton.Text = "toolStripButton5";
+            this.mSkipForwardToolBarButton.Text = "Next";
             this.mSkipForwardToolBarButton.Click += new System.EventHandler(this.SkipMediaForward);
             // 
             // label1
