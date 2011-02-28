@@ -24,7 +24,7 @@ namespace FractalBlaster.Universe {
 
                 for (int i = 0; i < quer.Length; i += 1)
                 {
-                    dataout[i] = (String)quer[i]["Artists"];
+                    dataout[i] = (String)quer[i]["Artist"];
                 }
 
                 return dataout;
@@ -54,7 +54,7 @@ namespace FractalBlaster.Universe {
 
                 for (int i = 0; i < quer.Length; i += 1)
                 {
-                    dataout[i] = (MediaFile)quer[i]["File"];
+                    dataout[i] = (MediaFile) (quer[i]["File"]);
                 }
 
                 return dataout;
@@ -120,6 +120,7 @@ namespace FractalBlaster.Universe {
                         dr["Artist"] = artist;
                         dr["Album"] = album;
                         dr["Title"] = title;
+                        dr["File"] = media;
 
                         MediaCollection.Rows.Add(dr);
                     }
