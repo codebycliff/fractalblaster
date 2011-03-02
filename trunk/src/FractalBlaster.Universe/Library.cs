@@ -35,6 +35,7 @@ namespace FractalBlaster.Universe {
             get 
             {
                 DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Album").Select();
+
                 String[] dataout = new String[quer.Length];
 
                 for (int i = 0; i < quer.Length; i += 1)
@@ -50,14 +51,8 @@ namespace FractalBlaster.Universe {
             get
             {
                 DataRow[] quer = MediaCollection.Select();
-                MediaFile[] dataout = new MediaFile[quer.Length];
 
-                for (int i = 0; i < quer.Length; i += 1)
-                {
-                    dataout[i] = (MediaFile) (quer[i]["File"]);
-                }
-
-                return dataout;
+                return GetFiles(quer);
             }
         }
 
@@ -115,11 +110,29 @@ namespace FractalBlaster.Universe {
                         String album = media.Metadata.Album;
                         String title = media.Metadata.Title;
 
+                        int bitrate = media.Metadata.BitRate;
+                        int channel = media.Metadata.Channels;
+                        int samplerate = media.Metadata.SampleRate;
+                        int year = media.Metadata.Year;
+
+                        TimeSpan duration = media.Metadata.Duration;
+
                         DataRow dr = MediaCollection.NewRow();
+
+
+                        //Apostrophes mess with searching and sorting, so we just strip them out
+                        artist = artist.Replace("'", "");
+                        album = album.Replace("'", "");
+                        title = title.Replace("'", "");
 
                         dr["Artist"] = artist;
                         dr["Album"] = album;
                         dr["Title"] = title;
+                        dr["BitRate"] = bitrate;
+                        dr["Channel"] = channel;
+                        dr["SampleRate"] = samplerate;
+                        dr["Year"] = year;
+                        dr["Duration"] = duration;
                         dr["File"] = media;
 
                         MediaCollection.Rows.Add(dr);
@@ -135,33 +148,64 @@ namespace FractalBlaster.Universe {
 
         public IEnumerable<MediaFile> MediaForArtist(String artist)
         {
-            DataRow[] quer = MediaCollection.Select("Artist = '" + artist + "'");
-            MediaFile[] dataout = new MediaFile[quer.Length];
-
-            for (int i = 0; i < quer.Length; i += 1)
-            {
-                dataout[i] = (MediaFile) quer[i]["File"];
-            }
-
-            return dataout;
+            return this.SearchStrict("Artist", artist, "ASC");
         }
 
         public IEnumerable<MediaFile> MediaForAlbum(String artist, String album)
         {
             DataRow[] quer = MediaCollection.Select("Artist = '" + artist + "' AND Album = '" + album + "'");
-            MediaFile[] dataout = new MediaFile[quer.Length];
 
-            for (int i = 0; i < dataout.Length; i += 1)
-            {
-                dataout[i] = (MediaFile) quer[i]["File"];
-            }
-
-            return dataout;
+            return this.GetFiles(quer);
         }
+
+        public IEnumerable<MediaFile> Sort(String columnname)
+        {
+            return this.Sort(columnname, "ASC");
+        }
+
+        public IEnumerable<MediaFile> Sort(String columnname, String order)
+        {
+            DataRow[] quer = MediaCollection.Select("", columnname + " " + NormalizeOrder(order));
+
+            return this.GetFiles(quer);
+        }
+
+        public IEnumerable<MediaFile> Search(String columnname, String searchterm)
+        {
+            return this.Search(columnname, searchterm, "ASC");
+        }
+
+        public IEnumerable<MediaFile> Search(String columnname, String searchterm, String order)
+        {
+            String searchexp = columnname + " LIKE '%" + searchterm + "%'";
+            String sorting = columnname + " " + NormalizeOrder(order);
+
+            DataRow[] quer = MediaCollection.Select(searchexp, sorting);
+
+            return this.GetFiles(quer);
+        }
+
+        public IEnumerable<MediaFile> SearchStrict(String columnname, String searchterm)
+        {
+            return this.SearchStrict(columnname, searchterm, "ASC");
+        }
+
+        public IEnumerable<MediaFile> SearchStrict(String columnname, String searchterm, String order)
+        {
+
+            String searchexp = columnname + " = '" + searchterm + "'";
+            String sorting = columnname + " " + NormalizeOrder(order);
+
+            DataRow[] quer = MediaCollection.Select(searchexp, sorting);
+
+            return this.GetFiles(quer);
+        }
+
 
         #region [ Static ]
 
-        static Library() {
+        static Library()
+        {
             FileName = "Library.xml";
             
         }
@@ -212,19 +256,41 @@ namespace FractalBlaster.Universe {
              * So as to reduce the "magic number" nature of this code.
              */
 
-            output.Columns.Add("#", typeof(Int32));
-            output.Columns.Add("Artist", typeof(String));
-            output.Columns.Add("Album", typeof(String));
-            output.Columns.Add("BitRate", typeof(Int32));
-            output.Columns.Add("Channel", typeof(Int32));
-            output.Columns.Add("Codec", typeof(String));
-            output.Columns.Add("Duration", typeof(TimeSpan));
-            output.Columns.Add("SampleRate", typeof(Int32));
-            output.Columns.Add("Title", typeof(String));
-            output.Columns.Add("Year", typeof(Int32));
-            output.Columns.Add("File", typeof(MediaFile));
+            output.Columns.Add("#",         typeof(Int32));
+            output.Columns.Add("Artist",    typeof(String));
+            output.Columns.Add("Album",     typeof(String));
+            output.Columns.Add("BitRate",   typeof(Int32));
+            output.Columns.Add("Channel",   typeof(Int32));
+            output.Columns.Add("Codec",     typeof(String));
+            output.Columns.Add("Duration",  typeof(TimeSpan));
+            output.Columns.Add("SampleRate",typeof(Int32));
+            output.Columns.Add("Title",     typeof(String));
+            output.Columns.Add("Year",      typeof(Int32));
+            output.Columns.Add("File",      typeof(MediaFile));
 
             return output;
+        }
+
+        private MediaFile[] GetFiles(DataRow[] rows)
+        {
+            MediaFile[] dataout = new MediaFile[rows.Length];
+
+            for (int i = 0; i < rows.Length; i += 1)
+            {
+                dataout[i] = (MediaFile)rows[i]["File"];
+            }
+
+            return dataout;
+        }
+
+        private String NormalizeOrder(String order)
+        {
+            if (!order.Equals("ASC") && !order.Equals("DESC"))
+            {
+                return "ASC";
+            }
+
+            return order;
         }
 
         private List<String> MediaPaths { get; set; }

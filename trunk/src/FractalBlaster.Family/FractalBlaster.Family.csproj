@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AA6B47A2-E37A-42FE-B520-660FA4E779DD}</ProjectGuid>
+    <ProjectGuid>{A1FC4551-1E32-4143-8738-61A182716337}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FractalBlaster.Family</RootNamespace>
