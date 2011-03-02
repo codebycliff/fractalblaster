@@ -48,8 +48,11 @@ namespace FractalBlaster.Plugins.FourierView
             {
                 data[i] = (stream.ReadByte() << 8) | stream.ReadByte();
             }
-            Exocortex.DSP.Fourier.RFFT(data, data.Length, Exocortex.DSP.FourierDirection.Forward);
-            updateUI(data);
+            //Exocortex.DSP.Fourier.RFFT(data, data.Length, Exocortex.DSP.FourierDirection.Forward);
+            float[] fft = new float[1024];
+            float dc;
+            Exocortex.DSP.Fourier.ComputeFFTPolarMag(fft, data, out dc);
+            updateUI(fft);
         }
 
         public bool Enabled { get; set; }
@@ -59,31 +62,39 @@ namespace FractalBlaster.Plugins.FourierView
             if (Enabled == false) return;
             if (UI.Visible == false) return;
 
-            UI.Width = data.Length;
+            UI.Width = data.Length/2;
 
             Graphics graphics = UI.CreateGraphics();
             graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, UI.Width, UI.Height);
             float max = 1;
+            /*
+            float[] power = new float[data.Length / 2];
 
-            for (int i = 1; i < data.Length; i++)
+            for (int i = 1; i < data.Length/2; i+=2)
             {
-                if (data[i] < 0)
+                power[i] = (float)Math.Sqrt(Math.Pow(data[i], 2) + Math.Pow(data[i+1],2));
+                if(power[i] > max)
                 {
-                    data[i] = -1 * data[i];
+                    max = power[i];
                 }
-                if (max < data[i] && data[i] != 0)
-                    max = data[i];
-
             }
+             * */
+            for (int i = 0; i < data.Length/2; i++)
+            {
+                if (data[i] > max)
+                    max = data[i];
+            }
+
+
             max /= UI.Height;
 
             float x1 =0, x2 =0, y1=0, y2=0;
             GraphicsPath myPath = new GraphicsPath();
-            for (int i = 1; i < data.Length-1; i++)
+            for (int i = 0; i < data.Length/2-1; i++)
             {
                 x1 = i;
                 y1 = data[i] / max;
-                x2 = i + 1;
+                x2 = i+1;
                 y2 = data[i + 1] / max;
                 myPath.AddLine(x1, y1, x2, y2);
             }
