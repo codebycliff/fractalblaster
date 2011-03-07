@@ -46,9 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Family\EnterpriseProductModel.cs" />
-    <Compile Include="Family\ExpressProductModel.cs" />
-    <Compile Include="Family\StandardProductModel.cs" />
+    <Compile Include="Products\EnterpriseProductModel.cs" />
+    <Compile Include="Products\ExpressProductModel.cs" />
+    <Compile Include="Products\StandardProductModel.cs" />
     <Compile Include="ProductSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
