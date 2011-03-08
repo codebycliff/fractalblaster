@@ -29,6 +29,16 @@ namespace FractalBlaster.Plugins.WPLPlaylist
             using (StreamReader reader = new StreamReader(File.OpenRead(path)))
             {
                 String line = reader.ReadLine().Trim();
+                while (!reader.EndOfStream && !line.Contains("<title>"))
+                {
+                    line = reader.ReadLine();
+                }
+                if (line.Contains("<title>"))
+                {
+                    line = line.Replace("<title>", "");
+                    line = line.Replace("</title>", "");
+                    playlist.Title = line;
+                }
                 while (!reader.EndOfStream && !line.Contains("<media src=\""))//Pass all the meta tags and crap
                 {
                     line = reader.ReadLine();
