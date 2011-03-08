@@ -38,6 +38,17 @@ namespace FractalBlaster.Universe {
         public IEnumerable<MediaFile> Items { get { return MediaItems.AsEnumerable();  } }
 
         /// <summary>
+        /// The Title of the playlist.
+        /// </summary>
+        protected String title;
+
+        public String Title
+        {
+            get { return title; }
+            set { title = value; }
+        }
+
+        /// <summary>
         /// The currently selected index in the playlist. This represents a selection,
         /// not a double-click or request to play the item.
         /// </summary>
