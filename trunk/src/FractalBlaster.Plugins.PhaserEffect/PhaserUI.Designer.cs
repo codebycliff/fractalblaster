@@ -183,6 +183,8 @@
             this.Name = "PhaserUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "PhaserUI";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WaveViewPluginUI_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WaveViewPluginUI_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.trkWet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkDry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkFeedback)).EndInit();

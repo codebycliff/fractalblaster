@@ -12,6 +12,7 @@ namespace FractalBlaster.Plugins.PhaserEffect
     public partial class PhaserUI : Form
     {
         private PhaserPlugin plugin;
+        Point mouse_offset;
 
         public PhaserUI(PhaserPlugin p)
         {
@@ -68,6 +69,21 @@ namespace FractalBlaster.Plugins.PhaserEffect
             lblFrequency.Text = "Frequency: " + ((trkFreq.Value - 1) *10.0f).ToString("F2");
             plugin.m_Frequency = ((trkFreq.Value - 1) * 10.0f);
             plugin.UpdateParams();
+        }
+
+        private void WaveViewPluginUI_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouse_offset = new Point(-e.X, -e.Y);
+        }
+
+        private void WaveViewPluginUI_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouse_offset);
+                this.Location = mousePos;
+            }
         }
     }
 }
