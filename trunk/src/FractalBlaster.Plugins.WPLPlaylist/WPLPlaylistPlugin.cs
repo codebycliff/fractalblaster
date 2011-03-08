@@ -14,7 +14,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
         Author = "Kevin Moore @ Fractal Blasters",
         Version = "0.1"
     )]
-    public class M3UPlaylistPlugin : IPlaylistPlugin
+    public class WPLPlaylistPlugin : IPlaylistPlugin
     {
         public AppContext Context { get; private set; }
 
@@ -76,7 +76,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                 writer.WriteLine("<meta name=\"ContentPartnerName\"/>");
                 writer.WriteLine("<meta name=\"Subtitle\"/>");
                 */writer.WriteLine("<author/>");
-                writer.WriteLine("<title>WPL Playlist</title>");
+                writer.WriteLine("<title>\""+playlist.Title+"\"</title>");
                 writer.WriteLine("</head>");
                 writer.WriteLine("<body>");
                 writer.WriteLine("<seq>");
