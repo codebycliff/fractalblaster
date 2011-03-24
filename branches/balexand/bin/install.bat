@@ -1,0 +1,5 @@
+mkdir "C:\Program Files\Fractal Blasters"
+copy FractalBlasters.exe "C:\Program Files\Fractal Blasters"
+copy Common.dll "C:\Program Files\Fractal Blasters"
+mkdir "C:\Program Files\Fractal Blasters\Plugins"
+copy Plugins\*.dll "C:\Program Files\Fractal Blasters\Plugins"

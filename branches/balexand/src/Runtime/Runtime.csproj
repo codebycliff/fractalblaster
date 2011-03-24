@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FractalBlaster.Runtime</RootNamespace>
-    <AssemblyName>Runtime</AssemblyName>
+    <AssemblyName>FractalBlasters</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,10 +53,6 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{75334C5F-0853-42B3-80CC-3692762BB77F}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\User Interface\Playback Control Form\Playback Control Form.csproj">
-      <Project>{1922334A-678B-453D-A89D-0292B173E383}</Project>
-      <Name>Playback Control Form</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

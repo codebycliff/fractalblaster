@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime", "Runtime\Runtime.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playback Control", "Wave Processing\Playback Control\Playback Control.csproj", "{FB078554-167B-4B50-BAB9-9E7189728053}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playlist Form", "User Interface\Playlist Form\Playlist Form.csproj", "{A01EEDD6-1C8E-408A-939A-FE8119C66867}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FB078554-167B-4B50-BAB9-9E7189728053}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB078554-167B-4B50-BAB9-9E7189728053}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB078554-167B-4B50-BAB9-9E7189728053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01EEDD6-1C8E-408A-939A-FE8119C66867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01EEDD6-1C8E-408A-939A-FE8119C66867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01EEDD6-1C8E-408A-939A-FE8119C66867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01EEDD6-1C8E-408A-939A-FE8119C66867}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

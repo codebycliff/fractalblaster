@@ -6,15 +6,11 @@ using System.Windows.Forms;
 
 namespace FractalBlaster.Universe
 {
-    public interface IPlaybackControlForm : IPlugin
+    public interface IPlaylistForm : IPlugin
     {
         Form form
         {
             get;
-        }
-        IPlaybackControl playbackControl
-        {
-            set;
         }
     }
 }

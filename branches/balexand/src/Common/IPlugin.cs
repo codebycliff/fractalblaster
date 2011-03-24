@@ -10,9 +10,6 @@ namespace FractalBlaster.Universe {
     /// must implement at the bare minimum.
     /// </remarks>
     public interface IPlugin {
-
-        void Initialize();
-
     }
 
     [AttributeUsage(AttributeTargets.Class)]
