@@ -71,7 +71,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\close.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\next.png" />
   </ItemGroup>

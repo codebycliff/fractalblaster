@@ -80,6 +80,23 @@ namespace FractalBlaster.Runtime {
             IPlaybackControlForm playbackControlForm = (IPlaybackControlForm) playbackControlForms.First();
             IPlaybackControl playbackControl = (IPlaybackControl)playbackControls.First();
             playbackControlForm.playbackControl = playbackControl;
+
+            if (playlistForms.Count() < 1)
+            {
+                Debug.printline("WARNING: Playlist Form not found.");
+            }
+            else
+            {
+                if (playlistForms.Count() > 1)
+                {
+                    Debug.printline("WARNING: More than one Playlist Form found.");
+                }
+                IPlaylistForm playlistForm = (IPlaylistForm)playlistForms.First();
+                playbackControlForm.form.AddOwnedForm(playlistForm.form);
+                playlistForm.form.Show();
+            }
+            
+            
             Application.Run(playbackControlForm.form);
         }
     }

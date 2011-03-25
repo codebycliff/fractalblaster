@@ -61,11 +61,14 @@ namespace FractalBlaster.PlaybackControlForm
 
         }
 
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void stopButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = stopButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -78,9 +81,7 @@ namespace FractalBlaster.PlaybackControlForm
 
         private void previousButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = previousButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -92,9 +93,7 @@ namespace FractalBlaster.PlaybackControlForm
 
         private void playButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = playButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -106,9 +105,7 @@ namespace FractalBlaster.PlaybackControlForm
 
         private void nextButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = nextButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -120,9 +117,7 @@ namespace FractalBlaster.PlaybackControlForm
 
         private void shuffleButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = shuffleButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -134,9 +129,7 @@ namespace FractalBlaster.PlaybackControlForm
 
         private void repeatButton_Paint(object sender, PaintEventArgs e)
         {
-            System.Drawing.Drawing2D.GraphicsPath buttonPath =
-                new System.Drawing.Drawing2D.GraphicsPath();
-
+            GraphicsPath buttonPath = new GraphicsPath();
             Rectangle buttonRect = repeatButton.ClientRectangle;
             buttonRect.Inflate(-1, -1);
             e.Graphics.DrawEllipse(Pens.Black, buttonRect);
@@ -144,6 +137,47 @@ namespace FractalBlaster.PlaybackControlForm
             buttonPath.AddEllipse(buttonRect);
 
             repeatButton.Region = new System.Drawing.Region(buttonPath);
+        }
+
+        bool mouseDown;
+        Point mouse_offset;
+        List<Point> window_offset;
+
+        private void PlaybackControlForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            mouse_offset = new Point(-e.X, -e.Y);
+            window_offset = new List<Point>();
+            for (int i = 0; i < OwnedForms.Length; i++)
+            {
+                Point subwindowLocation = OwnedForms.ElementAt(i).Location;
+                window_offset.Insert(i, new Point(subwindowLocation.X - this.Location.X, subwindowLocation.Y - this.Location.Y));
+            }
+        }
+
+        private void PlaybackControlForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouse_offset);
+                for (int i = 0; i < OwnedForms.Length; i++)
+                {
+                    if (!OwnedForms.ElementAt(i).Location.IsEmpty)
+                    {
+                        Point subwindowPos = Control.MousePosition;
+                        subwindowPos.Offset(mouse_offset);
+                        subwindowPos.Offset(window_offset.ElementAt(i));
+                        OwnedForms.ElementAt(i).Location = subwindowPos;
+                    }
+                }
+                this.Location = mousePos;
+            }
+        }
+
+        private void PlaybackControlForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
 
     }
