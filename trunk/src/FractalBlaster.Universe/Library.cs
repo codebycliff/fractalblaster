@@ -12,10 +12,19 @@ namespace FractalBlaster.Universe {
     [Serializable]
     public class Library {
         
+        /// <summary>
+        /// The directory that contains the songs this Library was loaded from.
+        /// </summary>
         public DirectoryInfo Root { get; private set; }
 
+        /// <summary>
+        /// The number of songs this Library contains.
+        /// </summary>
         public Int32 ItemCount { get { return MediaCollection.Rows.Count; } }
 
+        /// <summary>
+        /// A list of the names of all different artists this Library contains.
+        /// </summary>
         public IEnumerable<String> Artists {
             get
             {
@@ -31,6 +40,9 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// A list of the titles of all different albums this Library contains.
+        /// </summary>
         public IEnumerable<String> Albums { 
             get 
             {
@@ -47,6 +59,9 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// A list of all songs contained in this Library, sorted by when they were added.
+        /// </summary>
         public IEnumerable<MediaFile> AllMedia { 
             get
             {
@@ -56,6 +71,15 @@ namespace FractalBlaster.Universe {
             }
         }
 
+
+        /// <summary>
+        /// A method to accomodate the tree view structure of viewing the Library.
+        /// </summary>
+        /// <param name="key">The name of the artist to search for.</param>
+        /// <returns>
+        /// Returns a Dictionary containing a mapping of all album names by
+        /// the given artist to a list of the songs in that album.
+        /// </returns>
         public Dictionary<String, List<MediaFile>> this[String key] {
             get
             {
@@ -83,6 +107,9 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// Serializes the Library into an XML file.
+        /// </summary>
         public void Save() {
             XmlSerializer serializer = new XmlSerializer(typeof(Library));
             using (Stream stream = File.OpenWrite(Root.FullName + FileName)) {
@@ -90,6 +117,10 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// Tries to load/reload all of the mp3 files in the system defined
+        /// music folder into the Library.
+        /// </summary>
         public void Refresh()
         {
             FileInfo[] files = Root.GetFiles("*.mp3", SearchOption.AllDirectories);
@@ -146,11 +177,22 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// Searches the Library for a list of all songs from a given artist.
+        /// </summary>
+        /// <param name="artist">The name of an Artist</param>
+        /// <returns>A list of all songs who's ID3 tags have the given artist name.</returns>
         public IEnumerable<MediaFile> MediaForArtist(String artist)
         {
             return this.SearchStrict("Artist", artist, "ASC");
         }
 
+        /// <summary>
+        /// Searches the Library for a list of all songs from a given artist's album.
+        /// </summary>
+        /// <param name="artist">The name of an Artist.</param>
+        /// <param name="album">The title of an album</param>
+        /// <returns>A list of all the songs on the given album from the given artist</returns>
         public IEnumerable<MediaFile> MediaForAlbum(String artist, String album)
         {
             DataRow[] quer = MediaCollection.Select("Artist = '" + artist + "' AND Album = '" + album + "'");
@@ -158,11 +200,22 @@ namespace FractalBlaster.Universe {
             return this.GetFiles(quer);
         }
 
+        /// <summary>
+        /// Lists all the songs contained in this Library in ascending order for a given ID3 tag.
+        /// </summary>
+        /// <param name="columnname">The name of an ID3 tag by which to sort.</param>
+        /// <returns>A list of all songs sorted in ascending order by given tag.</returns>
         public IEnumerable<MediaFile> Sort(String columnname)
         {
             return this.Sort(columnname, "ASC");
         }
 
+        /// <summary>
+        /// Lists all the songs contained in this Library by a given order and tag.
+        /// </summary>
+        /// <param name="columnname">The name of an ID3 tag by which to sort.</param>
+        /// <param name="order">Either ASC for ascending order or DESC for descending.</param>
+        /// <returns>A list of all songs sorted in the given order by the given tag.</returns>
         public IEnumerable<MediaFile> Sort(String columnname, String order)
         {
             DataRow[] quer = MediaCollection.Select("", columnname + " " + NormalizeOrder(order));
@@ -170,11 +223,24 @@ namespace FractalBlaster.Universe {
             return this.GetFiles(quer);
         }
 
+        /// <summary>
+        /// Searches all songs over a given ID3 tag for those containing a given search term.
+        /// </summary>
+        /// <param name="columnname">The ID3 tag that will contain the search term.</param>
+        /// <param name="searchterm">The term you wish to search for.</param>
+        /// <returns>A list of all songs that have the given search term somewhere in the ID3 tag given, sorted in ascending order.</returns>
         public IEnumerable<MediaFile> Search(String columnname, String searchterm)
         {
             return this.Search(columnname, searchterm, "ASC");
         }
 
+        /// <summary>
+        /// Searches all songs over a given ID3 tag for those containing a given search term.
+        /// </summary>
+        /// <param name="columnname">The ID3 tag that will contain the search term.</param>
+        /// <param name="searchterm">The term you wish to search for.</param>
+        /// <param name="order">Either ASC for ascending order or DESC for descending.</param>
+        /// <returns>A list of all songs that have the given search term somewhere in the ID3 tag given, sorted in the given order.</returns>
         public IEnumerable<MediaFile> Search(String columnname, String searchterm, String order)
         {
             String searchexp = columnname + " LIKE '%" + searchterm + "%'";
@@ -185,11 +251,24 @@ namespace FractalBlaster.Universe {
             return this.GetFiles(quer);
         }
 
+        /// <summary>
+        /// Searches all songs over a given ID3 tag for those which match a given search term.
+        /// </summary>
+        /// <param name="columnname">The ID3 tag that will contain the search term.</param>
+        /// <param name="searchterm">The term you wish to search for.</param>
+        /// <returns>A list of all songs whose given ID3 tag are equal to the search term</returns>
         public IEnumerable<MediaFile> SearchStrict(String columnname, String searchterm)
         {
             return this.SearchStrict(columnname, searchterm, "ASC");
         }
 
+        /// <summary>
+        /// Searches all songs over a given ID3 tag for those which match a given search term.
+        /// </summary>
+        /// <param name="columnname">The ID3 tag that will contain the search term.</param>
+        /// <param name="searchterm">The term you wish to search for.</param>
+        /// <param name="order">Either ASC for ascending order or DESC for descending.</param>
+        /// <returns>A list of all songs whose given ID3 tag are equal to the search term, sorted in the given order.</returns>
         public IEnumerable<MediaFile> SearchStrict(String columnname, String searchterm, String order)
         {
 
@@ -212,6 +291,11 @@ namespace FractalBlaster.Universe {
 
         public static String FileName { get; private set; }
 
+        /// <summary>
+        /// Groups all files in a directory together into a Library.
+        /// </summary>
+        /// <param name="dir">A directory containing music files or a serialized library file</param>
+        /// <returns>A library containing all the music in the given directory.</returns>
         public static Library Load(DirectoryInfo dir) {
             Library library = null;
 

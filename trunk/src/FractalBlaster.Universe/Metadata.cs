@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 
 namespace FractalBlaster.Universe {
+
+    /// <summary>
+    /// A class representing the metadata that a song will contain.
+    /// Primarily this will be from loaded ID3 tags.
+    /// </summary>
     public class Metadata : IEnumerable<MediaProperty> {
 
         #region [ Keys ]
@@ -14,7 +19,7 @@ namespace FractalBlaster.Universe {
         public const String ALBUM = "Album";
         public const String BITRATE = "BitRate";
         public const String CHANNELS = "Channels";
-        public const String  CODEC = "Codec";
+        public const String CODEC = "Codec";
         public const String DURATION = "Duration";
         public const String SAMPLE_RATE = "SampleRate";
         public const String TITLE = "Title";
