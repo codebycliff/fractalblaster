@@ -23,6 +23,12 @@ namespace FractalBlaster.Universe {
         Boolean IsPaused { get; }
 
         /// <summary>
+        /// Integer value representing the system output device volume
+        /// setting in the running <see cref="IEngine"/> instance 
+        /// </summary>
+        Int32 Volume { set;  get; }
+
+        /// <summary>
         /// Method that can be called to begin outputting the media file that 
         /// is currently loaded in the running <see cref="IEngine"/> instance.
         /// </summary>
@@ -47,7 +53,6 @@ namespace FractalBlaster.Universe {
         /// <see cref="IEngine"/> instance.
         /// </summary>
         void Resume();
-
     }
 
 }

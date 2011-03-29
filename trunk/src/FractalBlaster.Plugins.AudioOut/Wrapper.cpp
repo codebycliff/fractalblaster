@@ -1,5 +1,6 @@
 #include "Wrapper.h"
 #include "WaveInterface.h"
+#include <iostream>
 
 namespace FractalBlaster
 {
@@ -36,6 +37,16 @@ namespace FractalBlaster
 				this->paused = IsPaused;
 			}
 			
+			System::Int32 Wrapper::Volume::get()
+			{
+				return volume;
+			}
+			
+			void Wrapper::Volume::set(System::Int32 vol)
+			{
+				this->volume = vol;
+				WaveInterface::instance->SetVolume(vol);
+			}
 
 			void Wrapper::Play()
 			{

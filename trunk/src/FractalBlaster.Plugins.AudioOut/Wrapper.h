@@ -18,6 +18,7 @@ namespace FractalBlaster
 
 					virtual property System::Boolean IsPlaying { System::Boolean get(); private: void set(System::Boolean);}
 					virtual property System::Boolean IsPaused { System::Boolean get(); private: void set(System::Boolean); }
+					virtual property System::Int32 Volume { System::Int32 get(); void set(System::Int32); }
 					
 					virtual void Play(void);
 					virtual void Stop(void);
@@ -49,6 +50,8 @@ namespace FractalBlaster
 
 					System::Boolean playing;
 					System::Boolean paused;
+
+					System::Int32 volume;
 			};
 		}
 	}

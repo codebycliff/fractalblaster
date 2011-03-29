@@ -152,3 +152,10 @@ void WaveInterface::Stop()
 	waveOutReset(*StereoOutputDevice);	
 	state = PlaybackState::Stopped;
 }
+
+void WaveInterface::SetVolume(int vol)
+{
+	double percent = ((double)vol)/100.0;
+	DWORD volume = 0xFFFF * percent;
+	waveOutSetVolume(*StereoOutputDevice, volume);
+}

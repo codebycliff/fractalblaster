@@ -61,6 +61,7 @@
             this.mFileSystemCollectionTabPage = new System.Windows.Forms.TabPage();
             this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.trkVolume = new System.Windows.Forms.TrackBar();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mStatusStrip.SuspendLayout();
@@ -71,6 +72,7 @@
             this.splitContainer1.SuspendLayout();
             this.mCollectionTabControl.SuspendLayout();
             this.mPlaylistTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkVolume)).BeginInit();
             this.SuspendLayout();
             // 
             // mMenuStrip
@@ -440,11 +442,23 @@
             this.tabPage1.Text = "Queue";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // trkVolume
+            // 
+            this.trkVolume.Location = new System.Drawing.Point(559, 429);
+            this.trkVolume.Maximum = 100;
+            this.trkVolume.Name = "trkVolume";
+            this.trkVolume.Size = new System.Drawing.Size(104, 45);
+            this.trkVolume.TabIndex = 9;
+            this.trkVolume.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trkVolume.Value = 100;
+            this.trkVolume.Scroll += new System.EventHandler(this.trkVolume_Scroll);
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 503);
+            this.Controls.Add(this.trkVolume);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mAudioControlToolBar);
@@ -475,6 +489,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.mCollectionTabControl.ResumeLayout(false);
             this.mPlaylistTabControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trkVolume)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,5 +535,6 @@
         private System.Windows.Forms.TabPage mFileSystemCollectionTabPage;
         private System.Windows.Forms.TabControl mPlaylistTabControl;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TrackBar trkVolume;
     }
 }

@@ -20,6 +20,8 @@ ref class WaveInterface
 		void UnPause(void);
 		void Stop(void);
 
+		void SetVolume(int);
+
 
 	private:
 		WaveInterface(void);

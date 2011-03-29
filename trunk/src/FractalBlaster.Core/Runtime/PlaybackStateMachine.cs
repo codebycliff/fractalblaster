@@ -51,6 +51,12 @@ namespace FractalBlaster.Core.Runtime {
             }
         }
 
+        public int Volume
+        {
+            get { return OutputStream.Volume; }
+            set { OutputStream.Volume = value; }
+        }
+
         public bool IsPlaying {
             get { return State == PlaybackState.Playing && OutputStream.IsPlaying; }
         }

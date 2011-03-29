@@ -306,5 +306,10 @@ namespace FractalBlaster.Core.UI {
 
         #endregion
 
+        private void trkVolume_Scroll(object sender, EventArgs e)
+        {
+            Engine.OutputPlugin.Volume = trkVolume.Value;
+        }
+
     }
 }
