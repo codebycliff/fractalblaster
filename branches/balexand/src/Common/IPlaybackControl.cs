@@ -14,5 +14,18 @@ namespace FractalBlaster.Universe
         void Next();
         void Previous();
         MemoryStream GetFrames();
+
+        void Open(string filename);
+
+        IInput input
+        {
+            set;
+        }
+
+        IOutput output
+        {
+            set;
+        }
+
     }
 }

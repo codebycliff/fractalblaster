@@ -8,36 +8,58 @@ namespace FractalBlaster.PlaybackControl
 {
     class PlaybackControl : IPlaybackControl
     {
+        IInput mInput;
+        IOutput mOutput;
+        string mFilename;
+
         #region IPlaybackControl Members
+
+        public IInput input
+        {
+            set { mInput = value; }
+        }
+
+        public IOutput output
+        {
+            set { mOutput = value; }
+        }
 
         public void Play()
         {
-            throw new NotImplementedException();
+            mOutput.Play();
         }
 
         public void Pause()
         {
-            throw new NotImplementedException();
+            mOutput.Pause();
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            mOutput.Stop();
+            mInput.Close();
+            mInput.Open(mFilename);
         }
 
         public void Next()
         {
-            throw new NotImplementedException();
+
         }
 
         public void Previous()
         {
-            throw new NotImplementedException();
+
         }
 
         public System.IO.MemoryStream GetFrames()
         {
             throw new NotImplementedException();
+        }
+
+        public void Open(string filename)
+        {
+            mFilename = filename;
+            mInput.Open(filename);
         }
 
         #endregion

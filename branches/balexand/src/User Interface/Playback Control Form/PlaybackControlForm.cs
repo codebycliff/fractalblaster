@@ -66,6 +66,21 @@ namespace FractalBlaster.PlaybackControlForm
             this.Close();
         }
 
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+
+            if (myOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                label2.Text = myOpenFileDialog.FileName;
+                label2.Refresh();
+                mPlaybackControl.Open(myOpenFileDialog.FileName);
+            }
+
+        }
+
+
         private void stopButton_Paint(object sender, PaintEventArgs e)
         {
             GraphicsPath buttonPath = new GraphicsPath();
@@ -179,6 +194,8 @@ namespace FractalBlaster.PlaybackControlForm
         {
             mouseDown = false;
         }
+
+
 
     }
 }

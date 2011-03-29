@@ -95,7 +95,37 @@ namespace FractalBlaster.Runtime {
                 playbackControlForm.form.AddOwnedForm(playlistForm.form);
                 playlistForm.form.Show();
             }
-            
+
+            if (inputs.Count() < 1)
+            {
+                Debug.printline("ERROR: Input not found.  Exiting in 5 seconds");
+                Thread.Sleep(5000);
+                return;
+            }
+            else if (inputs.Count() > 1)
+            {
+                Debug.printline("WARNING: More than one Input found.");
+            }
+
+            IInput input = (IInput)inputs.First();
+
+            if (outputs.Count() < 1)
+            {
+                Debug.printline("ERROR: Output not found.  Exiting in 5 seconds");
+                Thread.Sleep(5000);
+                return;
+            }
+            else if (outputs.Count() > 1)
+            {
+                Debug.printline("WARNING: More than one Output found.");
+            }
+
+            IOutput output = (IOutput)outputs.First();
+
+            output.input = input;
+
+            playbackControl.input = input;
+            playbackControl.output = output;
             
             Application.Run(playbackControlForm.form);
         }
