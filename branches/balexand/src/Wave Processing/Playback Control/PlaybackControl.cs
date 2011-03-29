@@ -10,7 +10,17 @@ namespace FractalBlaster.PlaybackControl
     {
         IInput mInput;
         IOutput mOutput;
+        IPlaylist mPlaylist;
         string mFilename;
+        bool fileOpen;
+        enum state {Playing, Paused, Stopped};
+        state playbackState;
+
+        public PlaybackControl()
+        {
+            fileOpen = false;
+            playbackState = state.Stopped;
+        }
 
         #region IPlaybackControl Members
 
@@ -24,9 +34,37 @@ namespace FractalBlaster.PlaybackControl
             set { mOutput = value; }
         }
 
+        public IPlaylist playlist
+        {
+            set { mPlaylist = value; }
+        }
+
+        public Int32 volume
+        {
+            set 
+            {
+                Debug.printline("volume = " + value.ToString());
+                mOutput.Volume = value;
+            }
+        }
+
         public void Play()
         {
-            mOutput.Play();
+            switch (playbackState)
+            {
+                case state.Paused:
+                    mOutput.Resume();
+                    break;
+                case state.Playing:
+                    break;
+                case state.Stopped:
+                    if (fileOpen)
+                    {
+                        mOutput.Play();
+                    }
+                    break;
+            }
+
         }
 
         public void Pause()
@@ -59,7 +97,10 @@ namespace FractalBlaster.PlaybackControl
         public void Open(string filename)
         {
             mFilename = filename;
+            MediaFile newMediaFile = new MediaFile(filename);
+            mPlaylist.add(newMediaFile);
             mInput.Open(filename);
+            fileOpen = true;
         }
 
         #endregion

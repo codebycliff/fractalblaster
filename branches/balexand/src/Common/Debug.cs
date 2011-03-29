@@ -12,7 +12,30 @@ namespace FractalBlaster.Universe
         static Debug()
         {
             myForm = new DebugForm();
+            File.Delete("debugLog.txt");
+        }
+
+        static public void show()
+        {
+            myForm = new DebugForm();
+            StreamReader sr = new StreamReader("debugLog.txt");
+            string s;
+            while ((s = sr.ReadLine()) != null)
+            {
+                myForm.printline(s);
+            }
+            sr.Close();
             myForm.Show();
+        }
+
+        static public void hide()
+        {
+            myForm.Hide();
+        }
+
+        static public bool Visible
+        {
+            get { return myForm.Visible; }
         }
 
         static public void print(string s)

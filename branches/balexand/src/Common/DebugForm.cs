@@ -19,12 +19,15 @@ namespace FractalBlaster.Universe
         public void print(string s)
         {
             textBox1.Text += s;
+            textBox1.ScrollToCaret();
             textBox1.Refresh();
         }
 
         public void printline(string s)
         {
             textBox1.Text += s + "\r\n";
+            textBox1.Select(textBox1.Text.Length - 1, 0);
+            textBox1.ScrollToCaret();
             textBox1.Refresh();
         }
     }

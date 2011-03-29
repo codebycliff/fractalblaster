@@ -37,11 +37,6 @@ namespace FractalBlaster
 				this->paused = IsPaused;
 			}
 			
-			System::Int32 Wrapper::Volume::get()
-			{
-				return volume;
-			}
-			
 			void Wrapper::Volume::set(System::Int32 vol)
 			{
 				this->volume = vol;

@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-//using FractalBlaster.Core.Runtime;
 using FractalBlaster.Universe;
-//using FractalBlaster.Core;
-//using log4net.Config;
 using System.Threading;
 
 namespace FractalBlaster.Runtime {
@@ -32,6 +29,9 @@ namespace FractalBlaster.Runtime {
 
             IEnumerable<IPlugin> libraries = PluginManager.GetInterfaces(typeof(ILibrary));
             Debug.printline("Found " + libraries.Count().ToString() + " Libraries");
+
+            IEnumerable<IPlugin> metadataPlugins = PluginManager.GetInterfaces(typeof(IMetadataPlugin));
+            Debug.printline("Found " + metadataPlugins.Count().ToString() + " Metadata Plugins");
 
             IEnumerable<IPlugin> outputs = PluginManager.GetInterfaces(typeof(IOutput));
             Debug.printline("Found " + outputs.Count().ToString() + " Outputs");
@@ -83,7 +83,9 @@ namespace FractalBlaster.Runtime {
 
             if (playlistForms.Count() < 1)
             {
-                Debug.printline("WARNING: Playlist Form not found.");
+                Debug.printline("ERROR: Playlist Form not found.  Exiting in 5 seconds");
+                Thread.Sleep(5000);
+                return;
             }
             else
             {
@@ -91,10 +93,8 @@ namespace FractalBlaster.Runtime {
                 {
                     Debug.printline("WARNING: More than one Playlist Form found.");
                 }
-                IPlaylistForm playlistForm = (IPlaylistForm)playlistForms.First();
-                playbackControlForm.form.AddOwnedForm(playlistForm.form);
-                playlistForm.form.Show();
             }
+            IPlaylistForm playlistForm = (IPlaylistForm)playlistForms.First();
 
             if (inputs.Count() < 1)
             {
@@ -122,10 +122,36 @@ namespace FractalBlaster.Runtime {
 
             IOutput output = (IOutput)outputs.First();
 
-            output.input = input;
+            if (playlists.Count() < 1)
+            {
+                Debug.printline("ERROR: Playlist not found.  Exiting in 5 seconds");
+                Thread.Sleep(5000);
+                return;
+            }
+            else if (playlists.Count() > 1)
+            {
+                Debug.printline("WARNING: More than one Playlist found.");
+            }
 
+            IPlaylist playlist = (IPlaylist)playlists.First();
+
+            playbackControlForm.form.AddOwnedForm(playlistForm.form);
+            playlistForm.form.Show();
+
+            List<IMetadataPlugin> metadataPluginTypeList = new List<IMetadataPlugin>();
+            foreach (IMetadataPlugin p in metadataPlugins)
+            {
+                metadataPluginTypeList.Add(p);
+            }
+
+            MediaFile.MetadataPlugins = metadataPluginTypeList;
+            output.input = input;
             playbackControl.input = input;
             playbackControl.output = output;
+            playbackControl.playlist = playlist;
+            playlist.playlistForm = playlistForm;
+            playlistForm.playlist = playlist;
+            
             
             Application.Run(playbackControlForm.form);
         }

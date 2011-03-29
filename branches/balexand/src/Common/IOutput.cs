@@ -11,7 +11,16 @@ namespace FractalBlaster.Universe
         void Stop();
         void Pause();
         void Resume();
-        int Volume { get; set; }
-        IInput input { set; }
+        
+        IInput input 
+        {
+            set; 
+        }
+
+        Int32 Volume
+        {
+            set;
+        }
+
     }
 }

@@ -27,5 +27,15 @@ namespace FractalBlaster.Universe
             set;
         }
 
+        IPlaylist playlist
+        {
+            set;
+        }
+
+        Int32 volume
+        {
+            set;
+        }
+
     }
 }

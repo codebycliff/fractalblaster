@@ -12,5 +12,11 @@ namespace FractalBlaster.Universe
         {
             get;
         }
+
+        IPlaylist playlist
+        {
+            set;
+        }
+
     }
 }

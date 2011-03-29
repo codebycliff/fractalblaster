@@ -14,10 +14,12 @@ namespace FractalBlaster.PlaybackControlForm
     public partial class PlaybackControlForm : Form , IPlaybackControlForm
     {
         IPlaybackControl mPlaybackControl;
+        int volume;
 
         public PlaybackControlForm()
         {
             Debug.printline("PlaybackControlForm()");
+            volume = 100;
             InitializeComponent();            
         }
 
@@ -154,6 +156,21 @@ namespace FractalBlaster.PlaybackControlForm
             repeatButton.Region = new System.Drawing.Region(buttonPath);
         }
 
+        private void VolumeControl_Paint(object sender, PaintEventArgs e)
+        {
+            GraphicsPath outline = new GraphicsPath();
+            outline.AddLine(0, 39, 100, 0);
+            outline.AddLine(100, 0, 100, 39);
+            outline.AddLine(100, 39, 0, 39);
+            e.Graphics.DrawPath(Pens.Black, outline);
+
+            GraphicsPath fill = new GraphicsPath();
+            fill.AddLine(0, 39, volume, 39);
+            fill.AddLine(volume, 39, volume, 39 - 39 * volume / 100);
+            fill.AddLine(volume, 39 - 39 * volume / 100, 0, 39);
+            e.Graphics.FillPath(Brushes.Green, fill);
+        }
+
         bool mouseDown;
         Point mouse_offset;
         List<Point> window_offset;
@@ -195,7 +212,64 @@ namespace FractalBlaster.PlaybackControlForm
             mouseDown = false;
         }
 
+        private bool volumeMouseDown;
 
+        private void VolumeControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if ((39 - e.Y) <= e.X * 39 / 100)
+            {
+                volumeMouseDown = true;
+                changeVolume(e);
+            }
+        }
+
+        private void VolumeControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (volumeMouseDown)
+            {
+                changeVolume(e);
+            }
+        }
+
+        private void VolumeControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            volumeMouseDown = false;
+        }
+
+        private void changeVolume(MouseEventArgs e)
+        {
+            if ((e.X >= 0) && (e.X <= 100))
+            {
+                volume = e.X;
+            }
+            else if (e.X < 0)
+            {
+                volume = 0;
+            }
+            else
+            {
+                volume = 100;
+            }
+            mPlaybackControl.volume = volume;
+            VolumeControl.Refresh();
+        }
+
+        private void debugToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (debugToolStripMenuItem.Checked)
+            {
+                Debug.show();
+            }
+            else
+            {
+                Debug.hide();
+            }
+        }
+
+        private void debugToolStripMenuItem_Paint(object sender, PaintEventArgs e)
+        {
+            debugToolStripMenuItem.Checked = Debug.Visible;
+        }
 
     }
 }

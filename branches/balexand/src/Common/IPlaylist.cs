@@ -12,5 +12,12 @@ namespace FractalBlaster.Universe
         MediaFile getNext();
         MediaFile getPrevious();
         MediaFile getIndex(int i);
+        void add(MediaFile f);
+
+        IPlaylistForm playlistForm
+        {
+            set;
+        }
+
     }
 }
