@@ -26,6 +26,7 @@ namespace FractalBlaster
 					virtual void Resume(void);
 
 					virtual property FractalBlaster::Universe::IInput^ input { void set(FractalBlaster::Universe::IInput^); }
+					virtual property FractalBlaster::Universe::IPlaybackControl^ playbackControl { void set(FractalBlaster::Universe::IPlaybackControl^); }
 
 					#pragma endregion
 
@@ -43,7 +44,8 @@ namespace FractalBlaster
 					FractalBlaster::Universe::BufferHandler^ BuffPtrDel;
 
 					FractalBlaster::Universe::IInput^ inputSource;
-					
+					FractalBlaster::Universe::IPlaybackControl^ playbackControlPtr;
+
 					OutputStream^ currentStream;
 
 					System::Boolean playing;

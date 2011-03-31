@@ -43,6 +43,19 @@ namespace FractalBlaster.PlaylistForm
             dataGridView1.Refresh();
         }
 
+        public void selectIndex(int i)
+        {
+            foreach (DataGridViewRow r in dataGridView1.Rows)
+            {
+                r.Selected = false;
+            }
+            if ((i < 0) || (i >= dataGridView1.Rows.Count))
+            {
+                return;
+            }
+            dataGridView1.Rows[i].Selected = true;
+        }
+
         private void dataGridView1_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
 

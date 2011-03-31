@@ -15,12 +15,18 @@ namespace FractalBlaster.PlaybackControlForm
     {
         IPlaybackControl mPlaybackControl;
         int volume;
+        bool playing;
+        SeekBar seekBar;
 
         public PlaybackControlForm()
         {
             Debug.printline("PlaybackControlForm()");
             volume = 100;
-            InitializeComponent();            
+            playing = false;
+            seekBar = new SeekBar();
+            InitializeComponent();
+            SeekBarPanel.Controls.Add(seekBar);
+            seekBarRefreshTimer.Start();
         }
 
         public Form form
@@ -33,6 +39,22 @@ namespace FractalBlaster.PlaybackControlForm
             set { mPlaybackControl = value; }
         }
 
+        public bool isPlaying
+        {
+            set 
+            {
+                playing = value;
+                if (value)
+                {
+                    playButton.Image = FractalBlaster.PlaybackControlForm.Properties.Resources.pause;
+                }
+                else
+                {
+                    playButton.Image = FractalBlaster.PlaybackControlForm.Properties.Resources.play;
+                }
+            }
+        }
+
         private void stopButton_Click(object sender, EventArgs e)
         {
             mPlaybackControl.Stop();
@@ -43,9 +65,19 @@ namespace FractalBlaster.PlaybackControlForm
             mPlaybackControl.Previous();
         }
 
+
         private void playButton_Click(object sender, EventArgs e)
         {
-            mPlaybackControl.Play();
+            if (playing)
+            {
+                mPlaybackControl.Pause();
+                playing = false;
+            }
+            else
+            {
+                mPlaybackControl.Play();
+                playing = true;
+            }
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -75,13 +107,21 @@ namespace FractalBlaster.PlaybackControlForm
 
             if (myOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                label2.Text = myOpenFileDialog.FileName;
-                label2.Refresh();
                 mPlaybackControl.Open(myOpenFileDialog.FileName);
             }
 
         }
 
+        private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+
+            if (myOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                mPlaybackControl.Add(myOpenFileDialog.FileName);
+            }
+
+        }
 
         private void stopButton_Paint(object sender, PaintEventArgs e)
         {
@@ -269,6 +309,13 @@ namespace FractalBlaster.PlaybackControlForm
         private void debugToolStripMenuItem_Paint(object sender, PaintEventArgs e)
         {
             debugToolStripMenuItem.Checked = Debug.Visible;
+        }
+
+        private void seekBarRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            seekBar.time = mPlaybackControl.getPlaybackTime();
+            seekBar.totalTime = (int)mPlaybackControl.getSongLength();
+            seekBar.Refresh();
         }
 
     }

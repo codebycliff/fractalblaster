@@ -63,6 +63,7 @@ namespace FractalBlaster.PlaylistForm
             {
                 pd.addRow(mf.Metadata.Artist, mf.Metadata.Title);
             }
+            pd.selectIndex(mPlaylist.getCurrentIndex());
         }
 
     }

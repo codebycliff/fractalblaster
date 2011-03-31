@@ -81,6 +81,11 @@ namespace FractalBlaster
 				this->inputSource = i;
 			}
 
+			void Wrapper::playbackControl::set(FractalBlaster::Universe::IPlaybackControl^ pc)
+			{
+				this->playbackControlPtr = pc;
+			}
+
 			#pragma endregion
 
 			System::IntPtr Wrapper::GetBufferPointer(bool cleanup)
@@ -96,6 +101,7 @@ namespace FractalBlaster
 
 				if(PCM == nullptr)
 				{
+					playbackControlPtr->PlaybackComplete();
 					return System::IntPtr::Zero;
 				}
 

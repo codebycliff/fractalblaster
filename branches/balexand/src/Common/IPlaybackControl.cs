@@ -16,6 +16,10 @@ namespace FractalBlaster.Universe
         MemoryStream GetFrames();
 
         void Open(string filename);
+        void Add(string filename);
+        void PlaybackComplete();
+        int getPlaybackTime();
+        double getSongLength();
 
         IInput input
         {
@@ -28,6 +32,11 @@ namespace FractalBlaster.Universe
         }
 
         IPlaylist playlist
+        {
+            set;
+        }
+
+        IPlaybackControlForm playbackControlForm
         {
             set;
         }

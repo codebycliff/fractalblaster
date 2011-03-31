@@ -69,7 +69,7 @@
             this.ClientSize = new System.Drawing.Size(400, 300);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Location = new System.Drawing.Point(0, 200);
+            this.Location = new System.Drawing.Point(0, 130);
             this.Name = "PlaylistForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

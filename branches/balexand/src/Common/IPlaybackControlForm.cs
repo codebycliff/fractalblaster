@@ -16,5 +16,9 @@ namespace FractalBlaster.Universe
         {
             set;
         }
+        bool isPlaying
+        {
+            set;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace FractalBlaster.Playlist
         public Playlist()
         {
             currentList = new List<MediaFile>();
+            currentIndex = -1;
         }
 
         #region IPlaylist Members
@@ -27,6 +28,10 @@ namespace FractalBlaster.Playlist
 
         public MediaFile getCurrent()
         {
+            if (currentIndex == -1)
+            {
+                return null;
+            }
             return currentList.ElementAt(currentIndex);
         }
 
@@ -59,6 +64,10 @@ namespace FractalBlaster.Playlist
 
         public void add(MediaFile f)
         {
+            if (currentIndex == -1)
+            {
+                currentIndex = 0;
+            }
             currentList.Add(f);
             mPlaylistForm.form.Refresh();
         }
@@ -66,6 +75,41 @@ namespace FractalBlaster.Playlist
         public IPlaylistForm playlistForm
         {
             set { mPlaylistForm = value; }
+        }
+
+        public void clear()
+        {
+            currentList.Clear();
+        }
+
+        public void selectIndex(int i)
+        {
+            if ((i < 0) || (i >= currentList.Count))
+            {
+                throw new IndexOutOfRangeException();
+            }
+            currentIndex = i;
+        }
+
+        public void selectNext()
+        {
+            if (currentIndex < currentList.Count - 1)
+            {
+                currentIndex++;
+            }
+        }
+
+        public void selectPrevious()
+        {
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+            }
+        }
+
+        public int getCurrentIndex()
+        {
+            return currentIndex;
         }
         
         #endregion

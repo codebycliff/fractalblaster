@@ -79,8 +79,7 @@ namespace FractalBlaster.Runtime {
             Debug.printline("Starting Playback Control Form");
             IPlaybackControlForm playbackControlForm = (IPlaybackControlForm) playbackControlForms.First();
             IPlaybackControl playbackControl = (IPlaybackControl)playbackControls.First();
-            playbackControlForm.playbackControl = playbackControl;
-
+            
             if (playlistForms.Count() < 1)
             {
                 Debug.printline("ERROR: Playlist Form not found.  Exiting in 5 seconds");
@@ -145,13 +144,15 @@ namespace FractalBlaster.Runtime {
             }
 
             MediaFile.MetadataPlugins = metadataPluginTypeList;
+
             output.input = input;
+            playbackControlForm.playbackControl = playbackControl;
             playbackControl.input = input;
             playbackControl.output = output;
             playbackControl.playlist = playlist;
+            playbackControl.playbackControlForm = playbackControlForm;
             playlist.playlistForm = playlistForm;
             playlistForm.playlist = playlist;
-            
             
             Application.Run(playbackControlForm.form);
         }
