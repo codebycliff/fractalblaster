@@ -5,6 +5,8 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Universe {
@@ -125,15 +127,10 @@ namespace FractalBlaster.Universe {
         {
             FileInfo[] files = Root.GetFiles("*.mp3", SearchOption.AllDirectories);
 
-            foreach (FileInfo file in files)
+            Parallel.ForEach(files, file =>
             {
-                if (MediaPaths.Contains(file.FullName))
+                if (!MediaPaths.Contains(file.FullName))
                 {
-                    continue;
-                }
-                else
-                {
-                    MediaPaths.Add(file.FullName);
                     try
                     {
                         MediaFile media = file.CreateMediaFile();
@@ -166,7 +163,15 @@ namespace FractalBlaster.Universe {
                         dr["Duration"] = duration;
                         dr["File"] = media;
 
-                        MediaCollection.Rows.Add(dr);
+                        lock (MediaPaths)
+                        {
+                            MediaPaths.Add(file.FullName);
+                        }
+
+                        lock (MediaCollection)
+                        {
+                            MediaCollection.Rows.Add(dr);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -174,7 +179,7 @@ namespace FractalBlaster.Universe {
                     }
                 }
 
-            }
+            });
         }
 
         /// <summary>
@@ -287,6 +292,11 @@ namespace FractalBlaster.Universe {
         {
             FileName = "Library.xml";
             
+        }
+
+        ~Library()
+        {
+            this.Save();
         }
 
         public static String FileName { get; private set; }
