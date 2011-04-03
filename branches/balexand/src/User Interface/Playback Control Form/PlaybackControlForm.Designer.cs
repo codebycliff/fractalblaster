@@ -70,7 +70,7 @@
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 25);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(89, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(181, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -104,6 +104,7 @@
             this.openPlaylistToolStripMenuItem.Name = "openPlaylistToolStripMenuItem";
             this.openPlaylistToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.openPlaylistToolStripMenuItem.Text = "Open Playlist";
+            this.openPlaylistToolStripMenuItem.Click += new System.EventHandler(this.openPlaylistToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 

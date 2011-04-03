@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="m3uPlaylist.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaglibAudioMetadata.cs" />

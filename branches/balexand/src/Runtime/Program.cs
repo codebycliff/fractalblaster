@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FractalBlaster.Universe;
 using System.Threading;
+using System.IO;
 
 namespace FractalBlaster.Runtime {
 
@@ -17,6 +18,14 @@ namespace FractalBlaster.Runtime {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Debug.printline("FractalBlasters started");
+
+            if (!File.Exists("config.ini"))
+            {
+                System.Diagnostics.Process setupProcess = new System.Diagnostics.Process();
+                setupProcess.StartInfo.FileName = "Setup.exe";
+                setupProcess.Start();
+                setupProcess.WaitForExit();
+            }
 
             PluginManager.Refresh();
             Debug.printline("Found " + PluginManager.AllPlugins.Count().ToString() + " Plugins");
@@ -144,9 +153,13 @@ namespace FractalBlaster.Runtime {
             }
 
             MediaFile.MetadataPlugins = metadataPluginTypeList;
+            Config.getProperty("abc");
 
-            output.input = input;
+
+            //output.input = input;
+            output.readFunction = input.GetFrames;
             playbackControlForm.playbackControl = playbackControl;
+            playbackControlForm.playlist = playlist;
             playbackControl.input = input;
             playbackControl.output = output;
             playbackControl.playlist = playlist;

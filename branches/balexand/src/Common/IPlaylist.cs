@@ -7,6 +7,7 @@ namespace FractalBlaster.Universe
 {
     public interface IPlaylist : IPlugin
     {
+        void open(string filename);
         List<MediaFile> getList();
         MediaFile getCurrent();
         MediaFile getNext();
@@ -18,6 +19,8 @@ namespace FractalBlaster.Universe
         void selectNext();
         void selectPrevious();
         int getCurrentIndex();
+        void selectList(int i);
+        void newList();
 
         IPlaylistForm playlistForm
         {

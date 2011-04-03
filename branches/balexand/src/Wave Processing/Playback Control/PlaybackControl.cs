@@ -17,13 +17,16 @@ namespace FractalBlaster.PlaybackControl
         state playbackState;
         int playbackTime;
         Timer playbackTimer;
+        MediaFile currentFile;
+
+        List<string> fileFormats;
 
         public PlaybackControl()
         {
             playbackState = state.Stopped;
             playbackTimer = new Timer(1000);
             playbackTimer.Enabled = false;
-            playbackTimer.Elapsed += new ElapsedEventHandler(playbackTimer_Elapsed);
+            playbackTimer.Elapsed += new ElapsedEventHandler(playbackTimer_Elapsed);            
         }
 
         void playbackTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -73,7 +76,8 @@ namespace FractalBlaster.PlaybackControl
                     break;
                 case state.Stopped:
                     playbackTime = 0;
-                    mInput.Open(mPlaylist.getCurrent().Info.FullName);
+                    currentFile = mPlaylist.getCurrent();
+                    mInput.Open(currentFile.Info.FullName);
                     mOutput.Play();
                     playbackState = state.Playing;
                     break;
@@ -118,24 +122,11 @@ namespace FractalBlaster.PlaybackControl
 
         }
 
-        public System.IO.MemoryStream GetFrames()
+        public System.IO.MemoryStream GetFrames(int numFramesToRead)
         {
-            throw new NotImplementedException();
-        }
+            System.IO.MemoryStream myStream =  mInput.GetFrames(numFramesToRead);
 
-        public void Open(string filename)
-        {
-            Stop();
-            MediaFile newMediaFile = new MediaFile(filename);
-            mPlaylist.clear();
-            mPlaylist.add(newMediaFile);
-
-        }
-
-        public void Add(string filename)
-        {
-            MediaFile newMediaFile = new MediaFile(filename);
-            mPlaylist.add(newMediaFile);
+            return myStream;
         }
 
         public void PlaybackComplete()
@@ -150,11 +141,11 @@ namespace FractalBlaster.PlaybackControl
 
         public double getSongLength()
         {
-            if (mPlaylist.getCurrent() == null)
+            if (currentFile == null)
             {
                 return 0;
             }
-            return mPlaylist.getCurrent().Metadata.Duration.TotalSeconds;
+            return currentFile.Metadata.Duration.TotalSeconds;
         }
 
         #endregion

@@ -11,16 +11,19 @@ namespace FractalBlaster.Universe
         void Stop();
         void Pause();
         void Resume();
-        
-        IInput input 
-        {
-            set; 
-        }
 
         Int32 Volume
         {
             set;
         }
 
+        ReadFunction readFunction
+        {
+            set;
+        }
+
     }
+    
+    public delegate System.IO.MemoryStream ReadFunction(int numFramesToRead);
+
 }

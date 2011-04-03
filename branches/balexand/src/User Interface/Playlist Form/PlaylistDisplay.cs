@@ -14,6 +14,7 @@ namespace FractalBlaster.PlaylistForm
     {
 
         DataTable dataSource;
+        PlaylistForm parent;
 
         public PlaylistDisplay()
         {
@@ -27,6 +28,11 @@ namespace FractalBlaster.PlaylistForm
             dataGridView1.Columns["Artist"].Width = 200;
             dataGridView1.Columns["Title"].Width = 200;
             dataGridView1.Refresh();
+        }
+
+        public PlaylistForm ParentForm
+        {
+            set { parent = value; }
         }
 
         public void clearRows()
@@ -61,6 +67,33 @@ namespace FractalBlaster.PlaylistForm
 
         }
 
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (i != e.RowIndex)
+                {
+                    foreach (DataGridViewCell d in dataGridView1.Rows[i].Cells)
+                        d.Style.BackColor = Color.White;
+                }
+                else
+                {
+                    foreach (DataGridViewCell d in dataGridView1.Rows[i].Cells)
+                    {
+                        d.Style.BackColor = Color.Blue;
+                    }
+                }
+            }
+            parent.selectIndex(e.RowIndex);
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (DataGridViewCell d in dataGridView1.CurrentRow.Cells)
+            {
+                d.Selected = true;
+            }
+        }
 
     }
 }

@@ -43,6 +43,11 @@ namespace FractalBlaster
 				WaveInterface::instance->SetVolume(vol);
 			}
 
+			void Wrapper::readFunction::set(FractalBlaster::Universe::ReadFunction^ funct)
+			{
+				myReadFunction = funct;
+			}
+
 			void Wrapper::Play()
 			{
 				currentStream = gcnew OutputStream(BuffPtrDel, BuffSizeDel, 2);
@@ -76,10 +81,6 @@ namespace FractalBlaster
 				IsPlaying = true;
 			}
 
-			void Wrapper::input::set(FractalBlaster::Universe::IInput^ i)
-			{
-				this->inputSource = i;
-			}
 
 			void Wrapper::playbackControl::set(FractalBlaster::Universe::IPlaybackControl^ pc)
 			{
@@ -97,7 +98,7 @@ namespace FractalBlaster
 					NativeData->RemoveAt(0);
 				}
 
-				PCM = inputSource->GetFrames(50);
+				PCM = myReadFunction(50);
 
 				if(PCM == nullptr)
 				{

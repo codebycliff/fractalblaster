@@ -16,6 +16,10 @@ namespace FractalBlaster.Universe
         {
             set;
         }
+        IPlaylist playlist
+        {
+            set;
+        }
         bool isPlaying
         {
             set;

@@ -13,10 +13,8 @@ namespace FractalBlaster.Universe
         void Stop();
         void Next();
         void Previous();
-        MemoryStream GetFrames();
+        MemoryStream GetFrames(int numFramesToRead);
 
-        void Open(string filename);
-        void Add(string filename);
         void PlaybackComplete();
         int getPlaybackTime();
         double getSongLength();

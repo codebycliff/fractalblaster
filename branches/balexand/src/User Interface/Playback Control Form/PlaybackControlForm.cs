@@ -14,6 +14,7 @@ namespace FractalBlaster.PlaybackControlForm
     public partial class PlaybackControlForm : Form , IPlaybackControlForm
     {
         IPlaybackControl mPlaybackControl;
+        IPlaylist mPlaylist;
         int volume;
         bool playing;
         SeekBar seekBar;
@@ -37,6 +38,11 @@ namespace FractalBlaster.PlaybackControlForm
         public IPlaybackControl playbackControl
         {
             set { mPlaybackControl = value; }
+        }
+
+        public IPlaylist playlist
+        {
+            set { mPlaylist = value; }
         }
 
         public bool isPlaying
@@ -104,10 +110,16 @@ namespace FractalBlaster.PlaybackControlForm
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+            myOpenFileDialog.Filter = Config.getProperty("fileformats");
+            myOpenFileDialog.Multiselect = true;
 
             if (myOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                mPlaybackControl.Open(myOpenFileDialog.FileName);
+                mPlaylist.newList();
+                foreach (string s in myOpenFileDialog.FileNames)
+                {
+                    mPlaylist.add(new MediaFile(s));
+                }
             }
 
         }
@@ -115,10 +127,13 @@ namespace FractalBlaster.PlaybackControlForm
         private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog myOpenFileDialog = new OpenFileDialog();
-
+            myOpenFileDialog.Multiselect = true;
             if (myOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                mPlaybackControl.Add(myOpenFileDialog.FileName);
+                foreach (string s in myOpenFileDialog.FileNames)
+                {
+                    mPlaylist.add(new MediaFile(s));
+                }
             }
 
         }
@@ -316,6 +331,11 @@ namespace FractalBlaster.PlaybackControlForm
             seekBar.time = mPlaybackControl.getPlaybackTime();
             seekBar.totalTime = (int)mPlaybackControl.getSongLength();
             seekBar.Refresh();
+        }
+
+        private void openPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
 
     }
