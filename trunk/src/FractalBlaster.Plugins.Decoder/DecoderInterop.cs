@@ -26,11 +26,17 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
         public String FilePath { get; private set; }
 
+        /// <summary>
+        /// Initializes 3rd party libraries that contain copyrighted and patent protected codecs
+        /// </summary>
         static DecoderInterop() {
             // FractalBlaster.Plugins.Decoder.FFMPEG Register All Encoders/Decoders
             FFMPEG.av_register_all();
         }
         
+        /// <summary>
+        /// Creates an instance of a decoder. Initializes all values need for interoperation with 3rd party library and all information used in metrics
+        /// </summary>
         public DecoderInterop() {
             audioCodecContext = new FFMPEG.AVCodecContext();
             formatContext = new FFMPEG.AVFormatContext();
@@ -46,20 +52,33 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             SampleSize = -1;
         }
 
+        /// <summary>
+        /// Plugin Interface Initialization
+        /// </summary>
+        /// <param name="context"></param>
         public void Initialize(AppContext context) {
             Context = context;
         }
 
+        /// <summary>
+        /// Frees all static information in 3rd party libraries
+        /// </summary>
         ~DecoderInterop() {
             //FractalBlaster.Plugins.Decoder.FFMPEG.av_free_static();
         }
 
+        /// <summary>
+        /// Returns a byte array containing the PCM data for the next audio frame.
+        /// Retrieves an audio packet from FFMPEG
+        /// Extracts audio frame byte data (4068 bytes)
+        /// Returns byte array representing PCM data for this frame.
+        /// </summary>
+        /// <returns></returns>
         public Byte[] RetrieveNextFrame() {
             byte[] rval;
 
             IntPtr pPacket = Marshal.AllocHGlobal(56);
             if (FFMPEG.av_read_frame(pFormatContext, pPacket) < 0) {
-                // TODO: Error Log - Failed to retrieve frame
                 return null;
             }
 
@@ -73,8 +92,6 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             }
 
             try {
-                // TODO: Define arbitrary AUDIO_FRAME_SIZE
-
                 int AUDIO_FRAME_SIZE = 5000;
 
                 int frameSize = 0;
@@ -101,6 +118,11 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         
         #region [ IInputPlugin ]
 
+        /// <summary>
+        /// Seeks to the given value within the file within seconds.
+        /// The parameter is intended to be within the scope of the file length
+        /// </summary>
+        /// <param name="seconds"></param>
         public void Seek(int seconds)
         {
             Int64 AVSeekAmt = seconds * FFMPEG.AV_TIME_BASE;
@@ -114,6 +136,11 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             FFMPEG.avcodec_flush_buffers(pAudioCodecContext);
         }
 
+        /// <summary>
+        /// Opens the file specified and determine the correct codec to use for extracting PCM data
+        /// Also determines other information such as sample size and codec type
+        /// </summary>
+        /// <param name="media"></param>
         public void OpenMedia(MediaFile media) {
 
             // Open Input Audio File
@@ -124,7 +151,6 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
             // Determine Audio Codec
             if (FFMPEG.av_find_stream_info(pFormatContext) < 0) {
                 throw new FileLoadException("Unable to read audio stream");
-                // TODO: Error Log
             }
 
             formatContext = (FFMPEG.AVFormatContext)Marshal.PtrToStructure(pFormatContext, typeof(FFMPEG.AVFormatContext));
@@ -143,7 +169,6 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
                     pAudioCodec = FFMPEG.avcodec_find_decoder(audioCodecContext.codec_id);
                     if (pAudioCodec == IntPtr.Zero) {
                         throw new FileLoadException("Unable to find codec");
-                        // TODO: Error Log
                     }
 
                     FFMPEG.avcodec_open(stream.codec, pAudioCodec);
@@ -152,15 +177,16 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
             if (audioStartIndex == -1) {
                 throw new FileLoadException("Unable to find audio stream");
-                // TODO: Error Log
             }
 
             SampleSize = audioCodecContext.frame_size;
 
         }
 
+        /// <summary>
+        /// Closes and purges the audio file from FFMPEG library
+        /// </summary>
         public void CloseMedia() {
-            //FractalBlaster.Plugins.Decoder.FFMPEG.av_freep(pAudioStream);
             FFMPEG.avcodec_close(pAudioCodecContext);
             FFMPEG.av_close_input_file(pFormatContext);
 
@@ -179,6 +205,11 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
 
         }
 
+        /// <summary>
+        /// Reads a series of frames and returns a MemoryStream with the PCM data
+        /// </summary>
+        /// <param name="numFramesToRead"></param>
+        /// <returns></returns>
         public MemoryStream ReadFrames(int numFramesToRead) {
             MemoryStream rval = new MemoryStream();
             for (int i = 0; i < numFramesToRead; i++) {
@@ -191,6 +222,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
                 }
                 rval.Write(vals, 0, vals.Length);
             }
+
             return rval;
         }
         
