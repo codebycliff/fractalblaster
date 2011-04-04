@@ -12,7 +12,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
         Name = "WPL Playlist",
         Description = "Provides support for reading and writing the WPL Playlist file format",
         Author = "Kevin Moore @ Fractal Blasters",
-        Version = "0.1"
+        Version = "1.0"
     )]
     public class WPLPlaylistPlugin : IPlaylistPlugin
     {
@@ -23,6 +23,11 @@ namespace FractalBlaster.Plugins.WPLPlaylist
             return extension.ToLower().CompareTo("wpl") == 0;
         }
 
+        /// <summary>
+        /// Reads the WPL formatted playlist and returns a valid Playlist object as pertains to our program.
+        /// </summary>
+        /// <param name="path">The file path of the WPL Playlist to read</param>
+        /// <returns>A valid Playlist as readable by our program</returns>
         public Playlist Read(string path)
         {
             Playlist playlist = new Playlist();
@@ -60,6 +65,11 @@ namespace FractalBlaster.Plugins.WPLPlaylist
             return playlist;
         }
 
+        /// <summary>
+        /// Writes the Playlist deemed by "playlist" to the location given by "path" in a valid WPL Playlist format.
+        /// </summary>
+        /// <param name="playlist">The Playlist object to convert to WPL and write to file</param>
+        /// <param name="path">The file path to write the Playlist to</param>
         public void Write(Playlist playlist, string path)
         {
             using (StreamWriter writer = new StreamWriter(File.OpenWrite(path)))
@@ -68,14 +78,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                 writer.WriteLine("<smil>");
                 writer.WriteLine("<head>");
                 writer.WriteLine("<meta name=\"Generator\" content=\"Microsoft Windows Media Player -- 12.0.7600.16667\"/>");
-                /*writer.WriteLine("<meta name=\"IsNetworkFeed\" content=\"0\"/>");
-                writer.WriteLine("<meta name=\"ItemCount\" content=\"\"/>");
-                writer.WriteLine("<meta name=\"IsFavorite\"/>");
-                writer.WriteLine("<meta name=\"ContentPartnerListID\"/>");
-                writer.WriteLine("<meta name=\"ContentPartnerNameType\"/>");
-                writer.WriteLine("<meta name=\"ContentPartnerName\"/>");
-                writer.WriteLine("<meta name=\"Subtitle\"/>");
-                */writer.WriteLine("<author/>");
+                writer.WriteLine("<author/>");
                 writer.WriteLine("<title>\""+playlist.Title+"\"</title>");
                 writer.WriteLine("</head>");
                 writer.WriteLine("<body>");
@@ -87,20 +90,32 @@ namespace FractalBlaster.Plugins.WPLPlaylist
             }
         }
 
+        /// <summary>
+        /// Initialize the plugin
+        /// </summary>
+        /// <param name="context"></param>
         public void Initialize(AppContext context)
         {
             Context = context;
         }
 
+        /// <summary>
+        /// Return the supported file extensions as deemed by this plugin
+        /// </summary>
         public IEnumerable<string> SupportedFileExtensions
         {
             get { return new String[] { ".wpl" }; }
         }
 
+        /// <summary>
+        /// Retrieves the playlist name from the StreamReader
+        /// </summary>
+        /// <param name="reader">The StreamReader to grab the Playlist name from</param>
+        /// <returns>The name of the Playlist or a blank string if no name</returns>
         private string ReturnPlaylistName(StreamReader reader)
         {
             string line = "";
-            while (!reader.EndOfStream && !line.Contains("<title>") && !line.Contains("<seq>"))//<title> means we found it, <seq> means it doesn't exist, EOS is obvious
+            while (!reader.EndOfStream && !line.Contains("<title>") && !line.Contains("<seq>"))//<title> means we found it, <seq> means it doesn't exist, EOS is simply the end of stream
             {
                 line = reader.ReadLine().Trim();
             }
