@@ -97,11 +97,11 @@ namespace FractalBlaster.Plugins.WaveView
                 int readResult = myStream.Read(buffer, 0, 16);
                 if (readResult == 0) return;
                 long sum = 0;
-                for (int j = 0; j < 16; j++)
+                for (int j = 0; j < 16; j += 2)
                 {
-                    sum += buffer[j];
+                    sum += ((Int16)((buffer[j + 1] << 8) | (buffer[j]))) + 32768;
                 }
-                waveData[i] = (byte)(sum / 16.0 / 2.55);
+                waveData[i] = (byte)(sum / 8.0 / 655.35);
             }
             Pen wavePen = new Pen(Color.FromArgb(0, 255, 0));
             float x1 = 0, y1 = 0, x2 = 0, y2 = 0;
