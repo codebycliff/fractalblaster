@@ -52,6 +52,7 @@ namespace FractalBlaster.Core.UI
         public IPlaybackTimer PlaybackTimer
         {
             set { mPlaybackTimer = value; }
+            get { return mPlaybackTimer; }
         }
 
 
@@ -65,7 +66,7 @@ namespace FractalBlaster.Core.UI
             e.Graphics.DrawPath(Pens.Black, seekBorder);
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (mTotalTime != 0)
+            if (mTotalTime != 0 && mTime < mTotalTime)
             {
                 Rectangle seekRectangle = new Rectangle((mTime * 200 / mTotalTime) - 6, 3, 14, 14);
                 e.Graphics.FillEllipse(Brushes.DarkRed, seekRectangle);
@@ -76,7 +77,11 @@ namespace FractalBlaster.Core.UI
                     e.Graphics.FillEllipse(Brushes.IndianRed, newSeekRect);
                 }
             }
-            
+
+            if (mTime == mTotalTime)
+            {
+                PlaybackTimer.timerStop();
+            }
             
             label1.Text = String.Format("{0:d2}:{1:d2}/{2:d2}:{3:d2}",
                 mTime / 60, mTime % 60, mTotalTime / 60, mTotalTime % 60);
