@@ -46,6 +46,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.Name = "SeekBar";
             this.Size = new System.Drawing.Size(282, 22);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.SeekBar_Paint);

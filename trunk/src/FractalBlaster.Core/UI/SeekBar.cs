@@ -63,6 +63,7 @@ namespace FractalBlaster.Core.UI
             Region outsideBorder = new Region(this.Bounds);
             outsideBorder.Exclude(seekBorder);
             e.Graphics.DrawPath(Pens.Black, seekBorder);
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             if (mTotalTime != 0)
             {

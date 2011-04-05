@@ -95,7 +95,7 @@ namespace FractalBlaster.Universe {
         /// </param>
         public void RequestMediaAt(Int32 index) {
             SelectedIndex = index;
-            if (MediaRequested != null) {
+            if (MediaRequested != null && !(index >= MediaItems.Count)) {
                 MediaRequested(MediaItems[index]);
             }
         }
