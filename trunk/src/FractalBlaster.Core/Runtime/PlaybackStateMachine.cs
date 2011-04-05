@@ -18,7 +18,7 @@ namespace FractalBlaster.Core.Runtime {
     public class PlaybackStateMachine : IOutputPlugin {
 
         public PlaybackState State { get; private set; }
-        
+
         public PlaybackStateMachine(IOutputPlugin output, IInputPlugin input) {
             State = PlaybackState.Stopped;
             OutputStream = output;
@@ -33,6 +33,7 @@ namespace FractalBlaster.Core.Runtime {
 
         public void Play() {
             if (Context.Engine.IsMediaLoaded) {
+                Context.Engine.Timer.timerStart();
                 switch (State) {
                 case PlaybackState.Paused:
                     OutputStream.Resume();
@@ -42,6 +43,7 @@ namespace FractalBlaster.Core.Runtime {
                     break;
                 case PlaybackState.Stopped:
                     State = PlaybackState.Playing;
+                    Context.Engine.Timer.currentTime = 0;
                     OutputStream.Play();
                     break;
                 }
@@ -66,6 +68,7 @@ namespace FractalBlaster.Core.Runtime {
                 //FamilyKernel.Log.Info("Attempt to Play in the PlaybackStateMachine without Engine being loaded with media.");
                 return;
             }
+            Context.Engine.Timer.timerStop();
             switch (State) {
             case PlaybackState.Paused:
                 OutputStream.Resume();
@@ -86,12 +89,15 @@ namespace FractalBlaster.Core.Runtime {
 
         public void Stop() {
             if (Context.Engine.IsMediaLoaded) {
+                Context.Engine.Timer.timerStop();
+                Context.Engine.Timer.currentTime = 0;
                 switch (State) {
                 case PlaybackState.Paused:
                 case PlaybackState.Playing:
                     OutputStream.Stop();
                     InputController.Seek(0);
                     State = PlaybackState.Stopped;
+
                     break;
                 case PlaybackState.Stopped:
                     break;

@@ -25,6 +25,7 @@ namespace FractalBlaster.Core.Runtime {
 
         public IEnumerable<IPlugin> AllPlugins { get; private set; }
 
+        public IPlaybackTimer Timer { get; private set; }
 
         public MediaFile CurrentMedia { get; private set; }
 
@@ -76,7 +77,7 @@ namespace FractalBlaster.Core.Runtime {
             InputPlugin.Initialize(Context);
             OutputPlugin = new PlaybackStateMachine(output, input);
             OutputPlugin.Initialize(Context);
-            
+            Timer = new PlaybackTimer();
         }
 
         private static AudioEngine mInstance;

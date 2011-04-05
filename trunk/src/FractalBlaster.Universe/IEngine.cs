@@ -17,6 +17,7 @@ namespace FractalBlaster.Universe {
 
         IOutputPlugin OutputPlugin { get; }
 
+        IPlaybackTimer Timer { get; }
 
         MediaFile CurrentMedia { get; }
         

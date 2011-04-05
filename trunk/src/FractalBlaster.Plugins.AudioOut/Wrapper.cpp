@@ -13,6 +13,7 @@ namespace FractalBlaster
 				NativeData = gcnew System::Collections::Generic::List< System::Collections::Generic::KeyValuePair<System::Runtime::InteropServices::GCHandle, System::IntPtr> >();
 				BuffSizeDel = gcnew FractalBlaster::Universe::BufferSizeHandler(this, &Wrapper::GetBufferSize);
 				BuffPtrDel = gcnew FractalBlaster::Universe::BufferHandler(this, &Wrapper::GetBufferPointer);
+				volume = 100;
 			}
 
 			#pragma region [ IOutputPlugin ]

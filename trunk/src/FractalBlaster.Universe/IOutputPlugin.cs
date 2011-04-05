@@ -53,6 +53,7 @@ namespace FractalBlaster.Universe {
         /// <see cref="IEngine"/> instance.
         /// </summary>
         void Resume();
+
     }
 
 }

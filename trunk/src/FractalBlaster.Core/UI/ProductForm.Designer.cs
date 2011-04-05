@@ -23,8 +23,11 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.mMenuStrip = new System.Windows.Forms.MenuStrip();
             this.mFileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addFileToPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mNewPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mOpenPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -61,7 +64,9 @@
             this.mFileSystemCollectionTabPage = new System.Windows.Forms.TabPage();
             this.mPlaylistTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.trkVolume = new System.Windows.Forms.TrackBar();
+            this.SeekBarPanel = new System.Windows.Forms.Panel();
+            this.seekBarRefreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.VolumeControl = new System.Windows.Forms.Panel();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mStatusStrip.SuspendLayout();
@@ -72,7 +77,6 @@
             this.splitContainer1.SuspendLayout();
             this.mCollectionTabControl.SuspendLayout();
             this.mPlaylistTabControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trkVolume)).BeginInit();
             this.SuspendLayout();
             // 
             // mMenuStrip
@@ -95,6 +99,8 @@
             // mFileMenu
             // 
             this.mFileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem,
+            this.addFileToPlaylistToolStripMenuItem,
             this.mNewPlaylistMenuItem,
             this.mOpenPlaylistMenuItem,
             this.toolStripSeparator2,
@@ -108,62 +114,76 @@
             this.mFileMenu.Size = new System.Drawing.Size(37, 20);
             this.mFileMenu.Text = "File";
             // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.openFileToolStripMenuItem.Text = "Open File";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // addFileToPlaylistToolStripMenuItem
+            // 
+            this.addFileToPlaylistToolStripMenuItem.Name = "addFileToPlaylistToolStripMenuItem";
+            this.addFileToPlaylistToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.addFileToPlaylistToolStripMenuItem.Text = "Add File to Playlist";
+            this.addFileToPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addFileToPlaylistToolStripMenuItem_Click);
+            // 
             // mNewPlaylistMenuItem
             // 
             this.mNewPlaylistMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_new;
             this.mNewPlaylistMenuItem.Name = "mNewPlaylistMenuItem";
-            this.mNewPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mNewPlaylistMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mNewPlaylistMenuItem.Text = "New Playlist";
             // 
             // mOpenPlaylistMenuItem
             // 
             this.mOpenPlaylistMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
             this.mOpenPlaylistMenuItem.Name = "mOpenPlaylistMenuItem";
-            this.mOpenPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mOpenPlaylistMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mOpenPlaylistMenuItem.Text = "Open Playlist...";
             this.mOpenPlaylistMenuItem.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(168, 6);
             // 
             // mSaveMenuItem
             // 
             this.mSaveMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_save;
             this.mSaveMenuItem.Name = "mSaveMenuItem";
-            this.mSaveMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mSaveMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mSaveMenuItem.Text = "Save";
             // 
             // mSaveAsMenuItem
             // 
             this.mSaveAsMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_save_as;
             this.mSaveAsMenuItem.Name = "mSaveAsMenuItem";
-            this.mSaveAsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mSaveAsMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mSaveAsMenuItem.Text = "Save As...";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(168, 6);
             // 
             // mConfigureMenuItem
             // 
             this.mConfigureMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.configure;
             this.mConfigureMenuItem.Name = "mConfigureMenuItem";
-            this.mConfigureMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mConfigureMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mConfigureMenuItem.Text = "Settings";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
             // 
             // mExitMenuItem
             // 
             this.mExitMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.application_exit;
             this.mExitMenuItem.Name = "mExitMenuItem";
-            this.mExitMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mExitMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mExitMenuItem.Text = "Exit";
             this.mExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
@@ -442,23 +462,38 @@
             this.tabPage1.Text = "Queue";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // trkVolume
+            // SeekBarPanel
             // 
-            this.trkVolume.Location = new System.Drawing.Point(559, 429);
-            this.trkVolume.Maximum = 100;
-            this.trkVolume.Name = "trkVolume";
-            this.trkVolume.Size = new System.Drawing.Size(104, 45);
-            this.trkVolume.TabIndex = 9;
-            this.trkVolume.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trkVolume.Value = 100;
-            this.trkVolume.Scroll += new System.EventHandler(this.trkVolume_Scroll);
+            this.SeekBarPanel.BackColor = System.Drawing.Color.Transparent;
+            this.SeekBarPanel.Location = new System.Drawing.Point(271, 442);
+            this.SeekBarPanel.Name = "SeekBarPanel";
+            this.SeekBarPanel.Size = new System.Drawing.Size(282, 22);
+            this.SeekBarPanel.TabIndex = 10;
+            // 
+            // seekBarRefreshTimer
+            // 
+            this.seekBarRefreshTimer.Interval = 200;
+            this.seekBarRefreshTimer.Tick += new System.EventHandler(this.seekBarRefreshTimer_Tick);
+            // 
+            // VolumeControl
+            // 
+            this.VolumeControl.BackColor = System.Drawing.Color.Transparent;
+            this.VolumeControl.Location = new System.Drawing.Point(566, 438);
+            this.VolumeControl.Name = "VolumeControl";
+            this.VolumeControl.Size = new System.Drawing.Size(101, 40);
+            this.VolumeControl.TabIndex = 11;
+            this.VolumeControl.Paint += new System.Windows.Forms.PaintEventHandler(this.VolumeControl_Paint);
+            this.VolumeControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VolumeControl_MouseDown);
+            this.VolumeControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VolumeControl_MouseMove);
+            this.VolumeControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VolumeControl_MouseUp);
             // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 503);
-            this.Controls.Add(this.trkVolume);
+            this.Controls.Add(this.VolumeControl);
+            this.Controls.Add(this.SeekBarPanel);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mAudioControlToolBar);
@@ -489,7 +524,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.mCollectionTabControl.ResumeLayout(false);
             this.mPlaylistTabControl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trkVolume)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -535,6 +569,10 @@
         private System.Windows.Forms.TabPage mFileSystemCollectionTabPage;
         private System.Windows.Forms.TabControl mPlaylistTabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TrackBar trkVolume;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addFileToPlaylistToolStripMenuItem;
+        private System.Windows.Forms.Panel SeekBarPanel;
+        private System.Windows.Forms.Timer seekBarRefreshTimer;
+        private System.Windows.Forms.Panel VolumeControl;
     }
 }

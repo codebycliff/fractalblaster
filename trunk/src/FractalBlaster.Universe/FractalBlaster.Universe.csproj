@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,6 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugForm.designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IPlaybackTimer.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Extensions.cs" />
@@ -59,6 +69,11 @@
     <Compile Include="IViewPlugin.cs" />
     <Compile Include="MediaFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

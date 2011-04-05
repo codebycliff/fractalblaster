@@ -9,9 +9,12 @@ using System.Windows.Forms;
 using FractalBlaster.Universe;
 using FractalBlaster.Core.Runtime;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace FractalBlaster.Core.UI {
     public partial class ProductForm : Form {
+
+        SeekBar mSeekBar;
 
         public ProductForm() {
             InitializeComponent();
@@ -19,6 +22,12 @@ namespace FractalBlaster.Core.UI {
             Engine = Context.Engine;
             PluginViews = new List<Form>();
             PlaylistPluginMap = new Dictionary<String, IPlaylistPlugin>();
+
+            mSeekBar = new SeekBar();
+            mSeekBar.Input = Engine.InputPlugin;
+            mSeekBar.PlaybackTimer = Engine.Timer;
+            SeekBarPanel.Controls.Add(mSeekBar);
+            seekBarRefreshTimer.Start();
 
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
                 foreach (String f in plugin.SupportedFileExtensions) {
@@ -306,9 +315,103 @@ namespace FractalBlaster.Core.UI {
 
         #endregion
 
-        private void trkVolume_Scroll(object sender, EventArgs e)
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Engine.OutputPlugin.Volume = trkVolume.Value;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Playlist p = new Playlist();
+                foreach (string s in ofd.FileNames)
+                {
+                    p.AddItem(new MediaFile(s));
+                }
+                CurrentPlaylistControl.Playlist = p;
+            }
+        }
+
+        private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string s in ofd.FileNames)
+                {
+                    CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
+                }
+                
+            }
+        }
+
+        private void seekBarRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            if (CurrentPlaylistControl.Playlist.SelectedIndex < CurrentPlaylistControl.Playlist.Count())
+            {
+                mSeekBar.time = Engine.Timer.currentTime;
+                mSeekBar.totalTime = (int)CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex).Metadata.Duration.TotalSeconds;
+                mSeekBar.Refresh();
+            }
+        }
+
+        private void VolumeControl_Paint(object sender, PaintEventArgs e)
+        {
+            int volume = Engine.OutputPlugin.Volume;
+            GraphicsPath outline = new GraphicsPath();
+            outline.AddLine(0, 39, 100, 0);
+            outline.AddLine(100, 0, 100, 39);
+            outline.AddLine(100, 39, 0, 39);
+            e.Graphics.DrawPath(Pens.Black, outline);
+
+            GraphicsPath fill = new GraphicsPath();
+            
+            fill.AddLine(0, 39, volume, 39);
+            fill.AddLine(volume, 39, volume, 39 - 39 * volume / 100);
+            fill.AddLine(volume, 39 - 39 * volume / 100, 0, 39);
+            e.Graphics.FillPath(Brushes.Green, fill);
+        }
+
+        private bool volumeMouseDown;
+
+        private void VolumeControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            volumeMouseDown = false;
+        }
+
+        private void VolumeControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (volumeMouseDown)
+            {
+                changeVolume(e);
+            }
+        }
+
+        private void VolumeControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if ((39 - e.Y) <= e.X * 39 / 100)
+            {
+                volumeMouseDown = true;
+                changeVolume(e);
+            }
+        }
+
+        private void changeVolume(MouseEventArgs e)
+        {
+            int volume;
+            if ((e.X >= 0) && (e.X <= 100))
+            {
+                volume = e.X;
+            }
+            else if (e.X < 0)
+            {
+                volume = 0;
+            }
+            else
+            {
+                volume = 100;
+            }
+            Engine.OutputPlugin.Volume = volume;
+            VolumeControl.Refresh();
         }
 
     }
