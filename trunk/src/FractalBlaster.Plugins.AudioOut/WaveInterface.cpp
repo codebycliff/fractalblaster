@@ -117,6 +117,16 @@ void WaveInterface::PushNextBlock()
 	header->dwBufferLength = currentStream->getBufferSize();
 	header->lpData = currentStream->getBufferData();
 
+	#if UNITTEST
+		#include "stdio.h"
+		FILE* out = fopen("OutputDevicePCM.raw", "ab");
+		for(int i=0; i<currentStream->getBufferSize(); i++)
+		{
+			fputc(currentStream->getBufferData()[i], out);
+		}
+		fclose(out);
+	#endif 
+
 	MMRESULT result = waveOutPrepareHeader(*StereoOutputDevice, header, sizeof(WAVEHDR));
 	result = waveOutWrite(*StereoOutputDevice, header, sizeof(WAVEHDR));
 }
@@ -156,6 +166,8 @@ void WaveInterface::Stop()
 void WaveInterface::SetVolume(int vol)
 {
 	double percent = ((double)vol)/100.0;
-	DWORD volume = 0xFFFF * percent;
+	WORD rvol = 0xFFFF * percent;
+	WORD lvol = rvol;
+	DWORD volume = (rvol  << 8*sizeof(WORD)) | lvol;
 	waveOutSetVolume(*StereoOutputDevice, volume);
 }

@@ -223,6 +223,12 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
                 rval.Write(vals, 0, vals.Length);
             }
 
+        #if UNITTEST
+            System.IO.BinaryWriter OriginalData = new System.IO.BinaryWriter(new System.IO.FileStream("OriginalPCM.raw", FileMode.Append, FileAccess.Write));
+            OriginalData.Write(rval.ToArray());
+            OriginalData.Close();
+        #endif
+
             return rval;
         }
         
