@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A1FC4551-1E32-4143-8738-61A182716337}</ProjectGuid>
+    <ProjectGuid>{F698F51F-8EA7-4E0D-A819-990C36E35B57}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FractalBlaster</RootNamespace>
-    <AssemblyName>FractalBlaster</AssemblyName>
+    <RootNamespace>Config</RootNamespace>
+    <AssemblyName>Config</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\build\debug\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,20 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Products\EnterpriseProductModel.cs" />
-    <Compile Include="Products\ExpressProductModel.cs" />
-    <Compile Include="Products\StandardProductModel.cs" />
-    <Compile Include="ProductSelectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProductSelectionForm.Designer.cs">
-      <DependentUpon>ProductSelectionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ProductSelectionForm.resx">
-      <DependentUpon>ProductSelectionForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigForm.designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,6 +66,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -81,16 +78,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FractalBlaster.Core\FractalBlaster.Core.csproj">
-      <Project>{D57C564F-4ACC-4319-8D20-06285C9283B7}</Project>
-      <Name>FractalBlaster.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
-      <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>
-      <Name>FractalBlaster.Universe</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
