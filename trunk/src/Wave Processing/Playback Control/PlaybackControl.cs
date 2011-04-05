@@ -72,6 +72,11 @@ namespace FractalBlaster.PlaybackControl
             mPlaybackControlForm.isPlaying = true;
             playbackTimer.Enabled = true;
 
+            foreach (IWavePlugin wp in mWavePlugins)
+            {
+                wp.Start();
+            }
+
             switch (playbackState)
             {
                 case state.Paused:
@@ -93,6 +98,10 @@ namespace FractalBlaster.PlaybackControl
 
         public void Pause()
         {
+            foreach (IWavePlugin wp in mWavePlugins)
+            {
+                wp.Stop();
+            }
             playbackTimer.Enabled = false;
             mPlaybackControlForm.isPlaying = false;
             mOutput.Pause();
@@ -101,6 +110,10 @@ namespace FractalBlaster.PlaybackControl
 
         public void Stop()
         {
+            foreach (IWavePlugin wp in mWavePlugins)
+            {
+                wp.Stop();
+            }
             playbackTimer.Enabled = false;
             playbackTime = 0;
             mPlaybackControlForm.isPlaying = false;
@@ -132,11 +145,14 @@ namespace FractalBlaster.PlaybackControl
 
         public System.IO.MemoryStream GetFrames(int numFramesToRead)
         {
-            System.IO.MemoryStream myStream =  mInput.GetFrames(numFramesToRead);
+            System.IO.MemoryStream myStream = mInput.GetFrames(numFramesToRead);
+            if (myStream == null) return null;
             foreach (IWavePlugin wp in mWavePlugins)
             {
+                myStream.Seek(0, 0);
                 wp.ProcessStream(myStream);
             }
+            myStream.Seek(0, 0);
             return myStream;
         }
 

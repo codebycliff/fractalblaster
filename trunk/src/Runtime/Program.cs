@@ -199,6 +199,12 @@ namespace FractalBlaster.Runtime {
             playbackControlForm.form.AddOwnedForm(libraryForm.form);
             libraryForm.form.Show();
 
+            foreach (IPluginForm pf in pluginForms)
+            {
+                playbackControlForm.form.AddOwnedForm(pf.form);
+                pf.form.Show();
+            }
+
             output.readFunction = playbackControl.GetFrames;
             playbackControlForm.playbackControl = playbackControl;
             playbackControlForm.playlist = playlist;

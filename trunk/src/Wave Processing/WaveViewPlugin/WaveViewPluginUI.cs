@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using FractalBlaster.Universe;
 
 namespace FractalBlaster.Plugins.WaveView
 {
@@ -15,7 +16,7 @@ namespace FractalBlaster.Plugins.WaveView
         {
             InitializeComponent();
         }
-
+        
         Point mouse_offset;
 
         private void WaveViewPluginUI_MouseDown(object sender, MouseEventArgs e)
