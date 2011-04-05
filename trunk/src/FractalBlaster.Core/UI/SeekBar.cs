@@ -17,6 +17,7 @@ namespace FractalBlaster.Core.UI
         int mTime;
         int mTotalTime;
         IInputPlugin mInput;
+        IOutputPlugin mOutput;
         IPlaybackTimer mPlaybackTimer;
 
         public SeekBar()
@@ -43,10 +44,16 @@ namespace FractalBlaster.Core.UI
             set { mInput = value; }
         }
 
+        public IOutputPlugin Output
+        {
+            set { mOutput = value; }
+        }
+
         public IPlaybackTimer PlaybackTimer
         {
             set { mPlaybackTimer = value; }
         }
+
 
         private void SeekBar_Paint(object sender, PaintEventArgs e)
         {
@@ -89,7 +96,9 @@ namespace FractalBlaster.Core.UI
             {
                 mouseDown = false;
                 Debug.printline("seek(" + (e.X * mTotalTime / 200).ToString() + ")");
+                mOutput.Stop();
                 mInput.Seek(e.X * mTotalTime / 200);
+                mOutput.Play();
                 mPlaybackTimer.currentTime = e.X * mTotalTime / 200;
             }
         }

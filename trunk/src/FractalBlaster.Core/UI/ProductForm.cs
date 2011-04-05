@@ -25,6 +25,7 @@ namespace FractalBlaster.Core.UI {
 
             mSeekBar = new SeekBar();
             mSeekBar.Input = Engine.InputPlugin;
+            mSeekBar.Output = Engine.OutputPlugin;
             mSeekBar.PlaybackTimer = Engine.Timer;
             SeekBarPanel.Controls.Add(mSeekBar);
             seekBarRefreshTimer.Start();
