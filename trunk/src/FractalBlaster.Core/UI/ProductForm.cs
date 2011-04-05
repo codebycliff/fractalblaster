@@ -136,6 +136,11 @@ namespace FractalBlaster.Core.UI {
         }
 
         private void PlayMedia(object sender, EventArgs args) {
+            if (CurrentPlaylistControl.Playlist.SelectedIndex >= CurrentPlaylistControl.Playlist.Items.Count())
+            {
+                return;
+            }
+
             MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);
             if (Engine.IsMediaLoaded)
             {
@@ -172,10 +177,25 @@ namespace FractalBlaster.Core.UI {
 
         private void SkipMediaBackward(object sender, EventArgs args) {
             if (Engine.IsMediaLoaded) {
-                CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex - 1);
+                if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex - 1);
+                }
             }
-            else {
-                CurrentPlaylistControl.Playlist.SelectedIndex--;
+            else 
+            {
+                if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    CurrentPlaylistControl.Playlist.SelectedIndex--;
+                }
             }
         }
 
@@ -224,7 +244,8 @@ namespace FractalBlaster.Core.UI {
                 playlist = new Playlist();
             }
             playlist.SelectedChanged += (o, ea) => {
-                if (playlist.SelectedIndex <= playlist.Items.Count() - 1) {
+                if (playlist.SelectedIndex <= playlist.Items.Count() - 1 && playlist.SelectedIndex >= 0)
+                {
                     MediaFile media = playlist.Items.ElementAt(playlist.SelectedIndex);
                     if (media != null) {
                         mCurrentSelectedMediaLabel.Text = String.Format("{0} - {1}",

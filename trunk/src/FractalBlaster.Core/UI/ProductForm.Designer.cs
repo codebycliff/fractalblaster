@@ -500,6 +500,7 @@
             this.Controls.Add(this.mStatusStrip);
             this.Controls.Add(this.mStandardToolBar);
             this.Controls.Add(this.mMenuStrip);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.mMenuStrip;
             this.Name = "ProductForm";
