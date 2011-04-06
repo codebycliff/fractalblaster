@@ -32,10 +32,7 @@ namespace FractalBlaster.Core.UI {
 
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
                 foreach (String f in plugin.SupportedFileExtensions) {
-                    if (Config.getProperty("playlistformats").Contains(f))
-                    {
-                        PlaylistPluginMap.Add(f, plugin);
-                    }
+                    PlaylistPluginMap.Add(f, plugin);
                 }
             }
 
@@ -66,14 +63,6 @@ namespace FractalBlaster.Core.UI {
                     CurrentPlaylistControl.Playlist.AddItem(media);
                 }
             };
-
-            if (Config.getProperty("saveloadplaylists") == "false")
-            {
-                mSaveAsMenuItem.Enabled = false;
-                mSaveMenuItem.Enabled = false;
-                mOpenPlaylistMenuItem.Enabled = false;
-            }
-
         }
 
         private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
@@ -352,7 +341,6 @@ namespace FractalBlaster.Core.UI {
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 Playlist p = new Playlist();
@@ -368,7 +356,6 @@ namespace FractalBlaster.Core.UI {
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 foreach (string s in ofd.FileNames)
