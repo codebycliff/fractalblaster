@@ -31,15 +31,13 @@ namespace FractalBlaster.Universe {
         public IEnumerable<String> Artists {
             get
             {
-                DataView temp = MediaCollection.DefaultView;
                 DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Artist").Select();
                 String[] dataout = new String[quer.Length];
-
+                    
                 for (int i = 0; i < quer.Length; i += 1)
                 {
                     dataout[i] = (String)quer[i]["Artist"];
                 }
-
                 return dataout;
             }
         }
@@ -102,7 +100,10 @@ namespace FractalBlaster.Universe {
                         currentname = (String) SongsbyArtist[i]["Album"];
                         collect = new List<MediaFile>();
                     }
-                    collect.Add((MediaFile) SongsbyArtist[i]["File"]);
+                    if (SongsbyArtist[i]["File"] != null && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
+                    {
+                        collect.Add((MediaFile)SongsbyArtist[i]["File"]);
+                    }
                 }
 
                 dataout.Add(currentname, collect);
@@ -363,19 +364,40 @@ namespace FractalBlaster.Universe {
              * Eventually replace this with a global list of supported ID3 tags
              * So as to reduce the "magic number" nature of this code.
              */
-
-            output.Columns.Add("#",         typeof(Int32));
-            output.Columns.Add("Artist",    typeof(String));
-            output.Columns.Add("Album",     typeof(String));
-            output.Columns.Add("BitRate",   typeof(Int32));
-            output.Columns.Add("Channel",   typeof(Int32));
-            output.Columns.Add("Codec",     typeof(String));
-            output.Columns.Add("Duration",  typeof(TimeSpan));
-            output.Columns.Add("SampleRate",typeof(Int32));
-            output.Columns.Add("Title",     typeof(String));
-            output.Columns.Add("Year",      typeof(Int32));
-            output.Columns.Add("File",      typeof(MediaFile));
-
+            DataColumn toAdd = new DataColumn("#", typeof(Int32));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Artist", typeof(String));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Album", typeof(String));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("BitRate", typeof(Int32));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Channel", typeof(Int32));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Codec", typeof(String));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Duration", typeof(TimeSpan));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("SampleRate", typeof(Int32));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Title", typeof(String));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("Year", typeof(Int32));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("File", typeof(MediaFile));
+            toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+        
             return output;
         }
 
@@ -385,7 +407,7 @@ namespace FractalBlaster.Universe {
 
             for (int i = 0; i < rows.Length; i += 1)
             {
-                if (!System.DBNull.Value.Equals(rows[i]["File"]))
+                if (rows[i]["File"] != null && !System.DBNull.Value.Equals(rows[i]["File"]))
                 {
                     dataout[i] = (MediaFile)rows[i]["File"];
                 }

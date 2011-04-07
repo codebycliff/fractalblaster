@@ -33,6 +33,7 @@
             // 
             this.mPlaylistGridView.AllowDrop = true;
             this.mPlaylistGridView.AllowUserToOrderColumns = true;
+            this.mPlaylistGridView.AllowUserToResizeRows = false;
             this.mPlaylistGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mPlaylistGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,

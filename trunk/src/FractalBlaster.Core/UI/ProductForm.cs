@@ -167,7 +167,10 @@ namespace FractalBlaster.Core.UI {
         }
 
         private void SkipMediaForward(object sender, EventArgs args) {
-            if (Engine.IsMediaLoaded) {
+            if (CurrentPlaylistControl.Playlist.Count() < CurrentPlaylistControl.Playlist.SelectedIndex+1){
+                return;
+            }
+            else if (Engine.IsMediaLoaded) {
                 CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex + 1);
             }
             else {
