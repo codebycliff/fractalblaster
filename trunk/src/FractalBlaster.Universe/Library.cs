@@ -31,6 +31,7 @@ namespace FractalBlaster.Universe {
         public IEnumerable<String> Artists {
             get
             {
+                DataView temp = MediaCollection.DefaultView;
                 DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Artist").Select();
                 String[] dataout = new String[quer.Length];
 
@@ -377,7 +378,10 @@ namespace FractalBlaster.Universe {
 
             for (int i = 0; i < rows.Length; i += 1)
             {
-                dataout[i] = (MediaFile)rows[i]["File"];
+                if (!System.DBNull.Value.Equals(rows[i]["File"]))
+                {
+                    dataout[i] = (MediaFile)rows[i]["File"];
+                }
             }
 
             return dataout;
