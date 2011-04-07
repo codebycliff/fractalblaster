@@ -10,8 +10,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for PlaybackStateMachine and is intended
     ///to contain all PlaybackStateMachine Unit Tests
@@ -29,8 +29,6 @@ namespace UnitTest
             // Hook up plugins and state machine
             IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
             FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
-            bool stopped = false; //Since we don't have a specific state for stopped, I made a boolean to make sure. Because just because it's not paused, doesn't mean it's stopped. Same with if it's not playing.
-
 
             // Initial State = Stopped
 
@@ -40,16 +38,14 @@ namespace UnitTest
             target.Pause();
 
             Assert.IsTrue(target.IsPaused);
-            
+
             target.Stop();
             // Stopped -> Playing -> Stopped -> Pause (Expecting Stopped)
             target.Play();
             target.Stop();
             target.Pause();
 
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false; //Reseting the boolean
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
             target.Stop();
             // Stopped -> Playing -> Paused -> Pause (Excepting Playing)
@@ -64,10 +60,7 @@ namespace UnitTest
             target.Stop();
             target.Pause();
 
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false; //Reseting the boolean
-
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
         }
 
@@ -89,14 +82,12 @@ namespace UnitTest
             target.Play();
             target.Stop();
             target.Play();
-
             Assert.IsTrue(target.IsPlaying);
 
             target.Stop();
             // Stopped -> Play -> Play (Expecting playing)
             target.Play();
             target.Play();
-
             Assert.IsTrue(target.IsPlaying);
 
             target.Stop();
@@ -104,7 +95,6 @@ namespace UnitTest
             target.Play();
             target.Pause();
             target.Play();
-
             Assert.IsTrue(target.IsPlaying);
 
             target.Stop();
@@ -112,7 +102,6 @@ namespace UnitTest
             target.Pause();
             target.Stop();
             target.Play();
-
             Assert.IsTrue(target.IsPlaying);
         }
 
@@ -125,7 +114,6 @@ namespace UnitTest
             // Hook up plugins and state machine
             IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
             FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
-            bool stopped = false; 
 
             //Inital state = stopped
 
@@ -150,9 +138,7 @@ namespace UnitTest
             target.Pause();
             target.Pause();
 
-            if ((target.IsPlaying == false) && (target.IsPaused == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false;
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
 
         }
@@ -166,48 +152,34 @@ namespace UnitTest
             // Hook up plugins and state machine
             IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
             FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
-            bool stopped = false;
 
-            // Inital state = stopped
-            // For these states, I just went ahead and made sure that it wasn't playing and it wasn't paused. If both of those are  
+            // Inital state = stopped 
 
             target.Stop();
             //Stopped -> pause (Expect stopped)
             target.Pause();
-
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false;
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
 
             target.Stop();
             //Stopped -> play -> stop (Expect stopped)
             target.Play();
             target.Stop();
-
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false;
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
             target.Stop();
             //Stopped -> pause -> play -> stop (Expect stopped)
             target.Pause();
             target.Play();
             target.Stop();
-
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false;
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
             target.Stop();
             //Stopped -> play -> pause -> stop (Expecting stopped)
             target.Play();
             target.Pause();
             target.Stop();
-
-            if ((target.IsPaused == false) && (target.IsPlaying == false)) stopped = true;
-            Assert.IsTrue(stopped);
-            stopped = false;
+            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
         }
     }
 }

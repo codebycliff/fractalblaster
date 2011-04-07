@@ -15,25 +15,6 @@ namespace UnitTest
     [TestClass()]
     public class AudioEngineTest
     {
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
         /// <summary>
         /// Uses the Core to load a media file
         /// File will be verified by checking ID3 / Other embedded tag information
@@ -41,20 +22,16 @@ namespace UnitTest
         [TestMethod()]
         public void LoadTest()
         {
-            AudioEngine target = new AudioEngine(new AppContext());
             MediaFile song = new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3");
-            Metadata songData = target.Load(song);
-            Assert.AreEqual(songData.Artist, "WHEEEEEEEEEEEEEE");
-            Assert.AreEqual(songData.Album, "It's a series of concurent tests!");
-            Assert.AreEqual(songData.BitRate, "Fill with the correct information.");
-            Assert.AreEqual(songData.Channels, "Also, I know there's a problem with the load.");
-            Assert.AreEqual(songData.Duration, "And you could probably do this all in like 5 seconds.");
-            Assert.AreEqual(songData.Keys, "Tests.");
-            Assert.AreEqual(songData.SampleRate, "Now that I think about it, not all of these should be assert equals.");
-            Assert.AreEqual(songData.Title, "But I'm tired, and I'll do it tomorrow.");
-            Assert.AreEqual(songData.Track, "Sleep...");
-            Assert.AreEqual(songData.Values, "Zzzz");
-            Assert.AreEqual(songData.Year, "ZZzzzzzz");
+            Assert.AreEqual(song.Metadata.Album, "Futurism");
+            Assert.AreEqual(song.Metadata.Artist, "Muse");
+            Assert.AreEqual(song.Metadata.BitRate, 64); //Check
+            Assert.AreEqual(song.Metadata.Channels, 2); //Check. I'm pretty sure this is 2, as it's sterio
+            Assert.AreEqual(song.Metadata.Duration, new TimeSpan(0,2,20));
+            Assert.AreEqual(song.Metadata.SampleRate, 32); //Check
+            Assert.AreEqual(song.Metadata.Title, "Popcorn");
+            Assert.AreEqual(song.Metadata.Track, 4); //Check
+            Assert.AreEqual(song.Metadata.Year, 2003); //check 
         }
     }
 }
