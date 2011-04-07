@@ -96,7 +96,7 @@ namespace FractalBlaster.Universe {
                 {
                     if(!currentname.Equals(SongsbyArtist[i]["Album"]))
                     {
-                        if (!currentname.Equals("")) { dataout.Add(currentname, collect); };
+                        if (!currentname.Equals("") && !dataout.ContainsKey(currentname)) { dataout.Add(currentname, collect); };
                         
                         currentname = (String) SongsbyArtist[i]["Album"];
                         collect = new List<MediaFile>();
