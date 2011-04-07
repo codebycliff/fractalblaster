@@ -24,8 +24,6 @@ namespace UnitTest
         [TestMethod()]
         public void AllPluginsTest()
         {
-            int Output = 0;
-            int Input = 0;
             int ManagedDLLs = 0;
             // All plugin types possible, they need counters
 
@@ -44,10 +42,7 @@ namespace UnitTest
                 ManagedDLLs++;
             }
 
-            Assert.IsTrue(Output == 1);
-            Assert.IsTrue(Input == 1);
-
-            int UnManagedDLLs = 6; // UnitTest DLL, + 3xFFMPEG + Taglib
+            int UnManagedDLLs = 9; // UnitTest DLL + 3xFFMPEG + Taglib + AudioOut Manifest + XNA + XNA Graphics + Core
 
             Assert.IsTrue(ManagedDLLs + UnManagedDLLs == Total);
         }
