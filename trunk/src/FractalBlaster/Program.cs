@@ -22,6 +22,12 @@ namespace FractalBlaster.Family {
             //BasicConfigurator.Configure();
             //FamilyRuntime.FamilyKernel.Log = log4net.LogManager.GetLogger(typeof(Program));
 
+            if (!System.IO.File.Exists("config.ini"))
+            {
+                MessageBox.Show("Cannot find config.ini.  Run Config.exe");
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(ParseArguments(args));

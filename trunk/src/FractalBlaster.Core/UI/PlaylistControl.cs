@@ -46,7 +46,13 @@ namespace FractalBlaster.Core.UI {
             };
             mPlaylistGridView.DragEnter += new DragEventHandler(DragEnterHandler);
             mPlaylistGridView.DragDrop += new DragEventHandler(DragDropHandler);
-
+            if (Config.getProperty("sortable") == "false")
+            {
+                foreach (DataGridViewColumn dgvc in mPlaylistGridView.Columns)
+                {
+                    dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+            }
         }
 
         public PlaylistControl(Playlist playlist) : this() {
@@ -63,6 +69,7 @@ namespace FractalBlaster.Core.UI {
 
         private void AddMediaToPlaylistData(MediaFile media) {
             mPlaylistGridView.Rows.Add(new String[] {
+                media.Metadata.Artist,
                 media.Metadata.Title,
                 media.Metadata.Duration.ToString()
             });

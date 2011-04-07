@@ -55,6 +55,17 @@ namespace Config
             }
             configFile.WriteLine();
 
+            configFile.Write("sortable=");
+            if (radioButton3.Checked == true)
+            {
+                configFile.Write("true");
+            }
+            else
+            {
+                configFile.Write("false");
+            }
+            configFile.WriteLine();
+
             configFile.Close();
             Close();
         }

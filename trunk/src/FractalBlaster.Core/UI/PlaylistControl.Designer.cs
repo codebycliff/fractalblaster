@@ -24,6 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.mPlaylistGridView = new System.Windows.Forms.DataGridView();
+            this.Artist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.mPlaylistGridView)).BeginInit();
@@ -36,6 +37,7 @@
             this.mPlaylistGridView.AllowUserToResizeRows = false;
             this.mPlaylistGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mPlaylistGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Artist,
             this.Title,
             this.Length});
             this.mPlaylistGridView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -49,6 +51,12 @@
             this.mPlaylistGridView.TabIndex = 0;
             this.mPlaylistGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mPlaylistGridView_CellMouseDoubleClick);
             this.mPlaylistGridView.SelectionChanged += new System.EventHandler(this.mPlaylistGridView_SelectionChanged);
+            // 
+            // Artist
+            // 
+            this.Artist.HeaderText = "Artist";
+            this.Artist.Name = "Artist";
+            this.Artist.ReadOnly = true;
             // 
             // Title
             // 
@@ -81,6 +89,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView mPlaylistGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Artist;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Length;
     }
