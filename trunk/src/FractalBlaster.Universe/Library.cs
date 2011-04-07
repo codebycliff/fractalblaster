@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
-using System.IO;
-using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.Xml;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Universe {
@@ -114,7 +115,8 @@ namespace FractalBlaster.Universe {
         /// </summary>
         public void Save() {
             XmlSerializer serializer = new XmlSerializer(typeof(Library));
-            using (Stream stream = File.OpenWrite(Root.FullName + FileName)) {
+            using (XmlWriter stream = XmlWriter.Create(File.OpenWrite(Root.FullName + FileName)))
+            {
                 serializer.Serialize(stream, this);
             }
         }
@@ -285,7 +287,6 @@ namespace FractalBlaster.Universe {
             return this.GetFiles(quer);
         }
 
-
         #region [ Static ]
 
         static Library()
@@ -326,6 +327,11 @@ namespace FractalBlaster.Universe {
         #endregion
 
         #region [ Private ]
+
+        private Library()
+        {
+
+        }
 
         private Library(DirectoryInfo root) {
             Root = root;

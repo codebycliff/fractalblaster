@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using FractalBlaster.Universe;
 using System.Collections.Generic;
+using FractalBlaster.Core.Runtime;
+using System.IO;
 
 namespace UnitTest
 {
@@ -16,65 +18,38 @@ namespace UnitTest
     public class PluginManagerTest
     {
 
-
-        private TestContext testContextInstance;
-
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
-        /// <summary>
-        ///A test for AllPlugins
+        ///A test for AllPlugins, ensures the proper loading occurs
         ///</summary>
         [TestMethod()]
         public void AllPluginsTest()
         {
-            IEnumerable<IPlugin> actual;
-            actual = PluginManager.AllPlugins;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            int Output = 0;
+            int Input = 0;
+            int ManagedDLLs = 0;
+            // All plugin types possible, they need counters
+
+            string[] dlls = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\Plugins\");
+
+            int Total = 0;
+
+            foreach (string s in dlls)
+            {
+                if (s.Contains("dll"))
+                    Total++;
+            }
+
+            foreach (IPlugin p in FamilyKernel.Instance.Context.DefaultPlugins)
+            {
+                ManagedDLLs++;
+            }
+
+            Assert.IsTrue(Output == 1);
+            Assert.IsTrue(Input == 1);
+
+            int UnManagedDLLs = 6; // UnitTest DLL, + 3xFFMPEG + Taglib
+
+            Assert.IsTrue(ManagedDLLs + UnManagedDLLs == Total);
         }
     }
 }

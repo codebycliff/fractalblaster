@@ -8,89 +8,76 @@ namespace UnitTest
     
     
     /// <summary>
-    ///This is a test class for DecoderInteropTest and is intended
-    ///to contain all DecoderInteropTest Unit Tests
+    ///This is a test class for DecoderInterop and is intended
+    ///to contain all DecoderInterop Unit Tests
     ///</summary>
     [TestClass()]
     public class DecoderInteropTest
     {
-
-
-        private TestContext testContextInstance;
-
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
-        /// <summary>
-        ///A test for RetrieveNextFrame
+        ///A test for RetrieveNextFrame, determines if the decoder is extracting PCM data from the audio resource
         ///</summary>
         [TestMethod()]
         public void RetrieveNextFrameTest()
         {
-            DecoderInterop target = new DecoderInterop(); // TODO: Initialize to an appropriate value
-            byte[] expected = null; // TODO: Initialize to an appropriate value
-            byte[] actual = null;
-            //actual = target.RetrieveNextFrame();
-            Assert.AreEqual(expected, actual);
+            // Initialize Decoder
+            DecoderInterop target = new DecoderInterop();
+
+            // Load an MP3 that conforms to the MP3 Spec
+            target.OpenMedia(new FractalBlaster.Universe.MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Retrieve PCM data from the decoder
+            byte[] actual = target.RetrieveNextFrame();
+
+            // Failure from the decoder will result in null being returned, 
+            // if we have data the decoder is operating properly
+            Assert.IsNotNull(actual);
         }
 
         /// <summary>
-        ///A test for ReadFrames
+        ///A test for ReadFrames, ensures the total number of audio frames read is correct given the file length
         ///</summary>
         [TestMethod()]
         public void ReadFramesTest()
         {
-            DecoderInterop target = new DecoderInterop(); // TODO: Initialize to an appropriate value
-            target.OpenMedia(new FractalBlaster.Universe.MediaFile(@"C:\Users\David\Desktop\The Killers\The Killers - Day & Age (2008)\01 - Losing Touch.mp3"));
-            int numFramesToRead = 10; // TODO: Initialize to an appropriate value
-            MemoryStream expected = null; // TODO: Initialize to an appropriate value
-            MemoryStream actual;
-            actual = target.ReadFrames(numFramesToRead);
-            Assert.AreNotEqual(expected, actual);
+            // Initialize Decoder
+            DecoderInterop target = new DecoderInterop();
+
+            // Load an MP3 that conforms to the MP3 Spec
+            target.OpenMedia(new FractalBlaster.Universe.MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Read all audio frames
+            MemoryStream actual = null;
+            Int64 bytesRead = 0;
+            do
+            {
+                actual = target.ReadFrames(1);
+                if(actual != null)
+                    bytesRead += actual.Length;
+            }
+            while (actual != null);
+
+            // Popcorn has a 2:27 runtime
+            // Allow 1 second variance
+
+            // 147 seconds * 2 channels * 2 bytes per sample * 44100 samples/second
+            Int64 bytesExpected = 147 * 2 * 2 * 44100;
+
+            // 147 seconds +/- 1 second
+            double varianceValue = bytesExpected * (1.0 / 147.0);
+
+            Boolean pass;
+
+            if(Math.Abs(bytesExpected - bytesRead) <= varianceValue)
+            {
+                pass = true;
+            }
+            else
+            {
+                pass = false;
+            }
+
+            Assert.IsTrue(pass);
         }
     }
 }

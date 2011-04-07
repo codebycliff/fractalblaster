@@ -1,81 +1,54 @@
-﻿using FractalBlaster.Core.Runtime;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using FractalBlaster.Core.Runtime;
+using FractalBlaster.Plugins.AudioOut;
+using FractalBlaster.Plugins.Decoder.FFMPEG;
 using FractalBlaster.Universe;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest
 {
     
     
     /// <summary>
-    ///This is a test class for PlaybackStateMachineTest and is intended
-    ///to contain all PlaybackStateMachineTest Unit Tests
+    ///This is a test class for PlaybackStateMachine and is intended
+    ///to contain all PlaybackStateMachine Unit Tests
+    ///Specifically this excercises the UI buttons that control playback
     ///</summary>
     [TestClass()]
     public class PlaybackStateMachineTest
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for Pause
         ///</summary>
         [TestMethod()]
         public void PauseTest()
         {
-            IOutputPlugin output = null; // TODO: Initialize to an appropriate value
-            IInputPlugin input = null; // TODO: Initialize to an appropriate value
-            PlaybackStateMachine target = new PlaybackStateMachine(output, input); // TODO: Initialize to an appropriate value
+            // Hook up plugins and state machine
+            IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
+            FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Initial State = Stopped
+
+            // Stopped -> Playing -> Pause (Expecting Paused)
+
+            target.Play();
             target.Pause();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.IsTrue(target.IsPaused);
+
+            // Stopped -> Playing -> Stopped -> Pause (Expecting Stopped)
+            // TODO
+
+            // Stopped -> Playing -> Paused -> Pause (Excepting Playing)
+            // TODO
+
+            // Stopped -> Pause (Expecting Stopped)
+            // TODO
+
+
         }
 
         /// <summary>
@@ -84,11 +57,11 @@ namespace UnitTest
         [TestMethod()]
         public void PlayTest()
         {
-            IOutputPlugin output = null; // TODO: Initialize to an appropriate value
-            IInputPlugin input = null; // TODO: Initialize to an appropriate value
-            PlaybackStateMachine target = new PlaybackStateMachine(output, input); // TODO: Initialize to an appropriate value
-            target.Play();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            // Hook up plugins and state machine
+            IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
+            FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Follow Example from Pause
         }
 
         /// <summary>
@@ -97,11 +70,13 @@ namespace UnitTest
         [TestMethod()]
         public void ResumeTest()
         {
-            IOutputPlugin output = null; // TODO: Initialize to an appropriate value
-            IInputPlugin input = null; // TODO: Initialize to an appropriate value
-            PlaybackStateMachine target = new PlaybackStateMachine(output, input); // TODO: Initialize to an appropriate value
-            target.Resume();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            // Hook up plugins and state machine
+            IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
+            FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Follow Example from Pause.
+
+            // Should be always playing
         }
 
         /// <summary>
@@ -110,11 +85,11 @@ namespace UnitTest
         [TestMethod()]
         public void StopTest()
         {
-            IOutputPlugin output = null; // TODO: Initialize to an appropriate value
-            IInputPlugin input = null; // TODO: Initialize to an appropriate value
-            PlaybackStateMachine target = new PlaybackStateMachine(output, input); // TODO: Initialize to an appropriate value
-            target.Stop();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            // Hook up plugins and state machine
+            IOutputPlugin target = FamilyKernel.Instance.Context.DefaultPlugins.OfType<IOutputPlugin>().First();
+            FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
+
+            // Follow Example from Pause
         }
     }
 }
