@@ -282,8 +282,15 @@ namespace FractalBlaster.Universe {
 
             String searchexp = columnname + " = '" + searchterm + "'";
             String sorting = columnname + " " + NormalizeOrder(order);
-
-            DataRow[] quer = MediaCollection.Select(searchexp, sorting);
+            DataRow[] quer;
+            try
+            {
+                quer = MediaCollection.Select(searchexp, sorting);
+            }
+            catch(Exception e)
+            {
+                return new MediaFile[0];
+            }
 
             return this.GetFiles(quer);
         }
