@@ -11,27 +11,14 @@ namespace Generator
     {
         static void Main(string[] args)
         {
-            DirectoryInfo sourceDirectory = new DirectoryInfo("bin");
-            DirectoryInfo destinationDirectory = Directory.CreateDirectory("Fractal Blasters");
-
-            foreach (FileInfo f in sourceDirectory.GetFiles())
-            {
-                File.Copy(f.FullName, destinationDirectory.FullName + "\\" + f.Name, true);
-            }
-
-            sourceDirectory = new DirectoryInfo("bin\\Plugins");
-            destinationDirectory = Directory.CreateDirectory("Fractal Blasters\\Plugins");
-
-            foreach (FileInfo f in sourceDirectory.GetFiles())
-            {
-                File.Copy(f.FullName, destinationDirectory.FullName + "\\" + f.Name, true);
-            }
-
+            GeneratorForm gf = new GeneratorForm();
+            System.Windows.Forms.Application.Run(gf);
             Process configProcess = new Process();
             configProcess.StartInfo.FileName = "Config.exe";
             configProcess.StartInfo.WorkingDirectory = "Fractal Blasters";
             configProcess.Start();
             configProcess.WaitForExit();
+
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Config
             libraryRoot = System.Environment.GetEnvironmentVariable("userprofile") + "\\Music";
             label4.Text = libraryRoot;
             radioButton2.Checked = true;
+            radioButton4.Checked = true;
         }
 
         private void button1_Click(object sender, EventArgs e)

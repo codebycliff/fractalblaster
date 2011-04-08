@@ -29,6 +29,12 @@ namespace FractalBlaster.Core.Runtime {
             ).AsEnumerable();
         }
 
+        public static IEnumerable<IPlugin> GetInterfaces(Type t)
+        {
+            return AllPlugins.Where(p =>
+                p.GetType().GetInterfaces().Contains(t)
+             ).AsEnumerable();
+        }
 
         public static void Refresh() {
             mPlugins.Clear();

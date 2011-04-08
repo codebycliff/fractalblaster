@@ -41,6 +41,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +50,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneratorForm.Designer.cs">
+      <DependentUpon>GeneratorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluginManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GeneratorForm.resx">
+      <DependentUpon>GeneratorForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
+      <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>
+      <Name>FractalBlaster.Universe</Name>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
