@@ -119,6 +119,7 @@ void WaveInterface::PushNextBlock()
 		return;
 	}
 
+
 	ZeroMemory(header, sizeof(WAVEHDR));
 	header->dwBufferLength = currentStream->getBufferSize();
 	header->lpData = currentStream->getBufferData();

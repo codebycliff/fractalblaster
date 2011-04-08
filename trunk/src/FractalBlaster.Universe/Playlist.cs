@@ -100,6 +100,16 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        public void RemoveMedia(int index)
+        {
+            MediaItems.RemoveAt(index);
+        }
+
+        public void Sort(Comparison<MediaFile> comparer)
+        {
+            MediaItems.Sort(comparer);
+        }
+
         #region [ IEnumerable ]
 
         public IEnumerator<MediaFile> GetEnumerator() {
