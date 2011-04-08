@@ -75,7 +75,7 @@ namespace FractalBlaster.Core.UI {
                 mOpenPlaylistMenuItem.Enabled = false;
             }
 
-            Context.Engine.CurrentPlaylist = mPlaylistTabControl.SelectedTab.Tag as Playlist;
+            Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
 
         }
 
@@ -454,14 +454,11 @@ namespace FractalBlaster.Core.UI {
             Engine.OutputPlugin.Volume = volume;
             VolumeControl.Refresh();
         }
-
         struct closeButton
         {
             public Rectangle location;
             public int index;
         }
-
-        
 
         private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -479,7 +476,7 @@ namespace FractalBlaster.Core.UI {
 
         private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Context.Engine.CurrentPlaylist = mPlaylistTabControl.SelectedTab.Tag as Playlist;
+            Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
         }
 
     }

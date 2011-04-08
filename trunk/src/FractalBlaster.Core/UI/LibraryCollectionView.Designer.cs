@@ -39,6 +39,8 @@
              this.mMediaTreeView.Name = "mMediaTreeView";
              this.mMediaTreeView.Size = new System.Drawing.Size(194, 114);
              this.mMediaTreeView.TabIndex = 0;
+             this.mMediaTreeView.Click += new System.EventHandler(this.mMediaTreeView_Click);
+             this.mMediaTreeView.DoubleClick += new System.EventHandler(this.mMediaTreeView_DoubleClick);
              // 
              // LibraryCollectionView
              // 

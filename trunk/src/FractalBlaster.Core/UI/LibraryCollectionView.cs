@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using FractalBlaster.Universe;
+using FractalBlaster.Core.Runtime;
 
 namespace FractalBlaster.Core.UI {
 
@@ -86,5 +87,22 @@ namespace FractalBlaster.Core.UI {
         }
 
         private ImageList ImageList { get; set; }
+
+        private void mMediaTreeView_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void mMediaTreeView_DoubleClick(object sender, EventArgs e)
+        {
+            if (mMediaTreeView.SelectedNode == null)
+                return;
+
+            MediaFile[] m = (MediaFile[])mMediaTreeView.SelectedNode.Tag;
+            if (m != null && !FamilyKernel.Instance.Context.Engine.CurrentPlaylist.Contains(m[0]))
+            {
+                FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(m[0]);
+            }
+        }
     }
 }

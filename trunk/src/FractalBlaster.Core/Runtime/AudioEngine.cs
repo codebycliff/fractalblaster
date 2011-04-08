@@ -84,6 +84,17 @@ namespace FractalBlaster.Core.Runtime {
         
         #endregion
 
+
+        #region IEngine Members
+
+
+        public Playlist CurrentPlaylist
+        {
+            get;
+            set;
+        }
+
+        #endregion
     }
 
 }
