@@ -7,10 +7,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Security.AccessControl;
+using FractalBlaster.Core.Runtime;
+using FractalBlaster.Universe;
 
-namespace FractalBlaster.Core.UI {
+namespace FractalBlaster.Core.UI
+{
 
-    public partial class FileSystemCollectionView : CollectionView {
+    public partial class FileSystemCollectionView : CollectionView
+    {
 
         public const Int32 COMPUTER_ICON_INDEX = 0;
         public const Int32 FOLDER_ICON_INDEX = 1;
@@ -18,14 +22,16 @@ namespace FractalBlaster.Core.UI {
         public const Int32 FILE_ICON_INDEX = 3;
 
         public override string Label { get { return "Browse"; } }
-        
+
         public override bool HasConfiguration { get { return true; } }
-        
+
         public override bool HasCustomToolStrip { get { return true; } }
-        
+
         public override Form ConfigurationDialog { get { return new FileSystemConfigurationDialog(); } }
 
-        public FileSystemCollectionView() : base()  {
+        public FileSystemCollectionView()
+            : base()
+        {
             InitializeComponent();
             ImageList imageList = new ImageList();
             imageList.Images.Add(Properties.Resources.computer);
@@ -38,44 +44,99 @@ namespace FractalBlaster.Core.UI {
             mTreeView.Nodes.Add(rootNode);
             RefreshNode(rootNode);
             mTreeView.Nodes[0].Expand();
+
+            mTreeView.NodeMouseDoubleClick += new TreeNodeMouseClickEventHandler(mTreeView_NodeMouseDoubleClick);
+            mTreeView.KeyDown += new KeyEventHandler(mTreeView_KeyDown);
         }
 
-        public override void RefreshItems(object sender, EventArgs args) {
+
+        void mTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (mTreeView.SelectedNode == null)
+                return;
+
+            TreeNode m = mTreeView.SelectedNode;
+            if (m.Nodes.Count == 0)
+            {
+                string filename = m.Tag as string;
+                if (filename != null)
+                {
+                    MediaFile media = new MediaFile(filename);
+                    FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
+                }
+            }
+        }
+
+        void mTreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (mTreeView.SelectedNode == null)
+                    return;
+
+                TreeNode m = mTreeView.SelectedNode;
+                if (m.Nodes.Count == 0)
+                {
+                    string filename = m.Tag as string;
+                    if (filename != null)
+                    {
+                        MediaFile media = new MediaFile(filename);
+                        FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
+                    }
+                }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        public override void RefreshItems(object sender, EventArgs args)
+        {
             base.RefreshItems(sender, args);
         }
 
-        public override void RefreshView(object sender, EventArgs args) {
+        public override void RefreshView(object sender, EventArgs args)
+        {
             base.RefreshView(sender, args);
         }
 
-        private void RefreshNode(TreeNode node) {
-            try {
+        private void RefreshNode(TreeNode node)
+        {
+            try
+            {
                 DirectoryInfo rootdir = new DirectoryInfo(node.FullPath);
-                foreach (DirectoryInfo dir in rootdir.GetDirectories()) {
-                    try {
-                        if (dir.GetDirectories().Length > 0 || dir.GetFiles("*.mp3").Length > 0) {
+                foreach (DirectoryInfo dir in rootdir.GetDirectories())
+                {
+                    try
+                    {
+                        if (dir.GetDirectories().Length > 0 || dir.GetFiles("*.mp3").Length > 0)
+                        {
                             TreeNode dirnode = new TreeNode(dir.Name, FOLDER_ICON_INDEX, FOLDER_ICON_INDEX);
                             node.Nodes.Add(dirnode);
                             dirnode.Nodes.Add("*");
                         }
                     }
-                    catch (Exception ie) {
+                    catch (Exception ie)
+                    {
                         continue;
                     }
                 }
-                foreach (FileInfo file in rootdir.GetFiles("*.mp3")) {
-                    
+                foreach (FileInfo file in rootdir.GetFiles("*.mp3"))
+                {
                     TreeNode fileNode = new TreeNode(file.Name, FILE_ICON_INDEX, FILE_ICON_INDEX);
+                    fileNode.Tag = file.FullName;
                     node.Nodes.Add(fileNode);
                 }
             }
-            catch(Exception e) {
-                
+            catch (Exception e)
+            {
+
             }
         }
 
-        private void mTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
-            if (e.Node.Nodes[0].Text == "*") {
+        private void mTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node.Nodes[0].Text == "*")
+            {
                 e.Node.Nodes.Clear();
                 RefreshNode(e.Node);
             }
