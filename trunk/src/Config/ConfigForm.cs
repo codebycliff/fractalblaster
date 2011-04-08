@@ -32,7 +32,7 @@ namespace Config
             if (checkBox1.Checked) configFile.Write("*.mp3;");
             if (checkBox2.Checked) configFile.Write("*.wma;");
             if (checkBox3.Checked) configFile.Write("*.aac;");
-            if (checkBox4.Checked) configFile.Write("*.mp4;");
+            if (checkBox4.Checked) configFile.Write("*.m4a;");
             if (checkBox5.Checked) configFile.Write("*.flac;");
             if (checkBox6.Checked) configFile.Write("*.ogg;");
             configFile.WriteLine();

@@ -68,8 +68,9 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkedListBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "GeneratorForm";
+            this.ShowInTaskbar = false;
             this.Text = "Fractal Blasters Generator";
             this.ResumeLayout(false);
             this.PerformLayout();

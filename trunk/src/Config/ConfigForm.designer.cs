@@ -121,7 +121,7 @@
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(46, 17);
             this.checkBox4.TabIndex = 32;
-            this.checkBox4.Text = "mp4";
+            this.checkBox4.Text = "m4a";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // checkBox5
