@@ -75,15 +75,26 @@ namespace FractalBlaster.Core.UI
                     return;
 
                 TreeNode m = mTreeView.SelectedNode;
-                if (m.Nodes.Count == 0)
+
+                string filename = m.Tag as string;
+                if (filename != null)
                 {
-                    string filename = m.Tag as string;
+                    MediaFile media = new MediaFile(filename);
+                    FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
+                }
+
+                RefreshNode(m);
+
+                foreach (TreeNode n in m.Nodes)
+                {
+                    filename = n.Tag as string;
                     if (filename != null)
                     {
                         MediaFile media = new MediaFile(filename);
                         FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
                     }
                 }
+
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }

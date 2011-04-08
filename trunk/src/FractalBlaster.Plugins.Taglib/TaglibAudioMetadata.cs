@@ -26,8 +26,20 @@ namespace FractalBlaster.Plugins.Taglib {
             
             TagLib.File file = TagLib.File.Create(media.Info.FullName);
             List<MediaProperty> props = new List<MediaProperty>();
+            if (file.Tag.Album == null)
+                file.Tag.Album = "-";
+            
+            if (file.Tag.Title == null)
+                file.Tag.Title = "-";
+
+            string performer;
+            if (file.Tag.FirstPerformer == null)
+                performer = "-";
+            else
+                performer = file.Tag.FirstPerformer;
+
             props.Add(MediaProperty.Create(Metadata.ALBUM, file.Tag.Album, file.Tag.Album.GetType()));
-            props.Add(MediaProperty.Create(Metadata.ARTIST, file.Tag.FirstPerformer, file.Tag.FirstPerformer.GetType()));
+            props.Add(MediaProperty.Create(Metadata.ARTIST, performer, performer.GetType()));
             props.Add(MediaProperty.Create(Metadata.BITRATE, file.Properties.AudioBitrate, file.Properties.AudioBitrate.GetType()));
             props.Add(MediaProperty.Create(Metadata.CHANNELS, file.Properties.AudioChannels, file.Properties.AudioChannels.GetType()));
             props.Add(MediaProperty.Create(Metadata.CODEC, file.Properties.Codecs.First().Description, file.Properties.Codecs.First().Description.GetType()));
