@@ -149,8 +149,7 @@ namespace FractalBlaster.Universe {
                 String currentname = "";
                 List<MediaFile> collect = null;
 
-                for(i = 0; i < SongsbyArtist.Length; i += 1)
-
+                for (i = 0; i < SongsbyArtist.Length; i += 1)
                 {
                     String album = (String)SongsbyArtist[i]["Album"];
                     String artist = (String)SongsbyArtist[i]["Artist"];
@@ -164,7 +163,7 @@ namespace FractalBlaster.Universe {
                         dataout.Add(album, new List<MediaFile>());
                         dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
                     }
-
+                }
                 return dataout;
             }
         }
