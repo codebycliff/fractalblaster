@@ -48,9 +48,16 @@ namespace FractalBlaster.Universe {
         /// </summary>
         /// <param name="path">The path to the file.</param>
         public MediaFile(String path) {
-            Info = new FileInfo(path);
-            Metadata = new Metadata();
-            ReadMetadata();
+            try
+            {
+                Info = new FileInfo(path);
+                Metadata = new Metadata();
+                ReadMetadata();
+            }
+            catch
+            {
+                Console.Out.WriteLine("There was invalid file given.");
+            }
         }
 
         #region [ Private ]

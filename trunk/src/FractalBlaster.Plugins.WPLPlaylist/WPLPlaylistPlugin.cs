@@ -89,6 +89,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                 }
                 writer.WriteLine("</seq>");
                 writer.WriteLine("</body>");
+                writer.WriteLine("</smil>");
             }
         }
 
