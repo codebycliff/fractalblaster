@@ -34,6 +34,12 @@ namespace FractalBlaster.Core.UI
             }
         }
 
+        public ProductForm UI
+        {
+            set;
+            private get;
+        }
+
         public int totalTime
         {
             set { mTotalTime = value; }
@@ -81,6 +87,9 @@ namespace FractalBlaster.Core.UI
             if (mTime == mTotalTime)
             {
                 PlaybackTimer.timerStop();
+
+                // Shift to next track if available
+                UI.SkipMediaForward(this, new EventArgs());
             }
             
             label1.Text = String.Format("{0:d2}:{1:d2}/{2:d2}:{3:d2}",

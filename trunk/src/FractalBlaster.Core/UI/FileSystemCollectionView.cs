@@ -46,14 +46,6 @@ namespace FractalBlaster.Core.UI {
 
         public override void RefreshView(object sender, EventArgs args) {
             base.RefreshView(sender, args);
-            switch (ViewMode) {
-            case ViewMode.Tree:
-                break;
-            case ViewMode.Icon:
-                break;
-            case ViewMode.List:
-                break;
-            }
         }
 
         private void RefreshNode(TreeNode node) {

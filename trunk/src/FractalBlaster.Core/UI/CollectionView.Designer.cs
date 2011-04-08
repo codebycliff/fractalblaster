@@ -26,9 +26,6 @@
             this.mCustomToolBar = new System.Windows.Forms.ToolStrip();
             this.ViewPanel = new System.Windows.Forms.Panel();
             this.mRefreshButton = new System.Windows.Forms.ToolStripButton();
-            this.mTreeViewButton = new System.Windows.Forms.ToolStripButton();
-            this.mIconViewButton = new System.Windows.Forms.ToolStripButton();
-            this.mListViewButton = new System.Windows.Forms.ToolStripButton();
             this.mConfigureButton = new System.Windows.Forms.ToolStripButton();
             this.mMainToolStrip = new System.Windows.Forms.ToolStrip();
             this.mMainToolStrip.SuspendLayout();
@@ -65,33 +62,6 @@
             this.mRefreshButton.Size = new System.Drawing.Size(36, 36);
             this.mRefreshButton.Text = "Refresh";
             // 
-            // mTreeViewButton
-            // 
-            this.mTreeViewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mTreeViewButton.Image = global::FractalBlaster.Core.Properties.Resources.view_list_tree_48x48;
-            this.mTreeViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mTreeViewButton.Name = "mTreeViewButton";
-            this.mTreeViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mTreeViewButton.Text = "Tree View";
-            // 
-            // mIconViewButton
-            // 
-            this.mIconViewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mIconViewButton.Image = global::FractalBlaster.Core.Properties.Resources.view_list_icons_32x32;
-            this.mIconViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mIconViewButton.Name = "mIconViewButton";
-            this.mIconViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mIconViewButton.Text = "Icon View";
-            // 
-            // mListViewButton
-            // 
-            this.mListViewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mListViewButton.Image = global::FractalBlaster.Core.Properties.Resources.view_list_text_32x32;
-            this.mListViewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mListViewButton.Name = "mListViewButton";
-            this.mListViewButton.Size = new System.Drawing.Size(36, 36);
-            this.mListViewButton.Text = "List View";
-            // 
             // mConfigureButton
             // 
             this.mConfigureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -107,9 +77,6 @@
             this.mMainToolStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.mMainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mRefreshButton,
-            this.mTreeViewButton,
-            this.mIconViewButton,
-            this.mListViewButton,
             this.mConfigureButton});
             this.mMainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mMainToolStrip.Name = "mMainToolStrip";
@@ -137,9 +104,6 @@
 
         private System.Windows.Forms.ToolStrip mCustomToolBar;
         private System.Windows.Forms.ToolStripButton mRefreshButton;
-        private System.Windows.Forms.ToolStripButton mTreeViewButton;
-        private System.Windows.Forms.ToolStripButton mIconViewButton;
-        private System.Windows.Forms.ToolStripButton mListViewButton;
         private System.Windows.Forms.ToolStripButton mConfigureButton;
         private System.Windows.Forms.ToolStrip mMainToolStrip;
         protected System.Windows.Forms.Panel ViewPanel;

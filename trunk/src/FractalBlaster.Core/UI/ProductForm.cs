@@ -27,6 +27,7 @@ namespace FractalBlaster.Core.UI {
             mSeekBar.Input = Engine.InputPlugin;
             mSeekBar.Output = Engine.OutputPlugin;
             mSeekBar.PlaybackTimer = Engine.Timer;
+            mSeekBar.UI = this;
             SeekBarPanel.Controls.Add(mSeekBar);
             seekBarRefreshTimer.Start();
 
@@ -177,7 +178,7 @@ namespace FractalBlaster.Core.UI {
             Engine.OutputPlugin.Stop();
         }
 
-        private void SkipMediaForward(object sender, EventArgs args) {
+        public void SkipMediaForward(object sender, EventArgs args) {
             if (CurrentPlaylistControl.Playlist.Count() < CurrentPlaylistControl.Playlist.SelectedIndex+1){
                 return;
             }
@@ -358,12 +359,10 @@ namespace FractalBlaster.Core.UI {
             ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Playlist p = new Playlist();
                 foreach (string s in ofd.FileNames)
                 {
-                    p.AddItem(new MediaFile(s));
+                    CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
                 }
-                CurrentPlaylistControl.Playlist = p;
             }
         }
 

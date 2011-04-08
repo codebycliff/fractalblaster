@@ -33,40 +33,11 @@ namespace FractalBlaster.Core.UI {
         
         #endregion
 
-
-        public ViewMode ViewMode {
-            get {
-                return mViewMode;
-            }
-            set {
-                if (value != ViewMode) {
-                    mViewMode = value;
-                    ViewChanged(this, new EventArgs());
-                }
-            }
-        }
-
         public CollectionView() {
             InitializeComponent();
-            ViewMode = ViewMode.Tree;
-            mTreeViewButton.Enabled = false;
             
-            // Setup the tags on the view buttons to reference their enum value...
-            mIconViewButton.Tag = ViewMode.Icon;
-            mTreeViewButton.Tag = ViewMode.Tree;
-            mListViewButton.Tag = ViewMode.List;
-
-            mTreeViewButton.Click += new EventHandler(ViewChanged);
-            mIconViewButton.Click += new EventHandler(ViewChanged);
-            mListViewButton.Click += new EventHandler(ViewChanged);
-
             // Hook up the refresh items handler...
             mRefreshButton.Click += new EventHandler(RefreshItems);
-
-          
-            mTreeViewButton.Click += (sender, args) => {
-                
-            };
 
             // If the view has a custom toolstrip...
             if (HasCustomToolStrip) {
@@ -93,32 +64,11 @@ namespace FractalBlaster.Core.UI {
 
         private void ViewChanged(Object sender, EventArgs args) {
             if (sender is ToolStripItem) {
-                ViewMode = (ViewMode)(sender as ToolStripItem).Tag;
             }
             else if (sender is CollectionView) {
-                switch (ViewMode) {
-                case ViewMode.Tree:
-                    mTreeViewButton.Enabled = false;
-                    mIconViewButton.Enabled = true;
-                    mListViewButton.Enabled = true;
-                    break;
-                case ViewMode.Icon:
-                    mIconViewButton.Enabled = false;
-                    mTreeViewButton.Enabled = true;
-                    mListViewButton.Enabled = true;
-                    break;
-                case ViewMode.List:
-                    mListViewButton.Enabled = false;
-                    mTreeViewButton.Enabled = true;
-                    mIconViewButton.Enabled = true;
-                    break;
                 }
                 RefreshView(sender, args);
-            }
         }
-
-        private ViewMode mViewMode;
-        
     }
-
+        
 }

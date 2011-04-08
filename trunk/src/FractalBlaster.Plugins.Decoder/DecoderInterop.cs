@@ -76,11 +76,16 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         /// <returns></returns>
         public Byte[] RetrieveNextFrame() {
             byte[] rval;
-
-            IntPtr pPacket = Marshal.AllocHGlobal(56);
-            if (FFMPEG.av_read_frame(pFormatContext, pPacket) < 0) {
-                return null;
+            IntPtr pPacket = IntPtr.Zero;
+            try
+            {
+                pPacket = Marshal.AllocHGlobal(56);
+                if (FFMPEG.av_read_frame(pFormatContext, pPacket) < 0)
+                {
+                    return null;
+                }
             }
+            catch (AccessViolationException) { return RetrieveNextFrame(); }
 
             IntPtr pSamples = IntPtr.Zero;
             FFMPEG.AVPacket packet = (FFMPEG.AVPacket)Marshal.PtrToStructure(pPacket, typeof(FFMPEG.AVPacket));

@@ -34,7 +34,7 @@ namespace FractalBlaster.Core.UI {
             ImageList.Images.Add(Properties.Resources.text_xmcd);
             ImageList.Images.Add(Properties.Resources.server_database);
             mMediaTreeView.ImageList = ImageList;
-            RefreshItems(this, new EventArgs());
+            //RefreshItems(this, new EventArgs()); -- Removed so that library does not load on startup and only populates upon the refresh button
             mMediaTreeView.MouseDown += new MouseEventHandler(MouseDownOnTreeView);
         }
 
@@ -88,14 +88,6 @@ namespace FractalBlaster.Core.UI {
 
         public override void RefreshView(object sender, EventArgs args) {
             base.RefreshView(sender, args);
-            switch (ViewMode) {
-            case ViewMode.Tree:
-                break;
-            case ViewMode.Icon:
-                break;
-            case ViewMode.List:
-                break;
-            }
         }
 
         private ImageList ImageList { get; set; }

@@ -44,7 +44,7 @@
             this.mControlTableLayout.ColumnCount = 3;
             this.mControlTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
             this.mControlTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.77778F));
-            this.mControlTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
+            this.mControlTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.mControlTableLayout.Controls.Add(this.mLibraryLocationLabel, 0, 0);
             this.mControlTableLayout.Controls.Add(this.textBox1, 1, 0);
             this.mControlTableLayout.Controls.Add(this.mBrowseLocationButton, 2, 0);
@@ -68,7 +68,7 @@
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(65, 3);
+            this.textBox1.Location = new System.Drawing.Point(64, 3);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(211, 20);
             this.textBox1.TabIndex = 1;
@@ -76,9 +76,9 @@
             // mBrowseLocationButton
             // 
             this.mBrowseLocationButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mBrowseLocationButton.Location = new System.Drawing.Point(282, 3);
+            this.mBrowseLocationButton.Location = new System.Drawing.Point(281, 3);
             this.mBrowseLocationButton.Name = "mBrowseLocationButton";
-            this.mBrowseLocationButton.Size = new System.Drawing.Size(66, 22);
+            this.mBrowseLocationButton.Size = new System.Drawing.Size(67, 22);
             this.mBrowseLocationButton.TabIndex = 2;
             this.mBrowseLocationButton.Text = "Browse";
             this.mBrowseLocationButton.UseVisualStyleBackColor = true;

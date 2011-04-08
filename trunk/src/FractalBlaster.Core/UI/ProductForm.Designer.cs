@@ -47,7 +47,6 @@
             this.mOpenPlaylistToolBarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.mNewToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSaveToolBarButton = new System.Windows.Forms.ToolStripButton();
-            this.mConfigureToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mExitToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
             this.mCurrentSelectedMediaLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -230,11 +229,10 @@
             this.mOpenToolBarDropDown,
             this.mNewToolBarButton,
             this.mSaveToolBarButton,
-            this.mConfigureToolBarButton,
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 51);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(284, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(263, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -277,15 +275,6 @@
             this.mSaveToolBarButton.Name = "mSaveToolBarButton";
             this.mSaveToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mSaveToolBarButton.Text = "Save";
-            // 
-            // mConfigureToolBarButton
-            // 
-            this.mConfigureToolBarButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mConfigureToolBarButton.Image = global::FractalBlaster.Core.Properties.Resources.configure;
-            this.mConfigureToolBarButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mConfigureToolBarButton.Name = "mConfigureToolBarButton";
-            this.mConfigureToolBarButton.Size = new System.Drawing.Size(52, 52);
-            this.mConfigureToolBarButton.Text = "Options";
             // 
             // mExitToolBarButton
             // 
@@ -549,7 +538,6 @@
         private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mEffectsMenu;
         private System.Windows.Forms.ToolStripButton mNewToolBarButton;
-        private System.Windows.Forms.ToolStripButton mConfigureToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mNewPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mSaveMenuItem;

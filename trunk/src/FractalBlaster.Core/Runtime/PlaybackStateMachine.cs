@@ -13,7 +13,7 @@ namespace FractalBlaster.Core.Runtime {
     }
 
     /// <summary>
-    /// TODO:  Add Forward() and Backward() methods.
+    /// Controls the state of playback and ensures the proper functionality is invoked when each type of function is called
     /// </summary>
     public class PlaybackStateMachine : IOutputPlugin {
 
