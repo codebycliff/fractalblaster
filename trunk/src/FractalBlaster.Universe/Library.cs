@@ -44,9 +44,6 @@ namespace FractalBlaster.Universe {
                 String[] dataout = new String[validCounter];
                 int dataoutCurLen = 0;
 
-
-
-
                 for (int i = 0; i < quer.Length; i += 1)
                 {
                     if (quer[i] != null)
@@ -54,7 +51,6 @@ namespace FractalBlaster.Universe {
                         dataout[dataoutCurLen] = (String)quer[i]["Artist"];
                         dataoutCurLen++;
                     }
-
                 }
                 return dataout;
             }
@@ -64,17 +60,29 @@ namespace FractalBlaster.Universe {
         /// A list of the titles of all different albums this Library contains.
         /// </summary>
         public IEnumerable<String> Albums { 
-            get 
+            get
             {
-                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Album").Select();
-
-                String[] dataout = new String[quer.Length];
+                DataTable AlbumTable = MediaCollection.Columns["Album"].Table;
+                DataRow[] quer = AlbumTable.Select();
+                int validCounter = 0;
+                for (int i = 0; i < quer.Length; i++)
+                {
+                    if (quer[i] != null)
+                    {
+                        validCounter++;
+                    }
+                }
+                String[] dataout = new String[validCounter];
+                int dataoutCurLen = 0;
 
                 for (int i = 0; i < quer.Length; i += 1)
                 {
-                    dataout[i] = (String)quer[i]["Album"];
+                    if (quer[i] != null)
+                    {
+                        dataout[dataoutCurLen] = (String)quer[i]["Album"];
+                        dataoutCurLen++;
+                    }
                 }
-
                 return dataout;
             }
         }
