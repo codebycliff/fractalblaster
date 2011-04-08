@@ -85,7 +85,7 @@ namespace FractalBlaster.Core.UI
                 }
             }
 
-            if (mTime == mTotalTime)
+            if (mTime >= mTotalTime)
             {
                 PlaybackTimer.timerStop();
 
