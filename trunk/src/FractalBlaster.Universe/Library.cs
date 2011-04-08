@@ -161,7 +161,11 @@ namespace FractalBlaster.Universe {
                     else
                     {
                         dataout.Add(album, new List<MediaFile>());
-                        dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
+                        if (SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null && !SongsbyArtist[i].Equals(System.DBNull.Value) 
+                            && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
+                        {
+                            dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
+                        }//Else don't add
                     }
                 }
                 return dataout;
