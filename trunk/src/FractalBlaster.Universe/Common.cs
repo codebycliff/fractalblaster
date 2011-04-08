@@ -4,7 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FractalBlaster.Universe {
+namespace FractalBlaster.Universe
+{
+    #region [ Gloabals ]
+    public static class GlobalVariables
+    {
+        public static int m_BufferSize = 50;
+
+        public static int BufferSize
+        {
+            get { return m_BufferSize; }
+            set { m_BufferSize = value; }
+        }
+    }
+    #endregion
 
     #region [ Delegates ]
 

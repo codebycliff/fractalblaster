@@ -102,7 +102,7 @@ namespace FractalBlaster
 					NativeData->RemoveAt(0);
 				}
 
-				PCM = appContext->Engine->InputPlugin->ReadFrames(50);
+				PCM = appContext->Engine->InputPlugin->ReadFrames(FractalBlaster::Universe::GlobalVariables::m_BufferSize);				
 
 				if(PCM == nullptr)
 				{
