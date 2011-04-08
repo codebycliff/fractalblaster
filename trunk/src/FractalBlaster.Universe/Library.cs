@@ -31,13 +31,30 @@ namespace FractalBlaster.Universe {
         public IEnumerable<String> Artists {
             get
             {
-                
-                DataRow[] quer = MediaCollection.DefaultView.ToTable(true, "Artist").Select();
-                String[] dataout = new String[quer.Length];
-                    
+                DataTable ArtistTable = MediaCollection.Columns["Artist"].Table;
+                DataRow[] quer = ArtistTable.Select();
+                int validCounter = 0;
+                for (int i = 0; i < quer.Length; i++)
+                {
+                    if (quer[i] != null)
+                    {
+                        validCounter++;
+                    }
+                }
+                String[] dataout = new String[validCounter];
+                int dataoutCurLen = 0;
+
+
+
+
                 for (int i = 0; i < quer.Length; i += 1)
                 {
-                    dataout[i] = (String)quer[i]["Artist"];
+                    if (quer[i] != null)
+                    {
+                        dataout[dataoutCurLen] = (String)quer[i]["Artist"];
+                        dataoutCurLen++;
+                    }
+
                 }
                 return dataout;
             }
@@ -87,12 +104,28 @@ namespace FractalBlaster.Universe {
             get
             {
                 Dictionary<String, List<MediaFile>> dataout = new Dictionary<string, List<MediaFile>>();
+                DataRow[] validSongs = new DataRow[MediaCollection.Rows.Count];
+                int i = 0;
+                foreach(DataRow row in MediaCollection.Rows){
+                    if (row["Artist"].Equals(key))
+                    {
+                        validSongs[i] = row;
+                        i++;
+                    }
+                }
+                DataRow[] SongsbyArtist = new DataRow[i];
+                for (int j = 0; j < i; j++)
+                {
+                    SongsbyArtist[j] = validSongs[j];
+                }
 
-                DataRow[] SongsbyArtist = MediaCollection.Select("Artist = '" + key + "'", "Album DESC");
+                //DataRow[] SongsbyArtist = MediaCollection.Select("Artist = '" + key + "'", "Album DESC");
+
                 String currentname = "";
                 List<MediaFile> collect = null;
 
-                for(int i = 0; i < SongsbyArtist.Length; i += 1)
+                for(i = 0; i < SongsbyArtist.Length; i += 1)
+
                 {
                     if(!currentname.Equals(SongsbyArtist[i]["Album"]))
                     {
@@ -106,8 +139,12 @@ namespace FractalBlaster.Universe {
                         collect.Add((MediaFile)SongsbyArtist[i]["File"]);
                     }
                 }
+                if (!dataout.ContainsKey(currentname))
+                {
+                    dataout.Add(currentname, collect);
+                }
 
-                dataout.Add(currentname, collect);
+
 
                 return dataout;
             }
@@ -117,11 +154,11 @@ namespace FractalBlaster.Universe {
         /// Serializes the Library into an XML file.
         /// </summary>
         public void Save() {
-            XmlSerializer serializer = new XmlSerializer(typeof(Library));
+            /*XmlSerializer serializer = new XmlSerializer(typeof(Library));
             using (XmlWriter stream = XmlWriter.Create(File.OpenWrite(Root.FullName + FileName)))
             {
                 serializer.Serialize(stream, this);
-            }
+            }*/
         }
 
         /// <summary>
@@ -180,14 +217,35 @@ namespace FractalBlaster.Universe {
                         dr["File"] = media;
 
                         lock (MediaPaths)
-                        {
-                            MediaPaths.Add(file.FullName);
-                        }
+                        bool exists = false;
 
                         lock (MediaCollection)
                         {
-                            MediaCollection.Rows.Add(dr);
+                            MediaPaths.Add(file.FullName);
+                            foreach (DataRow row in MediaCollection.Rows)
+                            {
+                                if (row["Title"].Equals(title))
+                                {
+                                    exists = true;
+                                    break;
+                                }
+                            }
+                            if (!exists)
+                            {
+                                MediaCollection.Rows.Add(dr);
+                            }
                         }
+
+                        lock (MediaCollection)
+                        lock (MediaPaths)
+                        {
+                            MediaCollection.Rows.Add(dr);
+                            if (!exists)
+                            {
+                                MediaPaths.Add(file.FullName);
+                            }
+                        }
+
                     }
                     catch (Exception e)
                     {
@@ -216,9 +274,25 @@ namespace FractalBlaster.Universe {
         /// <returns>A list of all the songs on the given album from the given artist</returns>
         public IEnumerable<MediaFile> MediaForAlbum(String artist, String album)
         {
-            DataRow[] quer = MediaCollection.Select("Artist = '" + artist + "' AND Album = '" + album + "'");
+            DataRow[] validSongs = new DataRow[MediaCollection.Rows.Count];
+            int i = 0;
+            foreach (DataRow row in MediaCollection.Rows)
+            {
+                if (row["Artist"].Equals(artist) && row["Album"].Equals(album))
+                {
+                    validSongs[i] = row;
+                    i++;
+                }
+            }
+            DataRow[] SongsbyArtist = new DataRow[i];
+            for (int j = 0; j < i; j++)
+            {
+                SongsbyArtist[j] = validSongs[j];
+            }
 
-            return this.GetFiles(quer);
+
+            return this.GetFiles(SongsbyArtist);
+
         }
 
         /// <summary>
@@ -409,7 +483,11 @@ namespace FractalBlaster.Universe {
             toAdd = new DataColumn("File", typeof(MediaFile));
             toAdd.Unique = false;
             output.Columns.Add(toAdd);
-        
+
+            output.CaseSensitive = true;
+            output.EndInit();
+
+            output.CaseSensitive = true;
             return output;
         }
 
@@ -419,7 +497,8 @@ namespace FractalBlaster.Universe {
 
             for (int i = 0; i < rows.Length; i += 1)
             {
-                if (rows[i]["File"] != null && !System.DBNull.Value.Equals(rows[i]["File"]))
+                if (rows[i] != null && rows[i]["File"] != null && !System.DBNull.Value.Equals(rows[i]["File"]))
+
                 {
                     dataout[i] = (MediaFile)rows[i]["File"];
                 }
