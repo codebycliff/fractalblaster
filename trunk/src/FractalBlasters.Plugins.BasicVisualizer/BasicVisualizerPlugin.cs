@@ -130,6 +130,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         /// <param name="mediaFile">The media file to which our media player has changed.</param>
         private void OnMediaChanged(MediaFile mediaFile)
         {
+            _graphicsControl.UpdateTitleDisplay(mediaFile.Metadata.Artist, mediaFile.Metadata.Title);
         }
         #endregion
     }

@@ -295,12 +295,15 @@ namespace FractalBlaster.Core.UI
 
         private void AddMediaToPlaylistData(MediaFile media)
         {
-            mPlaylistGridView.Rows.Add(new String[] {
+            if (media != null)
+            {
+                mPlaylistGridView.Rows.Add(new String[] {
                 media.Metadata.Artist,
                 media.Metadata.Title,
                 media.Metadata.Duration.ToString()
             });
-            mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = media;
+                mPlaylistGridView.Rows[mPlaylistGridView.Rows.Count - 1].Tag = media;
+            }
         }
         private void mPlaylistGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {

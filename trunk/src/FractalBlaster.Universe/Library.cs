@@ -48,8 +48,17 @@ namespace FractalBlaster.Universe {
                 {
                     if (quer[i] != null && !dataout.Contains(quer[i]["Artist"]))
                     {
-                        dataout[dataoutCurLen] = (String)quer[i]["Artist"];
-                        dataoutCurLen++;
+                        try
+                        {
+                            dataout[dataoutCurLen] = (String)quer[i]["Artist"];
+                            dataoutCurLen++;
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Source);
+                            Console.WriteLine(e.Message);
+                            Console.WriteLine(e.StackTrace);
+                        }
                     }
                 }
 

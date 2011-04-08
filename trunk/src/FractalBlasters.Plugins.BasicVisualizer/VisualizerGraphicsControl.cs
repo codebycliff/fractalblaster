@@ -94,6 +94,11 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         /// </summary>
         long _ticks_last_update = 0;
 
+        SpriteFont _spriteFont;
+
+        VisualizerSongTitleDisplay _titleDisplay;
+
+
         #endregion
 
         #region Properties
@@ -119,6 +124,19 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             //Create some services
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _content = new ContentManager(this.Services);
+
+            _spriteFont = _content.Load<SpriteFont>("./Plugins/Other Content/SpriteFont");
+
+            VisualizerDisplayTextSettings settings = new VisualizerDisplayTextSettings();
+
+            settings.FadeInTime = 2.0f;
+            settings.DisplayTime = 3.0f;
+            settings.FadeOutTime = 1.0f;
+
+            settings.StartingSize = 1.5f;
+            settings.DisplaySize = 1.5f;
+            settings.EndingSize = 0.0f;
+            _titleDisplay = new VisualizerSongTitleDisplay(_spriteBatch, _spriteFont, "", "", settings);
 
             //Create our oscilloscope lines.
             _lines = new OscilloscopeLines(GraphicsDevice);
@@ -194,6 +212,8 @@ namespace FractalBlaster.Plugins.BasicVisualizer
                     _rightChannel[i] = val;
                 }
             }
+
+            _titleDisplay.Update();
         }
 
         /// <summary>
@@ -210,11 +230,20 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             //Draw trails.
             _trails.Draw(_target, _target2);
 
+            //Draw Title Display
+            _titleDisplay.Draw(new Vector2(_target2.Height / 2, _target2.Width / 2));
+
             //Draw to backbuffer.
             GraphicsDevice.SetRenderTarget(null);
             _spriteBatch.Begin(0, BlendState.Opaque, null, null, null, null);
             _spriteBatch.Draw(_target2, new Microsoft.Xna.Framework.Rectangle(0, 0, this.Width, this.Height), Microsoft.Xna.Framework.Color.White);
             _spriteBatch.End();
+        }
+
+        internal void UpdateTitleDisplay(string artist, string title)
+        {
+            _titleDisplay.SetArtistTitle(artist, title);
+            _titleDisplay.Display();
         }
         #endregion
     }
