@@ -75,6 +75,8 @@ namespace FractalBlaster.Core.UI {
                 mOpenPlaylistMenuItem.Enabled = false;
             }
 
+            Context.Engine.CurrentPlaylist = (Playlist)mPlaylistTabControl.SelectedTab.Tag;
+
         }
 
         private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
@@ -455,14 +457,16 @@ namespace FractalBlaster.Core.UI {
 
         struct closeButton
         {
-            Rectangle location;
-            int index;
+            public Rectangle location;
+            public int index;
         }
 
         private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.Graphics.DrawString(mPlaylistTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 4, e.Bounds.Top + 4);
             closeButton c;
+            c.location = new Rectangle(e.Bounds.Right - 17, e.Bounds.Top + 5, 12, 12);
+            c.index = e.Index;
             e.Graphics.DrawImage(FractalBlaster.Core.Properties.Resources.application_exit_12x12, e.Bounds.Right - 17, e.Bounds.Top + 5);
         }
 
