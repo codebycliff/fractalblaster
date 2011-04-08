@@ -55,8 +55,14 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                         int start = line.IndexOf("<media src=\"") + 12;
                         int end = line.IndexOf("\"", start) - start;
                         line = line.Substring(start, end);
-                        MediaFile file = new MediaFile(line);
-                        playlist.AddItem(file);
+                        try{
+                            MediaFile file = new MediaFile(line);
+                            playlist.AddItem(file);
+                        }
+                        catch
+                        {
+                            Console.Out.WriteLine("There was invalid file given.");
+                        }
                         line = reader.ReadLine();
                     }
                 }
