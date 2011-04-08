@@ -456,24 +456,50 @@ namespace FractalBlaster.Core.UI {
             Engine.OutputPlugin.Volume = volume;
             VolumeControl.Refresh();
         }
+
         struct closeButton
         {
-            public Rectangle location;
+            public Rectangle rect;
             public int index;
         }
 
+        closeButton[] tabCloseButtons = new closeButton[0];
+
         private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
+            closeButton[] newArray = new closeButton[mPlaylistTabControl.TabCount];
+            for (int i = 0; (i < tabCloseButtons.Length) && (i < newArray.Length); i++)
+            {
+                newArray[i] = tabCloseButtons[i];
+            }
+            tabCloseButtons = newArray;
             e.Graphics.DrawString(mPlaylistTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 4, e.Bounds.Top + 4);
             closeButton c;
-            c.location = new Rectangle(e.Bounds.Right - 17, e.Bounds.Top + 5, 12, 12);
+            Rectangle r = new Rectangle(e.Bounds.Right - 17, e.Bounds.Top + 5, 12, 12);
+            c.rect = r;
             c.index = e.Index;
-            e.Graphics.DrawImage(FractalBlaster.Core.Properties.Resources.application_exit_12x12, e.Bounds.Right - 17, e.Bounds.Top + 5);
+            tabCloseButtons[e.Index] = c;
+            e.Graphics.DrawImage(FractalBlaster.Core.Properties.Resources.application_exit_12x12, r);
         }
 
         private void mPlaylistTabControl_MouseClick(object sender, MouseEventArgs e)
         {
-
+            foreach (closeButton c in tabCloseButtons)
+            {
+                if (c.rect.Contains(e.Location))
+                {
+                    if (mPlaylistTabControl.TabCount == 1)
+                    {
+                        PlaylistControl control = CreatePlaylistControl();
+                        mPlaylistTabControl.TabPages[0].Tag = control;
+                        mPlaylistTabControl.TabPages[0].Controls.Add(control);
+                    }
+                    else
+                    {
+                        mPlaylistTabControl.TabPages.RemoveAt(c.index);
+                    }
+                };
+            }
         }
 
         private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e)
