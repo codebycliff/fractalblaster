@@ -152,24 +152,18 @@ namespace FractalBlaster.Universe {
                 for(i = 0; i < SongsbyArtist.Length; i += 1)
 
                 {
-                    if(!currentname.Equals(SongsbyArtist[i]["Album"]))
-                    {
-                        if (!currentname.Equals("") && !dataout.ContainsKey(currentname)) { dataout.Add(currentname, collect); };
-                        
-                        currentname = (String) SongsbyArtist[i]["Album"];
-                        collect = new List<MediaFile>();
-                    }
-                    if (SongsbyArtist[i]["File"] != null && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
-                    {
-                        collect.Add((MediaFile)SongsbyArtist[i]["File"]);
-                    }
-                }
-                if (!dataout.ContainsKey(currentname))
-                {
-                    dataout.Add(currentname, collect);
-                }
+                    String album = (String)SongsbyArtist[i]["Album"];
+                    String artist = (String)SongsbyArtist[i]["Artist"];
 
-
+                    if (dataout.Keys.Contains(album))
+                    {
+                        dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
+                    }
+                    else
+                    {
+                        dataout.Add(album, new List<MediaFile>());
+                        dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
+                    }
 
                 return dataout;
             }
