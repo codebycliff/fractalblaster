@@ -88,6 +88,7 @@ namespace FractalBlaster.Core.UI
             if (mTime >= mTotalTime)
             {
                 PlaybackTimer.timerStop();
+                mTime = 0;
 
                 // Shift to next track if available
                 UI.SkipMediaForward(this, new EventArgs());

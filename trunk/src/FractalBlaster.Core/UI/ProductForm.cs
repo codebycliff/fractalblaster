@@ -183,15 +183,15 @@ namespace FractalBlaster.Core.UI {
         }
 
         public void SkipMediaForward(object sender, EventArgs args) {
-            if (CurrentPlaylistControl.Playlist.Count() < CurrentPlaylistControl.Playlist.SelectedIndex+1){
+            if (CurrentPlaylistControl.Playlist.SelectedIndex + 1 >= CurrentPlaylistControl.Playlist.Count()){
                 return;
             }
             else if (Engine.IsMediaLoaded) {
-                CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex + 1);
+                CurrentPlaylistControl.Playlist.RequestMediaAt(++CurrentPlaylistControl.Playlist.SelectedIndex);
             }
-            else {
-                CurrentPlaylistControl.Playlist.SelectedIndex++;
-            }
+            //else {
+            //    CurrentPlaylistControl.Playlist.SelectedIndex++;
+            //}
         }
 
         private void SkipMediaBackward(object sender, EventArgs args) {
@@ -202,20 +202,20 @@ namespace FractalBlaster.Core.UI {
                 }
                 else
                 {
-                    CurrentPlaylistControl.Playlist.RequestMediaAt(CurrentPlaylistControl.Playlist.SelectedIndex - 1);
+                    CurrentPlaylistControl.Playlist.RequestMediaAt(--CurrentPlaylistControl.Playlist.SelectedIndex);
                 }
             }
-            else 
-            {
-                if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    CurrentPlaylistControl.Playlist.SelectedIndex--;
-                }
-            }
+            //else 
+            //{
+            //    if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //   {
+            //        CurrentPlaylistControl.Playlist.SelectedIndex--;
+            //    }
+            //}
         }
 
         private void OpenPlaylist(object sender, EventArgs args) {
