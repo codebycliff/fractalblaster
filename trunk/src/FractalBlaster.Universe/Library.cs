@@ -224,12 +224,9 @@ namespace FractalBlaster.Universe {
                         dr["Duration"] = duration;
                         dr["File"] = media;
 
-                        lock (MediaPaths)
                         bool exists = false;
-
                         lock (MediaCollection)
                         {
-                            MediaPaths.Add(file.FullName);
                             foreach (DataRow row in MediaCollection.Rows)
                             {
                                 if (row["Title"].Equals(title))
@@ -244,10 +241,8 @@ namespace FractalBlaster.Universe {
                             }
                         }
 
-                        lock (MediaCollection)
                         lock (MediaPaths)
                         {
-                            MediaCollection.Rows.Add(dr);
                             if (!exists)
                             {
                                 MediaPaths.Add(file.FullName);
@@ -297,7 +292,6 @@ namespace FractalBlaster.Universe {
             {
                 SongsbyArtist[j] = validSongs[j];
             }
-
 
             return this.GetFiles(SongsbyArtist);
 
