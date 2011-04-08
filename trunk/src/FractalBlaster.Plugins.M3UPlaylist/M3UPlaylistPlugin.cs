@@ -64,7 +64,7 @@ namespace FractalBlaster.Plugins.M3UPlaylist {
             using (StreamWriter writer = new StreamWriter(File.OpenWrite(path))) {
                 writer.WriteLine(HEADER_EXT_M3U);
                 foreach (MediaFile file in playlist.Items) {
-                    writer.WriteLine(file.Info.Name);
+                    writer.WriteLine(file.Info.FullName);
                 }
             }
         }

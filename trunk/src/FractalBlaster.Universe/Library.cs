@@ -154,7 +154,9 @@ namespace FractalBlaster.Universe {
                     String album = (String)SongsbyArtist[i]["Album"];
                     String artist = (String)SongsbyArtist[i]["Artist"];
 
-                    if (dataout.Keys.Contains(album))
+
+                    if (dataout.Keys.Contains(album) && SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null && 
+                        !SongsbyArtist[i].Equals(System.DBNull.Value) && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
                     {
                         dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
                     }

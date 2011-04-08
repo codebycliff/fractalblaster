@@ -44,7 +44,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                     line = line.Replace("</title>", "");
                     playlist.Title = line;
                 }
-                while (!reader.EndOfStream && !line.Contains("<media src=\""))//Pass all the meta tags and crap
+                while (!reader.EndOfStream && !line.Contains("<media src=\""))//Pass all the meta tags and other useless information
                 {
                     line = reader.ReadLine();
                 }
@@ -91,7 +91,7 @@ namespace FractalBlaster.Plugins.WPLPlaylist
                 writer.WriteLine("<seq>");
                 foreach (MediaFile file in playlist.Items)
                 {
-                    writer.WriteLine(file.Info.DirectoryName);
+                    writer.WriteLine("<media src=\"" +file.Info.FullName + "\"/>");
                 }
                 writer.WriteLine("</seq>");
                 writer.WriteLine("</body>");
