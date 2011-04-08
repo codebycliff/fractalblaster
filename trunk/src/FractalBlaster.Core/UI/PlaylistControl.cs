@@ -79,8 +79,9 @@ namespace FractalBlaster.Core.UI
             if (e.KeyValue == 13)
             {
                 Playlist.RequestMediaAt(mPlaylistGridView.CurrentRow.Index);
+
+                e.Handled = true;
             }
-            e.Handled = true;
         }
 
         void mPlaylistGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
