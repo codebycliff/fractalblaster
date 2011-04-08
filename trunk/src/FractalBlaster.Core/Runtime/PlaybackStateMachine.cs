@@ -23,6 +23,7 @@ namespace FractalBlaster.Core.Runtime {
             State = PlaybackState.Stopped;
             OutputStream = output;
             InputController = input;
+            output.Volume = 100;
         }
         
         #region [ IOutputPlugin ]

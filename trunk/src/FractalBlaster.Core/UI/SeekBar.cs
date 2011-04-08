@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using FractalBlaster.Universe;
+using FractalBlaster.Core.Runtime;
 using System.Timers;
 
 namespace FractalBlaster.Core.UI
@@ -101,8 +102,11 @@ namespace FractalBlaster.Core.UI
 
         private void SeekBar_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseDown = true;
-            mouseX = e.X;
+            if (FamilyKernel.Instance.Context.Engine.IsMediaLoaded)
+            {
+                mouseDown = true;
+                mouseX = e.X;
+            }
         }
 
         private void SeekBar_MouseUp(object sender, MouseEventArgs e)

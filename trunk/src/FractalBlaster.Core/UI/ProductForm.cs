@@ -383,10 +383,10 @@ namespace FractalBlaster.Core.UI {
 
         private void seekBarRefreshTimer_Tick(object sender, EventArgs e)
         {
-            if (CurrentPlaylistControl.Playlist.SelectedIndex < CurrentPlaylistControl.Playlist.Count())
+            if (Engine.IsMediaLoaded)
             {
                 mSeekBar.time = Engine.Timer.currentTime;
-                mSeekBar.totalTime = (int)CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex).Metadata.Duration.TotalSeconds;
+                mSeekBar.totalTime = (int)Engine.CurrentMedia.Metadata.Duration.TotalSeconds;
                 mSeekBar.Refresh();
             }
         }
