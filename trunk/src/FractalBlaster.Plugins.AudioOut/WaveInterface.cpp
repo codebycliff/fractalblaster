@@ -1,5 +1,6 @@
 #include "WaveInterface.h"
 #include "Callbacks.h"
+#include "assert.h"
 
 WaveInterface::WaveInterface()
 {
@@ -112,20 +113,16 @@ void WaveInterface::PushNextBlock()
 		Queued = new WAVEHDR();
 		header = Queued;
 	}
+	else if(Playing != NULL && Queued != NULL)
+	{
+		// We shouldn't be here
+		assert(0);
+		return;
+	}
 
 	ZeroMemory(header, sizeof(WAVEHDR));
 	header->dwBufferLength = currentStream->getBufferSize();
 	header->lpData = currentStream->getBufferData();
-
-	#if UNITTEST
-		#include "stdio.h"
-		FILE* out = fopen("OutputDevicePCM.raw", "ab");
-		for(int i=0; i<currentStream->getBufferSize(); i++)
-		{
-			fputc(currentStream->getBufferData()[i], out);
-		}
-		fclose(out);
-	#endif 
 
 	MMRESULT result = waveOutPrepareHeader(*StereoOutputDevice, header, sizeof(WAVEHDR));
 	result = waveOutWrite(*StereoOutputDevice, header, sizeof(WAVEHDR));
