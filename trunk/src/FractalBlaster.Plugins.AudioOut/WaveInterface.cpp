@@ -116,7 +116,6 @@ void WaveInterface::PushNextBlock()
 	else if(Playing != NULL && Queued != NULL)
 	{
 		// We shouldn't be here
-		assert(0);
 		return;
 	}
 
