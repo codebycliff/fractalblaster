@@ -78,12 +78,14 @@ namespace FractalBlaster.Core.UI {
         }
 
         private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
+            /*
             LibraryCollectionView view = (sender as LibraryCollectionView);
             IEnumerable<MediaFile> items = view.Tree.GetNodeAt(args.X, args.Y).Tag as IEnumerable<MediaFile>;
             if (items != null) {
                 //MessageBox.Show(String.Format("Name: {0}\nTag null?: {1}\nCount: {2}", node.Text, node.Tag == null ? "Yes" : "No", items.Count().ToString()));
                 DoDragDrop(items, DragDropEffects.Copy);
             }
+             * */
         }
 
         int newViewYOffset;

@@ -46,13 +46,17 @@ namespace FractalBlaster.Universe {
 
                 for (int i = 0; i < quer.Length; i += 1)
                 {
-                    if (quer[i] != null)
+                    if (quer[i] != null && !dataout.Contains(quer[i]["Artist"]))
                     {
                         dataout[dataoutCurLen] = (String)quer[i]["Artist"];
                         dataoutCurLen++;
                     }
                 }
-                return dataout;
+
+                String[] rval = new String[dataoutCurLen];
+                Array.Copy(dataout, rval, dataoutCurLen);
+
+                return rval;
             }
         }
 
@@ -83,6 +87,7 @@ namespace FractalBlaster.Universe {
                         dataoutCurLen++;
                     }
                 }
+
                 return dataout;
             }
         }

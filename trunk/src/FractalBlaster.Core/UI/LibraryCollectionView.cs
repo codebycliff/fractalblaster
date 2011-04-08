@@ -22,8 +22,6 @@ namespace FractalBlaster.Core.UI {
 
         public Library Library { get; private set; }
 
-        public TreeView Tree { get { return mMediaTreeView; } }
-
         public LibraryCollectionView(Library library) : base() {
             InitializeComponent();
             Library = library;
@@ -33,9 +31,6 @@ namespace FractalBlaster.Core.UI {
             ImageList.Images.Add(Properties.Resources.media_optical_recordable);
             ImageList.Images.Add(Properties.Resources.text_xmcd);
             ImageList.Images.Add(Properties.Resources.server_database);
-            mMediaTreeView.ImageList = ImageList;
-            //RefreshItems(this, new EventArgs()); -- Removed so that library does not load on startup and only populates upon the refresh button
-            mMediaTreeView.MouseDown += new MouseEventHandler(MouseDownOnTreeView);
         }
 
         private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {

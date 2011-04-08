@@ -33,9 +33,23 @@ namespace FractalBlaster.Core.UI {
         
         #endregion
 
+
+        public ViewMode ViewMode {
+            get {
+                return mViewMode;
+            }
+            set {
+                if (value != ViewMode) {
+                    mViewMode = value;
+                    ViewChanged(this, new EventArgs());
+                }
+            }
+        }
+
         public CollectionView() {
             InitializeComponent();
-            
+            ViewMode = ViewMode.Tree;
+
             // Hook up the refresh items handler...
             mRefreshButton.Click += new EventHandler(RefreshItems);
 
@@ -64,11 +78,15 @@ namespace FractalBlaster.Core.UI {
 
         private void ViewChanged(Object sender, EventArgs args) {
             if (sender is ToolStripItem) {
+                ViewMode = (ViewMode)(sender as ToolStripItem).Tag;
             }
             else if (sender is CollectionView) {
-                }
                 RefreshView(sender, args);
+            }
         }
-    }
+
+        private ViewMode mViewMode;
         
+    }
+
 }
