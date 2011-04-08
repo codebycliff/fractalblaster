@@ -158,6 +158,11 @@ namespace FractalBlaster.Core.UI {
             }
 
             MediaFile media = CurrentPlaylistControl.Playlist.Items.ElementAt(CurrentPlaylistControl.Playlist.SelectedIndex);
+
+            mCurrentSelectedMediaLabel.Text = String.Format("{0} - {1}",
+            media.Metadata["Artist"].Value.ToString(),
+            media.Metadata["Title"].Value.ToString());
+
             if (Engine.IsMediaLoaded)
             {
                 if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName))
@@ -189,9 +194,6 @@ namespace FractalBlaster.Core.UI {
             else if (Engine.IsMediaLoaded) {
                 CurrentPlaylistControl.Playlist.RequestMediaAt(++CurrentPlaylistControl.Playlist.SelectedIndex);
             }
-            //else {
-            //    CurrentPlaylistControl.Playlist.SelectedIndex++;
-            //}
         }
 
         private void SkipMediaBackward(object sender, EventArgs args) {
@@ -205,17 +207,6 @@ namespace FractalBlaster.Core.UI {
                     CurrentPlaylistControl.Playlist.RequestMediaAt(--CurrentPlaylistControl.Playlist.SelectedIndex);
                 }
             }
-            //else 
-            //{
-            //    if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //   {
-            //        CurrentPlaylistControl.Playlist.SelectedIndex--;
-            //    }
-            //}
         }
 
         private void OpenPlaylist(object sender, EventArgs args) {
@@ -262,17 +253,7 @@ namespace FractalBlaster.Core.UI {
             if (playlist == null) {
                 playlist = new Playlist();
             }
-            playlist.SelectedChanged += (o, ea) => {
-                if (playlist.SelectedIndex <= playlist.Items.Count() - 1 && playlist.SelectedIndex >= 0)
-                {
-                    MediaFile media = playlist.Items.ElementAt(playlist.SelectedIndex);
-                    if (media != null) {
-                        mCurrentSelectedMediaLabel.Text = String.Format("{0} - {1}",
-                        media.Metadata["Artist"].Value.ToString(),
-                        media.Metadata["Title"].Value.ToString());
-                    }
-                }
-            };
+
             playlist.MediaRequested += m => { PlayMedia(null, new EventArgs()); };
             return playlist;
         }
@@ -389,9 +370,6 @@ namespace FractalBlaster.Core.UI {
         {
             if (Engine.IsMediaLoaded)
             {
-            //if (CurrentPlaylistControl.Playlist.SelectedIndex < CurrentPlaylistControl.Playlist.Count() &&
-            //    CurrentPlaylistControl.Playlist.SelectedIndex >= 0)
-            //{
                 mSeekBar.time = Engine.Timer.currentTime;
                 mSeekBar.totalTime = (int)Engine.CurrentMedia.Metadata.Duration.TotalSeconds;
                 mSeekBar.Refresh();
