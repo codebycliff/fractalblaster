@@ -39,9 +39,6 @@
             this.mExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mViewsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mEffectsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mHelpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mTutorialsMenuDropDown = new System.Windows.Forms.ToolStripMenuItem();
-            this.mTutorialsWritingPluginsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mStandardToolBar = new System.Windows.Forms.ToolStrip();
             this.mOpenToolBarDropDown = new System.Windows.Forms.ToolStripSplitButton();
             this.mOpenPlaylistToolBarButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,11 +81,10 @@
             this.mMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mFileMenu,
             this.mViewsMenu,
-            this.mEffectsMenu,
-            this.mHelpMenu});
+            this.mEffectsMenu});
             this.mMenuStrip.Location = new System.Drawing.Point(0, 27);
             this.mMenuStrip.Name = "mMenuStrip";
-            this.mMenuStrip.Size = new System.Drawing.Size(192, 24);
+            this.mMenuStrip.Size = new System.Drawing.Size(240, 24);
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             this.mMenuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -198,29 +194,6 @@
             this.mEffectsMenu.Size = new System.Drawing.Size(54, 20);
             this.mEffectsMenu.Text = "Effects";
             // 
-            // mHelpMenu
-            // 
-            this.mHelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mTutorialsMenuDropDown});
-            this.mHelpMenu.Name = "mHelpMenu";
-            this.mHelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.mHelpMenu.Text = "Help";
-            // 
-            // mTutorialsMenuDropDown
-            // 
-            this.mTutorialsMenuDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mTutorialsWritingPluginsMenuItem});
-            this.mTutorialsMenuDropDown.Image = global::FractalBlaster.Core.Properties.Resources.documentation;
-            this.mTutorialsMenuDropDown.Name = "mTutorialsMenuDropDown";
-            this.mTutorialsMenuDropDown.Size = new System.Drawing.Size(120, 22);
-            this.mTutorialsMenuDropDown.Text = "Tutorials";
-            // 
-            // mTutorialsWritingPluginsMenuItem
-            // 
-            this.mTutorialsWritingPluginsMenuItem.Name = "mTutorialsWritingPluginsMenuItem";
-            this.mTutorialsWritingPluginsMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.mTutorialsWritingPluginsMenuItem.Text = "Writing Plugins";
-            // 
             // mStandardToolBar
             // 
             this.mStandardToolBar.Dock = System.Windows.Forms.DockStyle.None;
@@ -232,7 +205,7 @@
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 51);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(263, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(232, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -525,7 +498,6 @@
         private System.Windows.Forms.ToolStripMenuItem mFileMenu;
         private System.Windows.Forms.ToolStripMenuItem mExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mViewsMenu;
-        private System.Windows.Forms.ToolStripMenuItem mHelpMenu;
         private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStrip mStandardToolBar;
@@ -533,8 +505,6 @@
         private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistToolBarButton;
         private System.Windows.Forms.ToolStripButton mExitToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mConfigureMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mTutorialsMenuDropDown;
-        private System.Windows.Forms.ToolStripMenuItem mTutorialsWritingPluginsMenuItem;
         private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mEffectsMenu;
         private System.Windows.Forms.ToolStripButton mNewToolBarButton;
