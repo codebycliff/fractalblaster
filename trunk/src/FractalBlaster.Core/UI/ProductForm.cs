@@ -75,7 +75,7 @@ namespace FractalBlaster.Core.UI {
                 mOpenPlaylistMenuItem.Enabled = false;
             }
 
-            Context.Engine.CurrentPlaylist = (Playlist)mPlaylistTabControl.SelectedTab.Tag;
+            Context.Engine.CurrentPlaylist = mPlaylistTabControl.SelectedTab.Tag as Playlist;
 
         }
 
@@ -461,6 +461,8 @@ namespace FractalBlaster.Core.UI {
             public int index;
         }
 
+        
+
         private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.Graphics.DrawString(mPlaylistTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 4, e.Bounds.Top + 4);
@@ -477,7 +479,7 @@ namespace FractalBlaster.Core.UI {
 
         private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Context.Engine.CurrentPlaylist = (Playlist)mPlaylistTabControl.SelectedTab.Tag;
+            Context.Engine.CurrentPlaylist = mPlaylistTabControl.SelectedTab.Tag as Playlist;
         }
 
     }
