@@ -74,6 +74,13 @@ namespace FractalBlaster.Core.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_exit_12x12 {
+            get {
+                object obj = ResourceManager.GetObject("application_exit_12x12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_rss_xml {
             get {
                 object obj = ResourceManager.GetObject("application_rss_xml", resourceCulture);

@@ -453,5 +453,28 @@ namespace FractalBlaster.Core.UI {
             VolumeControl.Refresh();
         }
 
+        struct closeButton
+        {
+            Rectangle location;
+            int index;
+        }
+
+        private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.DrawString(mPlaylistTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 4, e.Bounds.Top + 4);
+            closeButton c;
+            e.Graphics.DrawImage(FractalBlaster.Core.Properties.Resources.application_exit_12x12, e.Bounds.Right - 17, e.Bounds.Top + 5);
+        }
+
+        private void mPlaylistTabControl_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Context.Engine.CurrentPlaylist = (Playlist)mPlaylistTabControl.SelectedTab.Tag;
+        }
+
     }
 }

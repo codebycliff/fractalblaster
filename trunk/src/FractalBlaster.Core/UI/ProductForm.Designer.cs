@@ -84,7 +84,7 @@
             this.mEffectsMenu});
             this.mMenuStrip.Location = new System.Drawing.Point(0, 27);
             this.mMenuStrip.Name = "mMenuStrip";
-            this.mMenuStrip.Size = new System.Drawing.Size(240, 24);
+            this.mMenuStrip.Size = new System.Drawing.Size(148, 24);
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             this.mMenuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -408,11 +408,17 @@
             this.mPlaylistTabControl.AllowDrop = true;
             this.mPlaylistTabControl.Controls.Add(this.tabPage1);
             this.mPlaylistTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mPlaylistTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.mPlaylistTabControl.ItemSize = new System.Drawing.Size(80, 18);
             this.mPlaylistTabControl.Location = new System.Drawing.Point(0, 0);
             this.mPlaylistTabControl.Name = "mPlaylistTabControl";
             this.mPlaylistTabControl.SelectedIndex = 0;
             this.mPlaylistTabControl.Size = new System.Drawing.Size(434, 314);
+            this.mPlaylistTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mPlaylistTabControl.TabIndex = 4;
+            this.mPlaylistTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.mPlaylistTabControl_DrawItem);
+            this.mPlaylistTabControl.SelectedIndexChanged += new System.EventHandler(this.mPlaylistTabControl_SelectedIndexChanged);
+            this.mPlaylistTabControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mPlaylistTabControl_MouseClick);
             // 
             // tabPage1
             // 

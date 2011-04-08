@@ -23,7 +23,7 @@ namespace FractalBlaster.Universe {
         
         Boolean IsMediaLoaded { get; }
 
-        Playlist CurrentPlaylist { get; }
+        Playlist CurrentPlaylist { get; set; }
 
         void Load(MediaFile file);
 
