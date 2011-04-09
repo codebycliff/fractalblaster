@@ -23,24 +23,12 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.mCustomToolBar = new System.Windows.Forms.ToolStrip();
             this.ViewPanel = new System.Windows.Forms.Panel();
             this.mRefreshButton = new System.Windows.Forms.ToolStripButton();
             this.mConfigureButton = new System.Windows.Forms.ToolStripButton();
             this.mMainToolStrip = new System.Windows.Forms.ToolStrip();
             this.mMainToolStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mCustomToolBar
-            // 
-            this.mCustomToolBar.BackColor = System.Drawing.SystemColors.Control;
-            this.mCustomToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.mCustomToolBar.Location = new System.Drawing.Point(0, 159);
-            this.mCustomToolBar.Margin = new System.Windows.Forms.Padding(3);
-            this.mCustomToolBar.Name = "mCustomToolBar";
-            this.mCustomToolBar.Size = new System.Drawing.Size(200, 25);
-            this.mCustomToolBar.TabIndex = 5;
-            this.mCustomToolBar.Text = "mCustomToolBar";
             // 
             // ViewPanel
             // 
@@ -88,7 +76,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.mCustomToolBar);
             this.Controls.Add(this.mMainToolStrip);
             this.Controls.Add(this.ViewPanel);
             this.Name = "CollectionView";
@@ -102,7 +89,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip mCustomToolBar;
         protected System.Windows.Forms.ToolStripButton mRefreshButton;
         private System.Windows.Forms.ToolStripButton mConfigureButton;
         private System.Windows.Forms.ToolStrip mMainToolStrip;

@@ -162,12 +162,21 @@ namespace FractalBlaster.Universe {
                     }
                     else
                     {
-                        dataout.Add(album, new List<MediaFile>());
-                        if (SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null && !SongsbyArtist[i].Equals(System.DBNull.Value) 
-                            && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
+                        try
                         {
-                            dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
-                        }//Else don't add
+                            dataout.Add(album, new List<MediaFile>());
+                            if (SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null && !SongsbyArtist[i].Equals(System.DBNull.Value)
+                                && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
+                            {
+                                dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
+                            }//Else don't add
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Exception in Library.cs: ");
+                            Console.WriteLine(e.Source);
+                            Console.WriteLine(e.Message);
+                        }
                     }
                 }
                 return dataout;

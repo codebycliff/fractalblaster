@@ -53,6 +53,7 @@ namespace FractalBlaster.Core.UI {
             // Hook up the refresh items handler...
             mRefreshButton.Click += new EventHandler(RefreshItems);
 
+            /*
             // If the view has a custom toolstrip...
             if (HasCustomToolStrip) {
                 mCustomToolBar.Text = String.Format("{0} ToolBar", Name);
@@ -62,6 +63,7 @@ namespace FractalBlaster.Core.UI {
             else {
                 mCustomToolBar.Visible = false;
             }
+             */
 
             // If the view has configuration...
             if (HasConfiguration) {

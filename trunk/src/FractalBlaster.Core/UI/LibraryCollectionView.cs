@@ -68,7 +68,6 @@ namespace FractalBlaster.Core.UI
         public override void RefreshItems(object sender, EventArgs args)
         {
             base.RefreshItems(sender, args);
-
             this.mRefreshButton.Enabled = false;
             mMediaTreeView.Nodes.Clear();
             mMediaTreeView.Nodes.Add(new TreeNode("Library Collection"));
@@ -78,6 +77,12 @@ namespace FractalBlaster.Core.UI
         }
 
         private delegate void Add(TreeNode n);
+        private delegate void ChangeText(string text);
+
+        private void ChangeStatusStrip1Text(string text)
+        {
+            label1.Text = text;
+        }
 
         private void EnableRefreshButton()
         {
@@ -91,6 +96,7 @@ namespace FractalBlaster.Core.UI
 
         public void RefreshItems_Threaded()
         {
+            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text),new object[] { "Refreshing Library..." });
             Library.Refresh();
 
             TreeNode root = new TreeNode("Library Collection", 3, 3);
@@ -98,6 +104,7 @@ namespace FractalBlaster.Core.UI
 
             foreach (String artist in Library.Artists)
             {
+                mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Reading " + artist });
                 TreeNode artistNode = new TreeNode(artist, 0, 0);
                 artistNode.Tag = Library.MediaForArtist(artist);
                 Dictionary<String, List<MediaFile>> albums = Library[artist];
@@ -117,6 +124,7 @@ namespace FractalBlaster.Core.UI
 
                 mMediaTreeView.Invoke(new MethodInvoker(Refresh));
             }
+            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "" });
             mMediaTreeView.Invoke(new MethodInvoker(EnableRefreshButton));
         }
 
