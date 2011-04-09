@@ -37,7 +37,7 @@ namespace FractalBlaster.Core.UI
             ImageList.Images.Add(Properties.Resources.media_optical_recordable);
             ImageList.Images.Add(Properties.Resources.text_xmcd);
             ImageList.Images.Add(Properties.Resources.server_database);
-
+            mMediaTreeView.Sorted = true;
 
             this.mMediaTreeView.KeyDown += new KeyEventHandler(mMediaTreeView_KeyDown);
         }
@@ -96,11 +96,12 @@ namespace FractalBlaster.Core.UI
 
         public void RefreshItems_Threaded()
         {
-            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text),new object[] { "Refreshing Library..." });
+            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Refreshing Library..." });
             Library.Refresh();
 
             TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
+
 
             foreach (String artist in Library.Artists)
             {
