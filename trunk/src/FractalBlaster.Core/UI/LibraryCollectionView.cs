@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FractalBlaster.Universe;
 using FractalBlaster.Core.Runtime;
+using System.Threading;
 
 namespace FractalBlaster.Core.UI
 {
@@ -67,6 +68,29 @@ namespace FractalBlaster.Core.UI
         public override void RefreshItems(object sender, EventArgs args)
         {
             base.RefreshItems(sender, args);
+
+            this.mRefreshButton.Enabled = false;
+            mMediaTreeView.Nodes.Clear();
+            mMediaTreeView.Nodes.Add(new TreeNode("Library Collection"));
+            Thread thread = new Thread(RefreshItems_Threaded);
+            thread.Start();
+
+        }
+
+        private delegate void Add(TreeNode n);
+
+        private void EnableRefreshButton()
+        {
+            mRefreshButton.Enabled = true;
+        }
+
+        private void AddNode(TreeNode n)
+        {
+            mMediaTreeView.Nodes[0].Nodes.Add(n);
+        }
+
+        public void RefreshItems_Threaded()
+        {
             Library.Refresh();
 
             TreeNode root = new TreeNode("Library Collection", 3, 3);
@@ -89,12 +113,11 @@ namespace FractalBlaster.Core.UI
                     }
                     artistNode.Nodes.Add(albumNode);
                 }
-                root.Nodes.Add(artistNode);
-            }
+                mMediaTreeView.Invoke(new Add(AddNode), artistNode);
 
-            mMediaTreeView.Nodes.Clear();
-            mMediaTreeView.Nodes.Add(root);
-            mMediaTreeView.Refresh();
+                mMediaTreeView.Invoke(new MethodInvoker(Refresh));
+            }
+            mMediaTreeView.Invoke(new MethodInvoker(EnableRefreshButton));
         }
 
         public override void RefreshView(object sender, EventArgs args)

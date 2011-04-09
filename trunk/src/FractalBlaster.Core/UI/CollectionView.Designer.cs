@@ -103,7 +103,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip mCustomToolBar;
-        private System.Windows.Forms.ToolStripButton mRefreshButton;
+        protected System.Windows.Forms.ToolStripButton mRefreshButton;
         private System.Windows.Forms.ToolStripButton mConfigureButton;
         private System.Windows.Forms.ToolStrip mMainToolStrip;
         protected System.Windows.Forms.Panel ViewPanel;
