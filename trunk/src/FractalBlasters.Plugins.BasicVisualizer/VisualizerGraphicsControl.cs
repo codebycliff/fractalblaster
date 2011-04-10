@@ -242,8 +242,12 @@ namespace FractalBlaster.Plugins.BasicVisualizer
 
         internal void UpdateTitleDisplay(string artist, string title)
         {
-            _titleDisplay.SetArtistTitle(artist, title);
-            _titleDisplay.Display();
+            if (_titleDisplay != null)
+            {
+                //TODO find more elegant solution for hooking up this event.
+                _titleDisplay.SetArtistTitle(artist, title);
+                _titleDisplay.Display();
+            }
         }
         #endregion
     }

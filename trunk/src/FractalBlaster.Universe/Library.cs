@@ -10,11 +10,13 @@ using System.Xml.Serialization;
 using System.Xml;
 using FractalBlaster.Universe;
 
-namespace FractalBlaster.Universe {
+namespace FractalBlaster.Universe
+{
 
     [Serializable]
-    public class Library {
-        
+    public class Library
+    {
+
         /// <summary>
         /// The directory that contains the songs this Library was loaded from.
         /// </summary>
@@ -28,7 +30,8 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// A list of the names of all different artists this Library contains.
         /// </summary>
-        public IEnumerable<String> Artists {
+        public IEnumerable<String> Artists
+        {
             get
             {
                 DataTable ArtistTable = MediaCollection.Columns["Artist"].Table;
@@ -72,7 +75,8 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// A list of the titles of all different albums this Library contains.
         /// </summary>
-        public IEnumerable<String> Albums { 
+        public IEnumerable<String> Albums
+        {
             get
             {
                 DataTable AlbumTable = MediaCollection.Columns["Album"].Table;
@@ -107,7 +111,8 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// A list of all songs contained in this Library, sorted by when they were added.
         /// </summary>
-        public IEnumerable<MediaFile> AllMedia { 
+        public IEnumerable<MediaFile> AllMedia
+        {
             get
             {
                 DataRow[] quer = MediaCollection.Select();
@@ -125,13 +130,15 @@ namespace FractalBlaster.Universe {
         /// Returns a Dictionary containing a mapping of all album names by
         /// the given artist to a list of the songs in that album.
         /// </returns>
-        public Dictionary<String, List<MediaFile>> this[String key] {
+        public Dictionary<String, List<MediaFile>> this[String key]
+        {
             get
             {
                 Dictionary<String, List<MediaFile>> dataout = new Dictionary<string, List<MediaFile>>();
                 DataRow[] validSongs = new DataRow[MediaCollection.Rows.Count];
                 int i = 0;
-                foreach(DataRow row in MediaCollection.Rows){
+                foreach (DataRow row in MediaCollection.Rows)
+                {
                     if (row["Artist"].Equals(key))
                     {
                         validSongs[i] = row;
@@ -155,7 +162,7 @@ namespace FractalBlaster.Universe {
                     String artist = (String)SongsbyArtist[i]["Artist"];
 
 
-                    if (dataout.Keys.Contains(album) && SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null && 
+                    if (dataout.Keys.Contains(album) && SongsbyArtist[i] != null && SongsbyArtist[i]["File"] != null &&
                         !SongsbyArtist[i].Equals(System.DBNull.Value) && !SongsbyArtist[i]["File"].Equals(System.DBNull.Value))
                     {
                         dataout[album].Add((MediaFile)SongsbyArtist[i]["File"]);
@@ -186,7 +193,8 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// Serializes the Library into an XML file.
         /// </summary>
-        public void Save() {
+        public void Save()
+        {
             /*XmlSerializer serializer = new XmlSerializer(typeof(Library));
             using (XmlWriter stream = XmlWriter.Create(File.OpenWrite(Root.FullName + FileName)))
             {
@@ -201,8 +209,8 @@ namespace FractalBlaster.Universe {
         public void Refresh()
         {
             FileInfo[] files = new FileInfo[0];
-            
-            foreach(String s in Config.getProperty("fileformats").Split(';', '|'))
+
+            foreach (String s in Config.getProperty("fileformats").Split(';', '|'))
             {
                 FileInfo[] temp = Root.GetFiles(s, SearchOption.AllDirectories);
                 FileInfo[] temp2 = (FileInfo[])files.Clone();
@@ -211,8 +219,68 @@ namespace FractalBlaster.Universe {
                 Array.Copy(temp2, 0, files, temp.Length, temp2.Length);
             }
 
-            
+            foreach (FileInfo file in files)
+            {
+                if (!MediaPaths.Contains(file.FullName))
+                {
+                    try
+                    {
+                        MediaFile media = file.CreateMediaFile();
+                        String artist = media.Metadata.Artist;
+                        String album = media.Metadata.Album;
+                        String title = media.Metadata.Title;
 
+                        int bitrate = media.Metadata.BitRate;
+                        int channel = media.Metadata.Channels;
+                        int samplerate = media.Metadata.SampleRate;
+                        int year = media.Metadata.Year;
+
+                        TimeSpan duration = media.Metadata.Duration;
+
+                        DataRow dr = MediaCollection.NewRow();
+
+
+                        //Apostrophes mess with searching and sorting, so we just strip them out
+                        artist = artist.Replace("'", "");
+                        album = album.Replace("'", "");
+                        title = title.Replace("'", "");
+
+                        dr["Artist"] = artist;
+                        dr["Album"] = album;
+                        dr["Title"] = title;
+                        dr["BitRate"] = bitrate;
+                        dr["Channel"] = channel;
+                        dr["SampleRate"] = samplerate;
+                        dr["Year"] = year;
+                        dr["Duration"] = duration;
+                        dr["File"] = media;
+
+                        bool exists = false;
+                        foreach (DataRow row in MediaCollection.Rows)
+                        {
+                            if (row["Title"].Equals(title))
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists)
+                        {
+                            MediaCollection.Rows.Add(dr);
+                        }
+                        if (!exists)
+                        {
+                            MediaPaths.Add(file.FullName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine("Problem Opening MediaFile:\nException Type: {0}\nMessage:{1}", e.GetType().FullName, e.Message);
+                    }
+                }
+            }
+
+            /*
             Parallel.ForEach(files, file =>
             {
                 if (!MediaPaths.Contains(file.FullName))
@@ -281,7 +349,7 @@ namespace FractalBlaster.Universe {
                     }
                 }
 
-            });
+            });*/
         }
 
         /// <summary>
@@ -401,7 +469,7 @@ namespace FractalBlaster.Universe {
             {
                 quer = MediaCollection.Select(searchexp, sorting);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new MediaFile[0];
             }
@@ -414,7 +482,7 @@ namespace FractalBlaster.Universe {
         static Library()
         {
             FileName = "Library.xml";
-            
+
         }
 
         ~Library()
@@ -429,19 +497,23 @@ namespace FractalBlaster.Universe {
         /// </summary>
         /// <param name="dir">A directory containing music files or a serialized library file</param>
         /// <returns>A library containing all the music in the given directory.</returns>
-        public static Library Load(DirectoryInfo dir) {
+        public static Library Load(DirectoryInfo dir)
+        {
             Library library = null;
 
             String libraryConfig = Path.Combine(dir.FullName, FileName);
-            if (File.Exists(libraryConfig)) {
+            if (File.Exists(libraryConfig))
+            {
                 XmlSerializer deserializer = new XmlSerializer(typeof(Library));
-                using (Stream stream = File.OpenRead(dir.FullName)) {
+                using (Stream stream = File.OpenRead(dir.FullName))
+                {
                     library = (Library)deserializer.Deserialize(stream);
                 }
             }
-            else {
+            else
+            {
                 library = new Library(dir);
-                
+
             }
             return library;
         }
@@ -455,12 +527,14 @@ namespace FractalBlaster.Universe {
 
         }
 
-        private Library(DirectoryInfo root) {
+        private Library(DirectoryInfo root)
+        {
             Root = root;
 
             MediaCollection = this.createTable();
 
-            if (File.Exists(Root.FullName + FileName)) {
+            if (File.Exists(Root.FullName + FileName))
+            {
                 File.Delete(Root.FullName + FileName);
             }
             MediaPaths = new List<String>();
@@ -525,7 +599,6 @@ namespace FractalBlaster.Universe {
             for (int i = 0; i < rows.Length; i += 1)
             {
                 if (rows[i] != null && rows[i]["File"] != null && !System.DBNull.Value.Equals(rows[i]["File"]))
-
                 {
                     dataout[i] = (MediaFile)rows[i]["File"];
                 }
@@ -546,6 +619,6 @@ namespace FractalBlaster.Universe {
 
         private List<String> MediaPaths { get; set; }
 
-        #endregion    
+        #endregion
     }
 }

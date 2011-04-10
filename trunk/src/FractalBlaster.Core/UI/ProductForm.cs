@@ -163,6 +163,7 @@ namespace FractalBlaster.Core.UI {
             media.Metadata["Artist"].Value.ToString(),
             media.Metadata["Title"].Value.ToString());
 
+            Engine.OutputPlugin.Stop();
             if (Engine.IsMediaLoaded)
             {
                 if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName))
