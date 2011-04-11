@@ -82,16 +82,19 @@ namespace FractalBlaster.Core.UI
                     MediaFile media = new MediaFile(filename);
                     FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
                 }
-
-                RefreshNode(m);
-
-                foreach (TreeNode n in m.Nodes)
+                else
                 {
-                    filename = n.Tag as string;
-                    if (filename != null)
+
+                    RefreshNode(m);
+
+                    foreach (TreeNode n in m.Nodes)
                     {
-                        MediaFile media = new MediaFile(filename);
-                        FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
+                        filename = n.Tag as string;
+                        if (filename != null)
+                        {
+                            MediaFile media = new MediaFile(filename);
+                            FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(media);
+                        }
                     }
                 }
 
@@ -112,6 +115,7 @@ namespace FractalBlaster.Core.UI
 
         private void RefreshNode(TreeNode node)
         {
+            node.Nodes.Clear();
             try
             {
                 DirectoryInfo rootdir = new DirectoryInfo(node.FullPath);
@@ -131,6 +135,8 @@ namespace FractalBlaster.Core.UI
                         continue;
                     }
                 }
+
+                //node.Nodes.Clear();
                 foreach (FileInfo file in rootdir.GetFiles("*.mp3"))
                 {
                     TreeNode fileNode = new TreeNode(file.Name, FILE_ICON_INDEX, FILE_ICON_INDEX);
