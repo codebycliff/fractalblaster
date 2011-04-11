@@ -155,7 +155,7 @@ namespace FractalBlaster.Core.UI
                 return;
 
             MediaFile[] m = (MediaFile[])mMediaTreeView.SelectedNode.Tag;
-            if (m != null && m.Count() == 1 && !FamilyKernel.Instance.Context.Engine.CurrentPlaylist.Contains(m[0]))
+            if (m != null && m.Count() == 1)
             {
                 FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(m[0]);
             }
@@ -177,10 +177,7 @@ namespace FractalBlaster.Core.UI
                 {
                     foreach (MediaFile mediaFile in m)
                     {
-                        if (!FamilyKernel.Instance.Context.Engine.CurrentPlaylist.Contains(mediaFile))
-                        {
-                            FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(mediaFile);
-                        }
+                        FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(mediaFile);
                     }
                 }
                 e.Handled = true;

@@ -11,12 +11,15 @@ using FractalBlaster.Core.Runtime;
 using System.IO;
 using System.Drawing.Drawing2D;
 
-namespace FractalBlaster.Core.UI {
-    public partial class ProductForm : Form {
+namespace FractalBlaster.Core.UI
+{
+    public partial class ProductForm : Form
+    {
 
         SeekBar mSeekBar;
 
-        public ProductForm() {
+        public ProductForm()
+        {
             InitializeComponent();
             Context = FamilyKernel.Instance.Context;
             Engine = Context.Engine;
@@ -31,8 +34,10 @@ namespace FractalBlaster.Core.UI {
             SeekBarPanel.Controls.Add(mSeekBar);
             seekBarRefreshTimer.Start();
 
-            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
-                foreach (String f in plugin.SupportedFileExtensions) {
+            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>())
+            {
+                foreach (String f in plugin.SupportedFileExtensions)
+                {
                     if (Config.getProperty("playlistformats").Contains(f))
                     {
                         PlaylistPluginMap.Add(f, plugin);
@@ -47,23 +52,30 @@ namespace FractalBlaster.Core.UI {
             SetupCollectionTabs();
             mLibraryCollectionTabPage.MouseDown += new MouseEventHandler(MouseDownOnTreeView);
 
-            foreach (TabPage tp in mPlaylistTabControl.TabPages) {
+            foreach (TabPage tp in mPlaylistTabControl.TabPages)
+            {
                 tp.AllowDrop = true;
-                tp.DragOver += (o, e) => {
+                tp.DragOver += (o, e) =>
+                {
                     e.Effect = DragDropEffects.Copy;
                 };
             }
-            mPlaylistTabControl.DragEnter += (s,e) => {
-                if(e.Data.GetData(typeof(IEnumerable<MediaFile>)) != null) {
+            mPlaylistTabControl.DragEnter += (s, e) =>
+            {
+                if (e.Data.GetData(typeof(IEnumerable<MediaFile>)) != null)
+                {
                     e.Effect = DragDropEffects.Copy;
                 }
-                else {
+                else
+                {
                     e.Effect = DragDropEffects.Link;
                 }
             };
-            mPlaylistTabControl.DragDrop += (s, e) => {
+            mPlaylistTabControl.DragDrop += (s, e) =>
+            {
                 IEnumerable<MediaFile> items = e.Data.GetData(typeof(IEnumerable<MediaFile>)) as IEnumerable<MediaFile>;
-                foreach(MediaFile media in items) {
+                foreach (MediaFile media in items)
+                {
                     CurrentPlaylistControl.Playlist.AddItem(media);
                 }
             };
@@ -79,7 +91,8 @@ namespace FractalBlaster.Core.UI {
 
         }
 
-        private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
+        private void MouseDownOnTreeView(Object sender, MouseEventArgs args)
+        {
             /*
             LibraryCollectionView view = (sender as LibraryCollectionView);
             IEnumerable<MediaFile> items = view.Tree.GetNodeAt(args.X, args.Y).Tag as IEnumerable<MediaFile>;
@@ -92,16 +105,19 @@ namespace FractalBlaster.Core.UI {
 
         int newViewYOffset;
 
-        public void AddViewPlugin(IViewPlugin view) {
+        public void AddViewPlugin(IViewPlugin view)
+        {
 
             ToolStripMenuItem item = new ToolStripMenuItem(view.GetInfo().Name);
             item.CheckOnClick = true;
             Form form = view.UserInterface;
             PluginViews.Add(form);
             form.Owner = this;
-            item.CheckedChanged += (o, e) => {
+            item.CheckedChanged += (o, e) =>
+            {
                 ToolStripMenuItem viewItem = o as ToolStripMenuItem;
-                if(viewItem.Checked) {
+                if (viewItem.Checked)
+                {
                     form.Show();
                     if (form.Location.IsEmpty)
                     {
@@ -111,26 +127,31 @@ namespace FractalBlaster.Core.UI {
                         form.Location = nextLocation;
                     }
                 }
-                else {
+                else
+                {
                     form.Hide();
                 }
             };
-            form.FormClosed += (o, ea) => {
+            form.FormClosed += (o, ea) =>
+            {
                 item.CheckState = CheckState.Unchecked;
             };
             mViewsMenu.DropDownItems.Add(item);
         }
 
-        public void AddEffectPlugin(IEffectPlugin plugin) {
+        public void AddEffectPlugin(IEffectPlugin plugin)
+        {
             ToolStripMenuItem item = new ToolStripMenuItem(plugin.GetInfo().Name);
             item.CheckOnClick = true;
-            item.CheckStateChanged += (o, ea) => {
+            item.CheckStateChanged += (o, ea) =>
+            {
                 plugin.Enabled = item.CheckState == CheckState.Checked ? true : false;
             };
             mEffectsMenu.DropDownItems.Add(item);
         }
 
-        public void AddPlaylistPlugin(IPlaylistPlugin plugin) {
+        public void AddPlaylistPlugin(IPlaylistPlugin plugin)
+        {
             ToolStripMenuItem item = new ToolStripMenuItem(String.Format("Export as {0} ...", plugin.GetInfo().Name));
             item.Click += new EventHandler(SavePlaylist);
             mSaveMenuItem.DropDownItems.Add(item);
@@ -138,7 +159,8 @@ namespace FractalBlaster.Core.UI {
 
         #region  [ Private ]
 
-       private void SetupCollectionTabs() {
+        private void SetupCollectionTabs()
+        {
             Library lib = Library.Load(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)));
             LibraryCollectionView libraryView = new LibraryCollectionView(lib);
             libraryView.Dock = DockStyle.Fill;
@@ -151,7 +173,8 @@ namespace FractalBlaster.Core.UI {
             mFileSystemCollectionTabPage.Text = fsView.Label;
         }
 
-        private void PlayMedia(object sender, EventArgs args) {
+        private void PlayMedia(object sender, EventArgs args)
+        {
             if (CurrentPlaylistControl.Playlist.SelectedIndex >= CurrentPlaylistControl.Playlist.Items.Count())
             {
                 return;
@@ -180,25 +203,32 @@ namespace FractalBlaster.Core.UI {
             }
         }
 
-        private void PauseMedia(object sender, EventArgs args) {
+        private void PauseMedia(object sender, EventArgs args)
+        {
             Engine.OutputPlugin.Pause();
         }
 
-        private void StopMedia(object sender, EventArgs args) {
+        private void StopMedia(object sender, EventArgs args)
+        {
             Engine.OutputPlugin.Stop();
         }
 
-        public void SkipMediaForward(object sender, EventArgs args) {
-            if (CurrentPlaylistControl.Playlist.SelectedIndex + 1 >= CurrentPlaylistControl.Playlist.Count()){
+        public void SkipMediaForward(object sender, EventArgs args)
+        {
+            if (CurrentPlaylistControl.Playlist.SelectedIndex + 1 >= CurrentPlaylistControl.Playlist.Count())
+            {
                 return;
             }
-            else if (Engine.IsMediaLoaded) {
+            else if (Engine.IsMediaLoaded)
+            {
                 CurrentPlaylistControl.Playlist.RequestMediaAt(++CurrentPlaylistControl.Playlist.SelectedIndex);
             }
         }
 
-        private void SkipMediaBackward(object sender, EventArgs args) {
-            if (Engine.IsMediaLoaded) {
+        private void SkipMediaBackward(object sender, EventArgs args)
+        {
+            if (Engine.IsMediaLoaded)
+            {
                 if (CurrentPlaylistControl.Playlist.SelectedIndex == 0)
                 {
                     return;
@@ -210,39 +240,48 @@ namespace FractalBlaster.Core.UI {
             }
         }
 
-        private void OpenPlaylist(object sender, EventArgs args) {
+        private void OpenPlaylist(object sender, EventArgs args)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = GetFilterString();
-            if (ofd.ShowDialog() == DialogResult.OK) {
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
                 FileInfo f = new FileInfo(ofd.FileName);
                 IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
                 CurrentPlaylistControl.Playlist = CreatePlaylist(plugin.Read(f.FullName));
             }
         }
 
-        private void SavePlaylist(object sender, EventArgs args) {
+        private void SavePlaylist(object sender, EventArgs args)
+        {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = GetFilterString();
-            if (sfd.ShowDialog() == DialogResult.OK) {
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
                 FileInfo f = new FileInfo(sfd.FileName);
                 IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
                 plugin.Write(CurrentPlaylistControl.Playlist, f.FullName);
             }
         }
 
-        private void ExitApplication(object sender, EventArgs args) {
-            foreach (Form f in PluginViews) {
+        private void ExitApplication(object sender, EventArgs args)
+        {
+            foreach (Form f in PluginViews)
+            {
                 f.Close();
             }
             Application.ExitThread();
             Application.Exit();
         }
 
-        private String GetFilterString() {
-            if (PlaylistFilterString == null) {
+        private String GetFilterString()
+        {
+            if (PlaylistFilterString == null)
+            {
                 IEnumerable<String> extensions = PlaylistPluginMap.Keys;
                 String extensionFilters = "";
-                foreach (String extension in extensions) {
+                foreach (String extension in extensions)
+                {
                     extensionFilters += String.Format("*{0};", extension);
                 }
                 PlaylistFilterString = String.Format("Playlists ({0}) | {0}", extensionFilters.Remove(extensionFilters.Length - 1));
@@ -250,8 +289,10 @@ namespace FractalBlaster.Core.UI {
             return PlaylistFilterString;
         }
 
-        private Playlist CreatePlaylist(Playlist playlist = null) {
-            if (playlist == null) {
+        private Playlist CreatePlaylist(Playlist playlist = null)
+        {
+            if (playlist == null)
+            {
                 playlist = new Playlist();
             }
 
@@ -259,20 +300,24 @@ namespace FractalBlaster.Core.UI {
             return playlist;
         }
 
-        private PlaylistControl CreatePlaylistControl(Playlist p = null) {
-            if (p == null) {
+        private PlaylistControl CreatePlaylistControl(Playlist p = null)
+        {
+            if (p == null)
+            {
                 p = CreatePlaylist();
             }
             PlaylistControl pc = new PlaylistControl();
             pc.Playlist = p;
             pc.Dock = DockStyle.Fill;
-            pc.Playlist.MediaRequested += (m) => {
+            pc.Playlist.MediaRequested += (m) =>
+            {
 
             };
             return pc;
         }
 
-        private TabPage CreateNewPlaylistTab(Playlist playlist = null) {
+        private TabPage CreateNewPlaylistTab(Playlist playlist = null)
+        {
             PlaylistControl pc = CreatePlaylistControl(CreatePlaylist(playlist));
             TabPage tab = new TabPage(String.Format("New {0}", mPlaylistTabControl.TabCount));
             tab.Tag = pc;
@@ -280,7 +325,8 @@ namespace FractalBlaster.Core.UI {
             return tab;
         }
 
-        private void AddNewPlaylistTab(object sender, EventArgs args) {
+        private void AddNewPlaylistTab(object sender, EventArgs args)
+        {
             mPlaylistTabControl.TabPages.Add(CreateNewPlaylistTab());
         }
 
@@ -289,12 +335,14 @@ namespace FractalBlaster.Core.UI {
         private List<Form> PluginViews { get; set; }
         private Dictionary<String, IPlaylistPlugin> PlaylistPluginMap { get; set; }
         private String PlaylistFilterString { get; set; }
-        private PlaylistControl CurrentPlaylistControl {
-            get {
+        private PlaylistControl CurrentPlaylistControl
+        {
+            get
+            {
                 return mPlaylistTabControl.SelectedTab.Tag as PlaylistControl;
             }
         }
-        
+
         Point mouse_offset;
         List<Point> window_offset = new List<Point>();
         bool mouseDown = false;
@@ -363,7 +411,7 @@ namespace FractalBlaster.Core.UI {
                 {
                     CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
                 }
-                
+
             }
         }
 
@@ -387,7 +435,7 @@ namespace FractalBlaster.Core.UI {
             e.Graphics.DrawPath(Pens.Black, outline);
 
             GraphicsPath fill = new GraphicsPath();
-            
+
             fill.AddLine(0, 39, volume, 39);
             fill.AddLine(volume, 39, volume, 39 - 39 * volume / 100);
             fill.AddLine(volume, 39 - 39 * volume / 100, 0, 39);
@@ -468,13 +516,7 @@ namespace FractalBlaster.Core.UI {
             {
                 if (c.rect.Contains(e.Location))
                 {
-                    if (mPlaylistTabControl.TabCount == 1)
-                    {
-                        PlaylistControl control = CreatePlaylistControl();
-                        mPlaylistTabControl.TabPages[0].Tag = control;
-                        mPlaylistTabControl.TabPages[0].Controls.Add(control);
-                    }
-                    else
+                    if (mPlaylistTabControl.TabPages.Count != 1)
                     {
                         mPlaylistTabControl.TabPages.RemoveAt(c.index);
                     }

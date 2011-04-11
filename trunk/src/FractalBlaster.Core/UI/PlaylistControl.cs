@@ -76,7 +76,7 @@ namespace FractalBlaster.Core.UI
 
         void mPlaylistGridView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 13)
+            if (e.KeyCode == Keys.Enter)
             {
                 Playlist.RequestMediaAt(mPlaylistGridView.CurrentRow.Index);
 
