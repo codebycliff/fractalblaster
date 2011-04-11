@@ -248,7 +248,12 @@ namespace FractalBlaster.Core.UI
             {
                 FileInfo f = new FileInfo(ofd.FileName);
                 IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
-                CurrentPlaylistControl.Playlist = CreatePlaylist(plugin.Read(f.FullName));
+                Playlist blarg = plugin.Read(f.FullName);
+
+                foreach (MediaFile mediaFile in blarg)
+                {
+                    CurrentPlaylistControl.Playlist.AddItem(mediaFile);
+                }
             }
         }
 
