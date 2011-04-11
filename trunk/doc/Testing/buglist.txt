@@ -1,0 +1,26 @@
+The exit throws an InvalidOperationException in the Save() method in the Library Class. (Worked around by not saving)
+Tree, icon, list view does nothing in the library. (Gone)
+Options in the library does nothing. (Deleted)
+Access Exception if you seek too fast in a song. (looking for this)
+Main options does nothing. (Deleted)
+Browse click and drag(or double clicking does nothing)  (Rebuilding)
+Double clicking on a song in the playlist doesn't play that song (fixed)
+After a song finishes, and a song is highlighted, play does nothing.  
+After adding a bunch of playlists, you can't delete them.
+Make the various windows be able to move around. Copy the wave view or the visualizer
+Saving playlist gui do nothing. 
+Help writing tutorials doesn't open. (Gone)
+Transitions between songs is still iffy.
+Disable seeking when nothing playing. (Fixed)
+Volume reset at beginning. (Fixed)
+Open file adds songs to the list, but you can't access them. (worked on)
+Playlist sorting doesn't change the song, only the apperiance (worked on)
+selecting a song, enter, moves to the next song
+playing a song, doesn't reset the seek bar (Fixed)
+if a song doesn't have a artist/album, doesn't show in the library
+The song after deleted can be accessed still  
+After a song is completed from added file, you can't play using the play button.(Double click works though)
+Delete songs from playlist doesn't save.
+Clicking at the end of the seekbar starts the song over. Has to have ended once(the red dot doesn't show up)
+Opening up a playlist with songs currently in it makes the songs unuseable. 
+
