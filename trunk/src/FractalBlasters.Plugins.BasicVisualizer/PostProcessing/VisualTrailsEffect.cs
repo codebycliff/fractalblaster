@@ -105,7 +105,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             PresentationParameters pp = device.PresentationParameters;
 
             int width = 1280;
-            int height = 720;
+            int height = 800;
 
             SurfaceFormat format = pp.BackBufferFormat;
 

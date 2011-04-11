@@ -87,6 +87,22 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        public void AddItem(int index, MediaFile media)
+        {
+            MediaItems.Insert(index, media);
+            if (MediaAdded != null)
+            {
+                MediaAdded(media);
+            }
+        }
+
+        public void MoveItem(int fromIndex, int toIndex)
+        {
+            MediaFile removed = MediaItems[fromIndex];
+            MediaItems.RemoveAt(fromIndex);
+            MediaItems.Insert(toIndex, removed);
+        }
+
         /// <summary>
         /// Requests the media file at the specified index to be played.
         /// </summary>
@@ -100,9 +116,11 @@ namespace FractalBlaster.Universe {
             }
         }
 
-        public void RemoveMedia(int index)
+        public MediaFile RemoveMedia(int index)
         {
+            MediaFile removed = MediaItems[index];
             MediaItems.RemoveAt(index);
+            return removed;
         }
 
         public void Sort(Comparison<MediaFile> comparer)

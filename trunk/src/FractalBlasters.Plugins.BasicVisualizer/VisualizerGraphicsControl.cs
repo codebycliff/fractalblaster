@@ -155,7 +155,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
 
             //Create our render targets.
             _target = new RenderTarget2D(GraphicsDevice,
-                                        720,
+                                        800,
                                         1280,
                                         false,
                                         GraphicsDevice.PresentationParameters.BackBufferFormat,
@@ -165,7 +165,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             
             //Create our render targets.
             _target2 = new RenderTarget2D(GraphicsDevice,
-                                        720,
+                                        800,
                                         1280,
                                         false,
                                         GraphicsDevice.PresentationParameters.BackBufferFormat,

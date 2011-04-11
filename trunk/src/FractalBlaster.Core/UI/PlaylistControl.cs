@@ -72,6 +72,66 @@ namespace FractalBlaster.Core.UI
             mPlaylistGridView.KeyDown += new KeyEventHandler(mPlaylistGridView_KeyDown);
             mPlaylistGridView.SortCompare += new DataGridViewSortCompareEventHandler(mPlaylistGridView_SortCompare);
             mPlaylistGridView.UserDeletingRow += new DataGridViewRowCancelEventHandler(mPlaylistGridView_UserDeletingRow);
+
+            //Event handlers for dragging items around in the playlist
+            mPlaylistGridView.CellMouseDown += new DataGridViewCellMouseEventHandler(mPlaylistGridView_CellMouseDown);
+            mPlaylistGridView.CellMouseUp += new DataGridViewCellMouseEventHandler(mPlaylistGridView_CellMouseUp);
+            mPlaylistGridView.CellMouseEnter += new DataGridViewCellEventHandler(mPlaylistGridView_CellMouseEnter);
+            mPlaylistGridView.MouseMove += new MouseEventHandler(mPlaylistGridView_MouseMove);
+        }
+
+
+        void mPlaylistGridView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_draggingRow)
+            {
+                double timeSinceScroll = DateTime.Now.Subtract(_atScrollTime).TotalSeconds;
+                if (timeSinceScroll > 0.05)
+                {
+                    if (mPlaylistGridView.Rows[_movingRow.Index + 1].Displayed == false)
+                    {
+                        _atScrollTime = DateTime.Now;
+                        mPlaylistGridView.FirstDisplayedScrollingRowIndex++;
+                    }
+
+                    if (_movingRow.Index != 0 && mPlaylistGridView.Rows[_movingRow.Index - 1].Displayed == false)
+                    {
+                        _atScrollTime = DateTime.Now;
+                        mPlaylistGridView.FirstDisplayedScrollingRowIndex--;
+                    }
+                }
+            }
+        }
+
+        DateTime _atScrollTime;
+        void mPlaylistGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_draggingRow && e.RowIndex >= 0 && e.RowIndex < mPlaylistGridView.RowCount - 1)
+            {
+                playlist.MoveItem(_movingRow.Index, e.RowIndex);
+
+                mPlaylistGridView.Rows.RemoveAt(_movingRow.Index);
+                mPlaylistGridView.Rows.Insert(e.RowIndex, _movingRow);
+
+                _movingRow.Selected = true;
+            }
+        }
+
+        DataGridViewRow _movingRow;
+        bool _draggingRow = false;
+        void mPlaylistGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < mPlaylistGridView.RowCount - 1 && e.ColumnIndex >= 0 && e.ColumnIndex < mPlaylistGridView.ColumnCount)
+            {
+                _movingRow = mPlaylistGridView.Rows[e.RowIndex];
+                _draggingRow = true;
+            }
+        }
+
+        void mPlaylistGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            _movingRow = null;
+            _draggingRow = false;
         }
 
         void mPlaylistGridView_KeyDown(object sender, KeyEventArgs e)
@@ -189,7 +249,7 @@ namespace FractalBlaster.Core.UI
                     {
                         comparer = (b, a) =>
                         {
-                            int sortVal = System.String.Compare(a.Metadata.Artist,b.Metadata.Artist);
+                            int sortVal = System.String.Compare(a.Metadata.Artist, b.Metadata.Artist);
                             if (sortVal == 0)
                             {
                                 sortVal = System.String.Compare(a.Metadata.Title, b.Metadata.Title);
@@ -285,11 +345,14 @@ namespace FractalBlaster.Core.UI
 
         private void mPlaylistGridView_SelectionChanged(object sender, EventArgs e)
         {
-            DataGridViewRow row = mPlaylistGridView.SelectedRows[0];
-            if (row.Index <= Playlist.Items.Count())
+            if (mPlaylistGridView.SelectedRows.Count > 0)
             {
-                Playlist.SelectedIndex = row.Index;
-                ExternalSelectionChange = false;
+                DataGridViewRow row = mPlaylistGridView.SelectedRows[0];
+                if (row.Index <= Playlist.Items.Count())
+                {
+                    Playlist.SelectedIndex = row.Index;
+                    ExternalSelectionChange = false;
+                }
             }
         }
 
@@ -333,7 +396,7 @@ namespace FractalBlaster.Core.UI
                 }
         }
 
-        
+
 
 
         private Playlist playlist;
