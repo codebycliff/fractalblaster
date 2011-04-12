@@ -34,6 +34,9 @@ namespace FractalBlaster.Core.UI
             SeekBarPanel.Controls.Add(mSeekBar);
             seekBarRefreshTimer.Start();
 
+
+            this.mOpenToolBarDropDown.Click += new EventHandler(mOpenToolBarDropDown_Click);
+
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>())
             {
                 foreach (String f in plugin.SupportedFileExtensions)
@@ -88,6 +91,44 @@ namespace FractalBlaster.Core.UI
             }
 
             Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
+
+        }
+
+        void mOpenToolBarDropDown_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = GetAllFilesFilterString();
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string filename in ofd.FileNames)
+                {
+                    FileInfo f = new FileInfo(filename);
+                    IPlaylistPlugin playlist_plugin;
+                    if (PlaylistPluginMap.TryGetValue(f.Extension, out playlist_plugin))
+                    {
+                        IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                        Playlist blarg = plugin.Read(f.FullName);
+
+                        foreach (MediaFile mediaFile in blarg)
+                        {
+                            CurrentPlaylistControl.Playlist.AddItem(mediaFile);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            MediaFile media = new MediaFile(f.FullName);
+                            CurrentPlaylistControl.Playlist.AddItem(media);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
 
         }
 
@@ -257,7 +298,7 @@ namespace FractalBlaster.Core.UI
                         CurrentPlaylistControl.Playlist.AddItem(mediaFile);
                     }
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     Console.WriteLine("KeyNotFoundException");
                 }
@@ -299,6 +340,20 @@ namespace FractalBlaster.Core.UI
                 PlaylistFilterString = String.Format("Playlists ({0}) | {0}", extensionFilters.Remove(extensionFilters.Length - 1));
             }
             return PlaylistFilterString;
+        }
+
+        private String GetAllFilesFilterString()
+        {
+            List<string> file_extensions = Config.getProperty("fileformats").Split(';').ToList<string>();
+            IEnumerable<string> pl_extensions = Config.getProperty("playlistformats").Split(';').ToList<string>();
+
+            file_extensions.AddRange(pl_extensions);
+            string filters = "";
+            foreach (string extension in file_extensions)
+            {
+                filters += String.Format("{0};", extension);
+            }
+            return String.Format("Audio Files ({0}) | {0}", filters);
         }
 
         private Playlist CreatePlaylist(Playlist playlist = null)

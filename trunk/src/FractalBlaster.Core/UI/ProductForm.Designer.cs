@@ -40,8 +40,6 @@
             this.mViewsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mEffectsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mStandardToolBar = new System.Windows.Forms.ToolStrip();
-            this.mOpenToolBarDropDown = new System.Windows.Forms.ToolStripSplitButton();
-            this.mOpenPlaylistToolBarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.mNewToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mSaveToolBarButton = new System.Windows.Forms.ToolStripButton();
             this.mExitToolBarButton = new System.Windows.Forms.ToolStripButton();
@@ -63,6 +61,7 @@
             this.SeekBarPanel = new System.Windows.Forms.Panel();
             this.seekBarRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.VolumeControl = new System.Windows.Forms.Panel();
+            this.mOpenToolBarDropDown = new System.Windows.Forms.ToolStripButton();
             this.mMenuStrip.SuspendLayout();
             this.mStandardToolBar.SuspendLayout();
             this.mStatusStrip.SuspendLayout();
@@ -205,30 +204,12 @@
             this.mExitToolBarButton});
             this.mStandardToolBar.Location = new System.Drawing.Point(0, 51);
             this.mStandardToolBar.Name = "mStandardToolBar";
-            this.mStandardToolBar.Size = new System.Drawing.Size(232, 55);
+            this.mStandardToolBar.Size = new System.Drawing.Size(251, 55);
             this.mStandardToolBar.TabIndex = 2;
             this.mStandardToolBar.Text = "toolStrip1";
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
             this.mStandardToolBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseMove);
             this.mStandardToolBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseUp);
-            // 
-            // mOpenToolBarDropDown
-            // 
-            this.mOpenToolBarDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mOpenToolBarDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mOpenPlaylistToolBarButton});
-            this.mOpenToolBarDropDown.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
-            this.mOpenToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mOpenToolBarDropDown.Name = "mOpenToolBarDropDown";
-            this.mOpenToolBarDropDown.Size = new System.Drawing.Size(64, 52);
-            this.mOpenToolBarDropDown.Text = "Open";
-            // 
-            // mOpenPlaylistToolBarButton
-            // 
-            this.mOpenPlaylistToolBarButton.Name = "mOpenPlaylistToolBarButton";
-            this.mOpenPlaylistToolBarButton.Size = new System.Drawing.Size(152, 22);
-            this.mOpenPlaylistToolBarButton.Text = "Open Playlist...";
-            this.mOpenPlaylistToolBarButton.Click += new System.EventHandler(this.OpenPlaylist);
             // 
             // mNewToolBarButton
             // 
@@ -455,6 +436,15 @@
             this.VolumeControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VolumeControl_MouseMove);
             this.VolumeControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VolumeControl_MouseUp);
             // 
+            // mOpenToolBarDropDown
+            // 
+            this.mOpenToolBarDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mOpenToolBarDropDown.Image = global::FractalBlaster.Core.Properties.Resources.document_open;
+            this.mOpenToolBarDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mOpenToolBarDropDown.Name = "mOpenToolBarDropDown";
+            this.mOpenToolBarDropDown.Size = new System.Drawing.Size(52, 52);
+            this.mOpenToolBarDropDown.Text = "Open";
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -507,8 +497,6 @@
         private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStrip mStandardToolBar;
-        private System.Windows.Forms.ToolStripSplitButton mOpenToolBarDropDown;
-        private System.Windows.Forms.ToolStripMenuItem mOpenPlaylistToolBarButton;
         private System.Windows.Forms.ToolStripButton mExitToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mConfigureMenuItem;
         private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
@@ -539,5 +527,6 @@
         private System.Windows.Forms.Panel SeekBarPanel;
         private System.Windows.Forms.Timer seekBarRefreshTimer;
         private System.Windows.Forms.Panel VolumeControl;
+        private System.Windows.Forms.ToolStripButton mOpenToolBarDropDown;
     }
 }
