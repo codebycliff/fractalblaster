@@ -28,9 +28,9 @@ namespace FractalBlaster.Plugins.Taglib {
             List<MediaProperty> props = new List<MediaProperty>();
             if (file.Tag.Album == null)
                 file.Tag.Album = "-";
-            
+
             if (file.Tag.Title == null)
-                file.Tag.Title = "-";
+                file.Tag.Title = media.Info.Name;
 
             string performer;
             if (file.Tag.FirstPerformer == null)

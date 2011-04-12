@@ -210,6 +210,7 @@ namespace FractalBlaster.Universe
         {
             FileInfo[] files = new FileInfo[0];
 
+            Console.WriteLine("Reading Files");
             foreach (String s in Config.getProperty("fileformats").Split(';', '|'))
             {
                 FileInfo[] temp = Root.GetFiles(s, SearchOption.AllDirectories);
@@ -218,7 +219,7 @@ namespace FractalBlaster.Universe
                 Array.Copy(temp, files, temp.Length);
                 Array.Copy(temp2, 0, files, temp.Length, temp2.Length);
             }
-
+            Console.WriteLine("Scanning Files");
             foreach (FileInfo file in files)
             {
                 if (!MediaPaths.Contains(file.FullName))
@@ -226,6 +227,7 @@ namespace FractalBlaster.Universe
                     try
                     {
                         MediaFile media = file.CreateMediaFile();
+                        String fullName = file.FullName;
                         String artist = media.Metadata.Artist;
                         String album = media.Metadata.Album;
                         String title = media.Metadata.Title;
@@ -245,6 +247,7 @@ namespace FractalBlaster.Universe
                         album = album.Replace("'", "");
                         title = title.Replace("'", "");
 
+                        dr["FullName"] = fullName;
                         dr["Artist"] = artist;
                         dr["Album"] = album;
                         dr["Title"] = title;
@@ -256,14 +259,14 @@ namespace FractalBlaster.Universe
                         dr["File"] = media;
 
                         bool exists = false;
-                        foreach (DataRow row in MediaCollection.Rows)
-                        {
-                            if (row["Title"].Equals(title))
-                            {
-                                exists = true;
-                                break;
-                            }
-                        }
+                        //foreach (DataRow row in MediaCollection.Rows)
+                        //{
+                        //    if (row["FullName"].Equals(fullName))
+                        //    {
+                        //        exists = true;
+                        //        break;
+                        //    }
+                        //}
                         if (!exists)
                         {
                             MediaCollection.Rows.Add(dr);
@@ -553,6 +556,9 @@ namespace FractalBlaster.Universe
              */
             DataColumn toAdd = new DataColumn("#", typeof(Int32));
             toAdd.Unique = false;
+            output.Columns.Add(toAdd);
+            toAdd = new DataColumn("FullName", typeof(String));
+            toAdd.Unique = true;
             output.Columns.Add(toAdd);
             toAdd = new DataColumn("Artist", typeof(String));
             toAdd.Unique = false;
