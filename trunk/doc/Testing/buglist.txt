@@ -2,7 +2,7 @@
 * Unknown Status Bugs:
 *****************************************************************************
 
-Bug: After a song finishes, and a song is highlighted, play does nothing. 
+Bug: After a song finishes, and a song is highlighted, play does nothing. (Haven't noticed a problem. -Greg) 
 
 Bug: Transitions between songs is still iffy. (Haven't noticed a problem. -Greg)
 
@@ -41,6 +41,16 @@ Comments: Copy the wave view or the visualizer.
 
 Bug: Open File and Add File to Playlist in the main file menu do the exact same thing and throw an exception if you attempt to open a playlist with either.
 Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
+
+Bug: If loading/saving playlists is disabled at generation time, users can still open playlists through the big button on the huge toolbar.
+
+Bug: Users may enter *.* and open improper file types in all open file dialogs.
+
+Bug: If the user selects Open Playlist and then opens a supported media file using the bug above, it breaks.
+
+Bug: If the user selects Open File and then selects a playlist using the bug above, it breaks.
+
+Bug: 
 
 
 *****************************************************************************

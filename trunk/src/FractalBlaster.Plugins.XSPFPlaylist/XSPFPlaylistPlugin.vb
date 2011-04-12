@@ -24,9 +24,10 @@ Public Class XSPFPlaylistPlugin
 
         Dim xmlreader As New XmlTextReader(path)
         While xmlreader.Read()
-            If xmlreader.Name = "location" Then
+            If xmlreader.LocalName = "location" Then
                 xmlreader.Read()
                 playlist.AddItem(New MediaFile(xmlreader.Value))
+                xmlreader.Read()
             End If
         End While
 
