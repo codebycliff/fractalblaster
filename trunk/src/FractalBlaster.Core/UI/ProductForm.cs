@@ -84,7 +84,6 @@ namespace FractalBlaster.Core.UI
 
             if (Config.getProperty("saveloadplaylists") == "false")
             {
-                mSaveAsMenuItem.Enabled = false;
                 mSaveMenuItem.Enabled = false;
             }
 
