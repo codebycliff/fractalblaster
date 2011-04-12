@@ -23,14 +23,24 @@ Public Class XSPFPlaylistPlugin
         Dim playlist As New Playlist
 
         Dim xmlreader As New XmlTextReader(path)
-        While xmlreader.Read()
-            If xmlreader.LocalName = "location" Then
-                xmlreader.Read()
-                playlist.AddItem(New MediaFile(xmlreader.Value))
-                xmlreader.Read()
-            End If
-        End While
 
+        Try
+            While xmlreader.Read()
+                If xmlreader.LocalName = "location" Then
+                    xmlreader.Read()
+                    Dim value As String
+                    value = xmlreader.Value
+                    Try
+                        xmlreader.Read()
+                        playlist.AddItem(New MediaFile(value))
+                    Catch ex As Exception
+                        Console.WriteLine("Error: Could not read file: {0}", value)
+                    End Try
+                End If
+            End While
+        Catch ex As Exception
+            Console.WriteLine("Error: Invalid XSPF Playlist: {0}", path)
+        End Try
         Return playlist
     End Function
 

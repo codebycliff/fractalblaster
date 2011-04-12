@@ -247,12 +247,19 @@ namespace FractalBlaster.Core.UI
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 FileInfo f = new FileInfo(ofd.FileName);
-                IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
-                Playlist blarg = plugin.Read(f.FullName);
-
-                foreach (MediaFile mediaFile in blarg)
+                try
                 {
-                    CurrentPlaylistControl.Playlist.AddItem(mediaFile);
+                    IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                    Playlist blarg = plugin.Read(f.FullName);
+
+                    foreach (MediaFile mediaFile in blarg)
+                    {
+                        CurrentPlaylistControl.Playlist.AddItem(mediaFile);
+                    }
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Console.WriteLine("KeyNotFoundException");
                 }
             }
         }

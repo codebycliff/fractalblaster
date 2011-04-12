@@ -116,6 +116,8 @@ namespace FractalBlaster.Core.UI
         private void RefreshNode(TreeNode node)
         {
             node.Nodes.Clear();
+            string[] formats = Config.getProperty("fileformats").Split(';');
+            bool search_directory = false;
             try
             {
                 DirectoryInfo rootdir = new DirectoryInfo(node.FullPath);
@@ -123,7 +125,13 @@ namespace FractalBlaster.Core.UI
                 {
                     try
                     {
-                        if (dir.GetDirectories().Length > 0 || dir.GetFiles("*.mp3").Length > 0)
+
+                        foreach (string type in formats)
+                        {
+                            if (dir.GetFiles(type).Length > 0)
+                                search_directory = true;
+                        }
+                        if (dir.GetDirectories().Length > 0 || search_directory)
                         {
                             TreeNode dirnode = new TreeNode(dir.Name, FOLDER_ICON_INDEX, FOLDER_ICON_INDEX);
                             node.Nodes.Add(dirnode);
@@ -136,8 +144,14 @@ namespace FractalBlaster.Core.UI
                     }
                 }
 
+                List<FileInfo> files = new List<FileInfo>();
+                foreach (string type in formats)
+                {
+                    files.AddRange(rootdir.GetFiles(type));
+                }
+
                 //node.Nodes.Clear();
-                foreach (FileInfo file in rootdir.GetFiles("*.mp3"))
+                foreach (FileInfo file in files)
                 {
                     TreeNode fileNode = new TreeNode(file.Name, FILE_ICON_INDEX, FILE_ICON_INDEX);
                     fileNode.Tag = file.FullName;

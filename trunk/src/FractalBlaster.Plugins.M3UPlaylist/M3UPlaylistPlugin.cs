@@ -51,8 +51,17 @@ namespace FractalBlaster.Plugins.M3UPlaylist {
                                 line = newpath;
                             }
                         }
-                        MediaFile file = new MediaFile(line);
-                        playlist.AddItem(file);
+                        try
+                        {
+
+                            MediaFile file = new MediaFile(line);
+
+                            playlist.AddItem(file);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Error opening file: " + line);
+                        }
                     }
                 }                
             }
