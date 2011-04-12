@@ -39,23 +39,31 @@ Bug: Make the various windows be able to move around.
 Status: Not implemented.
 Comments: Copy the wave view or the visualizer.
 
-Bug: Open File and Add File to Playlist in the main file menu do the exact same thing and throw an exception if you attempt to open a playlist with either.
-Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
-
-Bug: If loading/saving playlists is disabled at generation time, users can still open playlists through the big button on the huge toolbar.
-
-Bug: Users may enter *.* and open improper file types in all open file dialogs.
-
-Bug: If the user selects Open Playlist and then opens a supported media file using the bug above, it breaks.
-
-Bug: If the user selects Open File and then selects a playlist using the bug above, it breaks.
-
-Bug: 
-
+Bug: Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
 
 *****************************************************************************
 * Fixed Bugs:
 *****************************************************************************
+Bug: If loading/saving playlists is disabled at generation time, users can still open playlists through the big button on the huge toolbar.
+Status: Fixed
+Comments: See below.
+
+Bug: If the user selects Open File and then selects a playlist using the bug above, it breaks.
+Status: Fixed
+Comments: See below.
+
+Bug: If the user selects Open Playlist and then opens a supported media file using the bug above, it breaks.
+Status: Fixed
+Comments: Checks file types and catches exceptions for misnamed files.
+
+Bug: Users may enter *.* and open improper file types in all open file dialogs.
+Status: Fixed
+Comments: There is no way to prevent the user from entering *.* to try to open other files. Instead, the program just checks the extensions to see if they're supported.
+
+Bug: Open File and Add File to Playlist in the main file menu do the exact same thing and throw an exception if you attempt to open a playlist with either.
+Status: Fixed / Worked around.
+Comments: Add File to Playlist has been removed. Open File now supports opening of both playlists and audio files. All files opened are added to the active playlist. Type of file is checked before attempting to read it. Exceptions from invalid (garbage) files with the correct extension are caught and ignored. Additionally, the Open Playlist dropdown button is now a normal button and does the exact same thing as Open File in the drop down menu.
+
 Bug: Browse click and drag(or double clicking does nothing)
 Status: Fixed
 
