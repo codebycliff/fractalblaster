@@ -94,7 +94,7 @@ namespace FractalBlaster.Core.UI
                         mPlaylistGridView.FirstDisplayedScrollingRowIndex++;
                     }
 
-                    if (_movingRow.Index != 0 && mPlaylistGridView.Rows[_movingRow.Index - 1].Displayed == false)
+                    if (_movingRow.Index > 0 && mPlaylistGridView.Rows[_movingRow.Index - 1].Displayed == false)
                     {
                         _atScrollTime = DateTime.Now;
                         mPlaylistGridView.FirstDisplayedScrollingRowIndex--;
@@ -146,6 +146,7 @@ namespace FractalBlaster.Core.UI
 
         void mPlaylistGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
+            _draggingRow = false;
             playlist.RemoveMedia(e.Row.Index);
         }
 

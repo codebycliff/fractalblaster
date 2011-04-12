@@ -15,7 +15,6 @@ namespace FractalBlaster.Core.UI
 {
     public partial class ProductForm : Form
     {
-
         SeekBar mSeekBar;
 
         public ProductForm()
@@ -35,7 +34,7 @@ namespace FractalBlaster.Core.UI
             seekBarRefreshTimer.Start();
 
 
-            this.mOpenToolBarDropDown.Click += new EventHandler(mOpenToolBarDropDown_Click);
+            
 
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>())
             {
@@ -87,48 +86,9 @@ namespace FractalBlaster.Core.UI
             {
                 mSaveAsMenuItem.Enabled = false;
                 mSaveMenuItem.Enabled = false;
-                mOpenPlaylistMenuItem.Enabled = false;
             }
 
             Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
-
-        }
-
-        void mOpenToolBarDropDown_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = GetAllFilesFilterString();
-
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string filename in ofd.FileNames)
-                {
-                    FileInfo f = new FileInfo(filename);
-                    IPlaylistPlugin playlist_plugin;
-                    if (PlaylistPluginMap.TryGetValue(f.Extension, out playlist_plugin))
-                    {
-                        IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
-                        Playlist blarg = plugin.Read(f.FullName);
-
-                        foreach (MediaFile mediaFile in blarg)
-                        {
-                            CurrentPlaylistControl.Playlist.AddItem(mediaFile);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            MediaFile media = new MediaFile(f.FullName);
-                            CurrentPlaylistControl.Playlist.AddItem(media);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-            }
 
         }
 
@@ -453,16 +413,39 @@ namespace FractalBlaster.Core.UI
 
         #endregion
 
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        void mOpenToolBarDropDown_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
+            ofd.Filter = GetAllFilesFilterString();
+
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                foreach (string s in ofd.FileNames)
+                foreach (string filename in ofd.FileNames)
                 {
-                    CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
+                    FileInfo f = new FileInfo(filename);
+                    IPlaylistPlugin playlist_plugin;
+                    if (PlaylistPluginMap.TryGetValue(f.Extension, out playlist_plugin))
+                    {
+                        IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                        Playlist blarg = plugin.Read(f.FullName);
+
+                        foreach (MediaFile mediaFile in blarg)
+                        {
+                            CurrentPlaylistControl.Playlist.AddItem(mediaFile);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            MediaFile media = new MediaFile(f.FullName);
+                            CurrentPlaylistControl.Playlist.AddItem(media);
+                        }
+                        catch
+                        {
+                        }
+                    }
                 }
             }
         }
