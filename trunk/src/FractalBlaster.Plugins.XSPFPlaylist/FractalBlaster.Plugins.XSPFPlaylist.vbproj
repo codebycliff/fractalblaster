@@ -29,7 +29,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Release\bin\Plugins\</OutputPath>
+    <OutputPath>..\..\Release\bin\Plugins\XSPFPlaylist\</OutputPath>
     <DocumentationFile>FractalBlaster.Plugins.XSPFPlaylist.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -105,6 +105,7 @@
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
       <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>
       <Name>FractalBlaster.Universe</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

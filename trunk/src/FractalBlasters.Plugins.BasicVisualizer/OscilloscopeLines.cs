@@ -112,7 +112,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             //Load shaders.
             try
             {
-                shader = content.Load<Effect>("./Plugins/Shaders/VisualizerShader");
+                shader = content.Load<Effect>("./Plugins/BasicVisualizer/Shaders/VisualizerShader");
             }
             catch (Exception e)
             {

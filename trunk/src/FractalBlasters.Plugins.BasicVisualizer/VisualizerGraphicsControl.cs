@@ -132,7 +132,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _content = new ContentManager(this.Services);
 
-            _spriteFont = _content.Load<SpriteFont>("./Plugins/Other Content/SpriteFont");
+            _spriteFont = _content.Load<SpriteFont>("./Plugins/BasicVisualizer/Other Content/SpriteFont");
 
             VisualizerDisplayTextSettings settings = new VisualizerDisplayTextSettings();
 

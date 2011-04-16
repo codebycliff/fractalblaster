@@ -101,7 +101,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         {
             settings = TrailsSettings.PresetSettings[0];
 
-            combine = content.Load<Effect>("./Plugins/Shaders/TrailCombine");
+            combine = content.Load<Effect>("./Plugins/BasicVisualizer/Shaders/TrailCombine");
             PresentationParameters pp = device.PresentationParameters;
 
             int width = 1280;

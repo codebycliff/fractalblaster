@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Release\bin\Plugins\</OutputPath>
+    <OutputPath>..\..\Release\bin\Plugins\BasicVisualizer\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,10 +36,12 @@
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\XNALibs\Microsoft.Xna.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\XNALibs\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,10 +82,12 @@
     <ProjectReference Include="..\FractalBlaster.Core\FractalBlaster.Core.csproj">
       <Project>{D57C564F-4ACC-4319-8D20-06285C9283B7}</Project>
       <Name>FractalBlaster.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
       <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>
       <Name>FractalBlaster.Universe</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

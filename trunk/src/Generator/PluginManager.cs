@@ -6,19 +6,29 @@ using System.Text;
 using FractalBlaster.Universe;
 using System.Reflection;
 
-namespace Generator {
+namespace Generator
+{
 
-    public static class PluginManager {
+    public static class PluginManager
+    {
 
-        static PluginManager() {
+        static PluginManager()
+        {
             mPlugins = new List<IPlugin>();
             mPluginPaths = new List<String>();
             SearchPaths = new List<String>() { "bin\\Plugins" };
 
             foreach (String s in SearchPaths)
             {
-                DirectoryInfo dir = new DirectoryInfo(s);
-                foreach (FileInfo f in dir.GetFiles("*.dll"))
+                GetPluginsFromDirectory(new DirectoryInfo(s));
+            }
+        }
+
+        private static void GetPluginsFromDirectory(DirectoryInfo dir)
+        {
+            foreach (DirectoryInfo d in dir.GetDirectories())
+            {
+                foreach (FileInfo f in d.GetFiles("*.dll"))
                 {
                     try
                     {
@@ -29,13 +39,14 @@ namespace Generator {
                             {
                                 IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
                                 mPlugins.Add(plugin);
-                                mPluginPaths.Add(f.Name);
+                                mPluginPaths.Add(d.Name);
                             }
                             catch (Exception e)
                             {
                             }
                         }
                     }
+
                     catch (BadImageFormatException ex)
                     {
                         //Console.WriteLine("\n\nFAILED: {0}\n\t{1}: {2}", file.FullName, ex.GetType(), ex.Message);
@@ -46,8 +57,10 @@ namespace Generator {
 
         public static List<String> SearchPaths { get; private set; }
 
-        public static IEnumerable<IPlugin> AllPlugins {
-            get {
+        public static IEnumerable<IPlugin> AllPlugins
+        {
+            get
+            {
                 return mPlugins.AsEnumerable();
             }
         }
@@ -60,7 +73,8 @@ namespace Generator {
             }
         }
 
-        public static IEnumerable<IPlugin> GetPlugins(Type t) {
+        public static IEnumerable<IPlugin> GetPlugins(Type t)
+        {
             return AllPlugins.Where(p =>
                 p.GetType() == t
             ).AsEnumerable();
@@ -87,7 +101,7 @@ namespace Generator {
 
         #region [ Private ]
 
-            
+
 
 
         private static List<IPlugin> mPlugins;

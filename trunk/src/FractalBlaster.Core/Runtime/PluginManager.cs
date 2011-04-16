@@ -65,6 +65,10 @@ namespace FractalBlaster.Core.Runtime {
                     //Console.WriteLine("\n\nFAILED: {0}\n\t{1}: {2}", file.FullName, ex.GetType(), ex.Message);
                 }
             }
+            foreach (DirectoryInfo directory in dir.GetDirectories())
+            {
+                plugins.AddRange(GetPluginsFromDirectory(directory));
+            }
             return plugins;
         }
 

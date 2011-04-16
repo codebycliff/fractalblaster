@@ -15,10 +15,11 @@ namespace Generator
             System.Windows.Forms.Application.Run(gf);
             Process configProcess = new Process();
             configProcess.StartInfo.FileName = "Config.exe";
-            configProcess.StartInfo.WorkingDirectory = "Fractal Blasters";
+            configProcess.StartInfo.WorkingDirectory = "bin";
             configProcess.Start();
             configProcess.WaitForExit();
-
+            FileInfo info = new FileInfo("bin/config.ini");
+            info.CopyTo("Fractal Blasters/config.ini", true);
         }
     }
 }

@@ -45,7 +45,7 @@
     <IntDir>..\build\debug\bin\Plugins</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\Release\bin\Plugins\</OutDir>
+    <OutDir>..\..\Release\bin\Plugins\AudioOut\</OutDir>
     <IntDir>..\..\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -91,6 +91,11 @@
   <ItemGroup>
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
       <Project>{055bd7f9-7075-4acb-aceb-410cb496c0f2}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

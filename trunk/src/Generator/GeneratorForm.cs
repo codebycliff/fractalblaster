@@ -50,39 +50,58 @@ namespace Generator
 
             foreach (FileInfo f in sourceDirectory.GetFiles())
             {
-                File.Copy(f.FullName, destinationDirectory.FullName + "\\" + f.Name, true);
+                if (f.Name != "Config.exe")
+                    File.Copy(f.FullName, destinationDirectory.FullName + "\\" + f.Name, true);
             }
 
             sourceDirectory = new DirectoryInfo("bin\\Plugins");
             destinationDirectory = Directory.CreateDirectory("Fractal Blasters\\Plugins");
 
-            string[] commonDLLs = {
-                "avcodec.dll",
-                "avformat.dll",
-                "avutil.dll",
-                "FractalBlaster.Plugins.AudioOut.dll",
-                "FractalBlaster.Plugins.Decoder.dll",
-                "FractalBlaster.Plugins.M3UPlaylist.dll",
-                "FractalBlaster.Plugins.Taglib.dll",
-                "FractalBlaster.Plugins.WPLPlaylist.dll",
-                "FractalBlaster.Plugins.XSPFPlaylist.dll",
-                "FractalBlaster.Plugins.XSPFPlaylist.xml",
-                "FractalBlaster.Universe.dll",
-                "taglib-sharp.dll"
+            string[] commonPlugins = {
+                "AudioOut",
+                "Decoder",
+                "M3UPlaylist",
+                "TagLib",
+                "WPLPlaylist",
+                "XSPFPlaylist"
             };
 
-            foreach (string s in commonDLLs)
+            foreach (string s in commonPlugins)
             {
-                File.Copy(sourceDirectory.FullName + "\\" + s, destinationDirectory.FullName + "\\" + s, true);
+                DirectoryInfo source = new DirectoryInfo(sourceDirectory.FullName + "\\" + s);
+                DirectoryInfo dest = new DirectoryInfo(destinationDirectory.FullName + "\\" + s);
+                CopyDirectory(source, dest);
+
             }
 
             foreach (int i in checkedListBox1.CheckedIndices)
             {
                 string s = mPluginPathList[i];
-                File.Copy(sourceDirectory.FullName + "\\" + s, destinationDirectory.FullName + "\\" + s, true);
+                DirectoryInfo source = new DirectoryInfo(sourceDirectory.FullName + "\\" + s);
+                DirectoryInfo dest = new DirectoryInfo(destinationDirectory.FullName + "\\" + s);
+                CopyDirectory(source, dest);
             }
 
             Close();
+        }
+
+        private static void CopyDirectory(DirectoryInfo source, DirectoryInfo target)
+        {
+            if (!Directory.Exists(target.FullName))
+            {
+                Directory.CreateDirectory(target.FullName);
+            }
+
+            foreach (FileInfo fileInfo in source.GetFiles())
+            {
+                fileInfo.CopyTo(Path.Combine(target.ToString(),fileInfo.Name),true);
+            }
+
+            foreach (DirectoryInfo dir in source.GetDirectories())
+            {
+                DirectoryInfo subdir = target.CreateSubdirectory(dir.Name);
+                CopyDirectory(dir, subdir);
+            }
         }
     }
 }

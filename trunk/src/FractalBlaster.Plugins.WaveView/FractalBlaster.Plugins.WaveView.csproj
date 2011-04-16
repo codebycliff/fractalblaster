@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Release\bin\Plugins\</OutputPath>
+    <OutputPath>..\..\Release\bin\Plugins\WaveView\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -60,6 +60,7 @@
     <ProjectReference Include="..\FractalBlaster.Universe\FractalBlaster.Universe.csproj">
       <Project>{055BD7F9-7075-4ACB-ACEB-410CB496C0F2}</Project>
       <Name>FractalBlaster.Universe</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
