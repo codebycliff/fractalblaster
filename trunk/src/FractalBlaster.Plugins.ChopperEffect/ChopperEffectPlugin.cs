@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace FractalBlaster.Plugins.ChopperEffect {
 
     [PluginAttribute(Name="Chopper Effect", Author="Fractal Blasters", Description="Chops stuff")]
-    public class ChopperEffectPlugin : IEffectPlugin, IViewPlugin {
+    public class ChopperEffectPlugin : IEffectPlugin {
 
         public AppContext Context { get; private set; }
 

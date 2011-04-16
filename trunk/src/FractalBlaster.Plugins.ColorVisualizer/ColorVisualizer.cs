@@ -9,7 +9,7 @@ using System.Drawing.Drawing2D;
 namespace FractalBlaster.Plugins.ColorVisualizer
 {
     [PluginAttribute(Name = "Color Visualizer", Author = "Fractal Blasters", Description = "Displays Color Based Visualizer")]
-    public class ColorVisualizerPlugin : IViewPlugin, IEffectPlugin
+    public class ColorVisualizerPlugin : IEffectPlugin
     {
         AppContext context;
         ColorVisualizerUI UI;

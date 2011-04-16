@@ -25,8 +25,8 @@
         private void InitializeComponent() {
             this.ViewPanel = new System.Windows.Forms.Panel();
             this.mRefreshButton = new System.Windows.Forms.ToolStripButton();
-            this.mConfigureButton = new System.Windows.Forms.ToolStripButton();
             this.mMainToolStrip = new System.Windows.Forms.ToolStrip();
+            this.mConfigureButton = new System.Windows.Forms.ToolStripButton();
             this.mMainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,15 +50,6 @@
             this.mRefreshButton.Size = new System.Drawing.Size(36, 36);
             this.mRefreshButton.Text = "Refresh";
             // 
-            // mConfigureButton
-            // 
-            this.mConfigureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mConfigureButton.Image = global::FractalBlaster.Core.Properties.Resources.configure;
-            this.mConfigureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mConfigureButton.Name = "mConfigureButton";
-            this.mConfigureButton.Size = new System.Drawing.Size(36, 36);
-            this.mConfigureButton.Text = "Configure";
-            // 
             // mMainToolStrip
             // 
             this.mMainToolStrip.BackColor = System.Drawing.SystemColors.Control;
@@ -71,6 +62,15 @@
             this.mMainToolStrip.Size = new System.Drawing.Size(200, 39);
             this.mMainToolStrip.TabIndex = 4;
             this.mMainToolStrip.Text = "General";
+            // 
+            // mConfigureButton
+            // 
+            this.mConfigureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mConfigureButton.Image = global::FractalBlaster.Core.Properties.Resources.configure;
+            this.mConfigureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mConfigureButton.Name = "mConfigureButton";
+            this.mConfigureButton.Size = new System.Drawing.Size(36, 36);
+            this.mConfigureButton.Text = "Configure";
             // 
             // CollectionView
             // 
@@ -90,9 +90,9 @@
         #endregion
 
         protected System.Windows.Forms.ToolStripButton mRefreshButton;
-        private System.Windows.Forms.ToolStripButton mConfigureButton;
         private System.Windows.Forms.ToolStrip mMainToolStrip;
         protected System.Windows.Forms.Panel ViewPanel;
+        protected System.Windows.Forms.ToolStripButton mConfigureButton;
 
 
     }

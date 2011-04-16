@@ -7,7 +7,7 @@ using FractalBlaster.Universe;
 namespace FractalBlaster.Plugins.PhaserEffect
 {
     [PluginAttribute(Name = "Phaser Effect", Author = "Fractal Blasters", Description = "Applies Phaser Effect")]
-    public class PhaserPlugin : IViewPlugin, IEffectPlugin
+    public class PhaserPlugin : IEffectPlugin
     {
         private PhaserUI UI;
         private AppContext appContext;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FractalBlaster.Core;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Plugins.BasicVisualizer
@@ -13,7 +14,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
     /// BasicVisualizerPlugin provides basic visualizer functionality.
     /// </summary>
     [PluginAttribute(Name = "Basic Visualizer", Author = "Fractal Blaster", Description = "A basic visualizer", Version = "0.1a")]
-    public class BasicVisualizerPlugin : IViewPlugin, IEffectPlugin
+    public class BasicVisualizerPlugin : IEffectPlugin
     {
         #region Fields
         /// <summary>
@@ -86,28 +87,31 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         /// <param name="stream">Stream containing audio byte data.</param>
         public void ProcessStream(MemoryStream stream)
         {
-            //Tell GraphicsControl object how long the stream is.
-            _graphicsControl.ChunkSampleCount = (int)(stream.Length / 2);
-
-            //Copy, process, and submit to VisualizerForm
-            for (int i = 0; i < stream.Length; i += 4)
+            if (Enabled)
             {
-                //Check the number of bytes we're reading each time.
-                int bytes_read;
-                //Allocate memory to read each sample into
-                byte[] temp = new byte[2];
+                //Tell GraphicsControl object how long the stream is.
+                _graphicsControl.ChunkSampleCount = (int)(stream.Length / 2);
 
-                //Read left sample
-                bytes_read = stream.Read(temp, 0, 2);
-                int sampleLeft = BitConverter.ToInt16(temp, 0);
+                //Copy, process, and submit to VisualizerForm
+                for (int i = 0; i < stream.Length; i += 4)
+                {
+                    //Check the number of bytes we're reading each time.
+                    int bytes_read;
+                    //Allocate memory to read each sample into
+                    byte[] temp = new byte[2];
 
-                //Read right sample
-                bytes_read = stream.Read(temp, 0, 2);
-                int sampleRight = BitConverter.ToInt16(temp, 0);
+                    //Read left sample
+                    bytes_read = stream.Read(temp, 0, 2);
+                    int sampleLeft = BitConverter.ToInt16(temp, 0);
 
-                //Record new floating point PCM samples.
-                _visData.Enqueue((float)(2f * sampleLeft / UInt16.MaxValue));
-                _visData.Enqueue((float)(2f * sampleRight / UInt16.MaxValue));
+                    //Read right sample
+                    bytes_read = stream.Read(temp, 0, 2);
+                    int sampleRight = BitConverter.ToInt16(temp, 0);
+
+                    //Record new floating point PCM samples.
+                    _visData.Enqueue((float)(2f * sampleLeft / UInt16.MaxValue));
+                    _visData.Enqueue((float)(2f * sampleRight / UInt16.MaxValue));
+                }
             }
         }
 

@@ -33,6 +33,7 @@ namespace FractalBlaster.Core.UI
             : base()
         {
             InitializeComponent();
+            this.mConfigureButton.Visible = false;
             ImageList imageList = new ImageList();
             imageList.Images.Add(Properties.Resources.computer);
             imageList.Images.Add(Properties.Resources.folder);

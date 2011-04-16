@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 
 namespace FractalBlaster.Universe {
     
@@ -26,6 +27,15 @@ namespace FractalBlaster.Universe {
         /// Determines whether this effect is enabled.
         /// </summary>
         Boolean Enabled { get; set;  }
+
+        /// <summary>
+        /// The main user interface represented as an <see cref=
+        /// "System.Windows.Forms.IContainerControl"/> implementation. The
+        /// control returned from this property will be added to a dialog
+        /// and can be shown or hidden via the 'Views' menu in the main
+        /// user interface.
+        /// </summary>
+        Form UserInterface { get; }
 
     }
 

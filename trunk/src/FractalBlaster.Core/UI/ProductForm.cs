@@ -34,7 +34,7 @@ namespace FractalBlaster.Core.UI
             seekBarRefreshTimer.Start();
 
 
-            
+
 
             foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>())
             {
@@ -110,12 +110,15 @@ namespace FractalBlaster.Core.UI
 
         public void AddViewPlugin(IViewPlugin view)
         {
-
             ToolStripMenuItem item = new ToolStripMenuItem(view.GetInfo().Name);
             item.CheckOnClick = true;
             Form form = view.UserInterface;
             PluginViews.Add(form);
             form.Owner = this;
+            form.FormClosing += (o, e) =>
+                {
+                    item.Checked = false;
+                };
             item.CheckedChanged += (o, e) =>
             {
                 ToolStripMenuItem viewItem = o as ToolStripMenuItem;
@@ -146,9 +149,33 @@ namespace FractalBlaster.Core.UI
         {
             ToolStripMenuItem item = new ToolStripMenuItem(plugin.GetInfo().Name);
             item.CheckOnClick = true;
+            Form form = plugin.UserInterface;
+
+            form.FormClosing += (o, ea) =>
+                {
+                    item.Checked = false;
+                };
+
             item.CheckStateChanged += (o, ea) =>
             {
                 plugin.Enabled = item.CheckState == CheckState.Checked ? true : false;
+                ToolStripMenuItem viewItem = o as ToolStripMenuItem;
+                if (viewItem.Checked)
+                {
+                    form.Show();
+                    if (form.Location.IsEmpty)
+                    {
+                        Point nextLocation = this.Location;
+                        nextLocation.Offset(this.Width, newViewYOffset);
+                        newViewYOffset += form.Height;
+                        form.Location = nextLocation;
+                    }
+                }
+                else
+                {
+                    newViewYOffset -= form.Height;
+                    form.Hide();
+                }
             };
             mEffectsMenu.DropDownItems.Add(item);
         }
@@ -283,7 +310,7 @@ namespace FractalBlaster.Core.UI
                 }
                 catch (KeyNotFoundException e)
                 {
-                    
+
                 }
             }
         }

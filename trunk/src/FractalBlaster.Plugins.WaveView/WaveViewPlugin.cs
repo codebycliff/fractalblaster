@@ -10,7 +10,7 @@ using FractalBlaster.Universe;
 namespace FractalBlaster.Plugins.WaveView
 {
     [PluginAttribute(Name = "Wave View", Author = "Fractal Blasters", Description = "Displays Waveform")]
-    public class WaveViewPlugin : IViewPlugin, IEffectPlugin
+    public class WaveViewPlugin : IEffectPlugin
     {
         AppContext context;
         WaveViewPluginUI UI;

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using FractalBlaster.Core.Runtime;
 #endregion
 
 namespace FractalBlaster.Plugins.BasicVisualizer
@@ -94,8 +95,14 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         /// </summary>
         long _ticks_last_update = 0;
 
+        /// <summary>
+        /// Spritefont for drawing stuff to screen.
+        /// </summary>
         SpriteFont _spriteFont;
 
+        /// <summary>
+        /// VisualizerSongTitleDisplay for fancily displaying song title in visualizer.
+        /// </summary>
         VisualizerSongTitleDisplay _titleDisplay;
 
 
