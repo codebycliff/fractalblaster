@@ -9,8 +9,13 @@ using System.Windows.Forms;
 
 namespace FractalBlaster.Core.UI {
     public partial class ConfigurationDialog : Form {
+
         public ConfigurationDialog() {
             InitializeComponent();
+
+            mCancelButton.Click += (o, a) => { this.Close(); };
+            
+            
         }
     }
 }

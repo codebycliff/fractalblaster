@@ -22,7 +22,7 @@ namespace FractalBlaster.Core.UI
 
         public override string Label { get { return "Library"; } }
 
-        public override Form ConfigurationDialog { get { return new LibraryConfigurationDialog(); } }
+        public override Form ConfigurationDialog { get { return new LibraryConfigurationDialog(Library); } }
 
         public Library Library { get; private set; }
 
@@ -104,9 +104,9 @@ namespace FractalBlaster.Core.UI
 
         public void RefreshItems_Threaded()
         {
-            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Reading Library Directory..." });
+            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Scanning Library Directory..." });
             Library.Refresh();
-
+            mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding music to library..." });
             TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
 

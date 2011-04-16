@@ -123,24 +123,27 @@ namespace FractalBlaster.Core.UI
                 DirectoryInfo rootdir = new DirectoryInfo(node.FullPath);
                 foreach (DirectoryInfo dir in rootdir.GetDirectories())
                 {
-                    try
+                    if ((dir.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                     {
+                        try
+                        {
 
-                        foreach (string type in formats)
-                        {
-                            if (dir.GetFiles(type).Length > 0)
-                                search_directory = true;
+                            foreach (string type in formats)
+                            {
+                                if (dir.GetFiles(type).Length > 0)
+                                    search_directory = true;
+                            }
+                            if (dir.GetDirectories().Length > 0 || search_directory)
+                            {
+                                TreeNode dirnode = new TreeNode(dir.Name, FOLDER_ICON_INDEX, FOLDER_ICON_INDEX);
+                                node.Nodes.Add(dirnode);
+                                dirnode.Nodes.Add("*");
+                            }
                         }
-                        if (dir.GetDirectories().Length > 0 || search_directory)
+                        catch (Exception ie)
                         {
-                            TreeNode dirnode = new TreeNode(dir.Name, FOLDER_ICON_INDEX, FOLDER_ICON_INDEX);
-                            node.Nodes.Add(dirnode);
-                            dirnode.Nodes.Add("*");
+                            continue;
                         }
-                    }
-                    catch (Exception ie)
-                    {
-                        continue;
                     }
                 }
 

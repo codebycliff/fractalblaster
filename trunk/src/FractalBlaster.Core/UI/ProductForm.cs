@@ -89,6 +89,9 @@ namespace FractalBlaster.Core.UI
 
             Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
 
+            mSaveToolBarButton.Click += SavePlaylist;
+            mNewPlaylistMenuItem.Click += new System.EventHandler(this.AddNewPlaylistTab);
+
         }
 
         private void MouseDownOnTreeView(Object sender, MouseEventArgs args)
@@ -159,9 +162,11 @@ namespace FractalBlaster.Core.UI
 
         #region  [ Private ]
 
+        private Library library;
         private void SetupCollectionTabs()
         {
             Library lib = Library.Load(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)));
+            library = lib;
             LibraryCollectionView libraryView = new LibraryCollectionView(lib);
             libraryView.Dock = DockStyle.Fill;
             mLibraryCollectionTabPage.Controls.Add(libraryView);
@@ -271,8 +276,15 @@ namespace FractalBlaster.Core.UI
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 FileInfo f = new FileInfo(sfd.FileName);
-                IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
-                plugin.Write(CurrentPlaylistControl.Playlist, f.FullName);
+                try
+                {
+                    IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
+                    plugin.Write(CurrentPlaylistControl.Playlist, f.FullName);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    
+                }
             }
         }
 
@@ -282,6 +294,7 @@ namespace FractalBlaster.Core.UI
             {
                 f.Close();
             }
+            library.Save();
             Application.ExitThread();
             Application.Exit();
         }

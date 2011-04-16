@@ -95,8 +95,8 @@
 
         protected System.Windows.Forms.Panel ControlPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button mCancelButton;
-        private System.Windows.Forms.Button mSaveButton;
+        protected System.Windows.Forms.Button mCancelButton;
+        protected System.Windows.Forms.Button mSaveButton;
 
     }
 }

@@ -41,6 +41,8 @@ Comments: Copy the wave view or the visualizer.
 
 Bug: Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
 
+Bug: Saving playlist GUI button does nothing.
+
 *****************************************************************************
 * Fixed Bugs:
 *****************************************************************************
@@ -71,9 +73,6 @@ Bug: Double clicking on a song in the playlist doesn't play that song
 Status: Fixed
 
 Bug: After adding a bunch of playlists, you can't delete them.
-Status: Fixed
-
-Bug: Saving playlist gui do nothing.
 Status: Fixed
 
 Bug:Disable seeking when nothing playing.
