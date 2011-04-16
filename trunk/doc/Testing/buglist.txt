@@ -2,16 +2,6 @@
 * Unknown Status Bugs:
 *****************************************************************************
 
-Bug: After a song finishes, and a song is highlighted, play does nothing. (Haven't noticed a problem. -Greg) 
-
-Bug: Transitions between songs is still iffy. (Haven't noticed a problem. -Greg)
-
-Bug: The song after deleted can be accessed still 
-Comment: (Clarification needed: Can the song be accessed after playing a different song? Deleting a song shouldn't cause the media player to stop playing it. -Greg)
-
-Bug: Delete songs from playlist doesn't save.
-Comment: (Explanation? Wouldn't that be intended? -Greg)
-
 Bug: Opening one song from the file browser, playing it, and skipping past the end of the song resulted in COM Exception.
 Comment: Here is the exception information.
 System.Runtime.InteropServices.COMException was unhandled
@@ -28,6 +18,10 @@ System.Runtime.InteropServices.COMException was unhandled
        at CallbackBlockCompleted()
   InnerException: 
 
+Bug: Access Violation exception if you double click on different songs in the media player.
+Comment: I can't seem to reproduce this.This could be a random exeption that I got. -marvin
+
+ 
 *****************************************************************************
 * Known Bugs:
 *****************************************************************************
@@ -41,8 +35,22 @@ Comments: Copy the wave view or the visualizer.
 
 Bug: Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
 
+<<<<<<< .mine
+Bug: Clicking on the very edge of the seek bar plays the song from the beginning. Not the next song, but the current one. 
+Comment: A small detail. As soon as you hit the pause or anything else, the red dot shows up and you can seek correctly. 
+
+Bug: Various interfaces not implemented, like the library options(wrench) not working.
+Comment: We need to clean up the interface. 
+	They include:
+	library options	
+	save (floppy icon)on main player
+
+
+
+=======
 Bug: Saving playlist GUI button does nothing.
 
+>>>>>>> .r206
 *****************************************************************************
 * Fixed Bugs:
 *****************************************************************************
@@ -105,6 +113,21 @@ Status: Fixed
 
 Bug: Opening up a playlist with songs currently in it makes the songs unuseable.
 Status: Fixed
+
+Bug: After a song finishes, and a song is highlighted, play does nothing. 
+Status: Fixed (Moved from unknown status, since it's been working) 
+
+Bug: Transitions between songs is still iffy. 
+Status: Fixed (Moved from unknown status. The tranitions from song to song in the playlist is fine now)
+
+Bug: Delete songs from playlist doesn't save.
+Status: Fixed
+Comment: An iteration of a problem from before. You have a song deleted, but are still playing it and not the playlist song if you have that highlighted and hit play
+
+Bug: The song after deleted can be accessed still 
+Status: Fixed
+Comment: Moved from known bugs since it was fixed. 
+
 
 *****************************************************************************
 * Worked Around Bugs:
