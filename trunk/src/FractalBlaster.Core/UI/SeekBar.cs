@@ -73,7 +73,7 @@ namespace FractalBlaster.Core.UI
             e.Graphics.DrawPath(Pens.Black, seekBorder);
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (mTotalTime != 0 && mTime < mTotalTime)
+            if (mTotalTime != 0 && mTime < mTotalTime && mTime >= 0)
             {
                 Rectangle seekRectangle = new Rectangle((mTime * 200 / mTotalTime) - 6, 3, 14, 14);
                 e.Graphics.FillEllipse(Brushes.DarkRed, seekRectangle);
@@ -92,6 +92,10 @@ namespace FractalBlaster.Core.UI
 
                 // Shift to next track if available
                 UI.SkipMediaForward(this, new EventArgs());
+            }
+            if (mTime < 0)
+            {
+                mTime = 0;
             }
             
             label1.Text = String.Format("{0:d2}:{1:d2}/{2:d2}:{3:d2}",
@@ -114,18 +118,28 @@ namespace FractalBlaster.Core.UI
         {
             if (mouseDown == true)
             {
+                if (e.X < 0)
+                    mouseX = 0;
+                if (e.X > 200)
+                    mouseX = 200;
                 mouseDown = false;
-                Debug.printline("seek(" + (e.X * mTotalTime / 200).ToString() + ")");
+                Debug.printline("seek(" + (mouseX * mTotalTime / 200).ToString() + ")");
                 mOutput.Stop();
-                mInput.Seek(e.X * mTotalTime / 200);
+                mInput.Seek(mouseX * mTotalTime / 200);
                 mOutput.Play();
-                mPlaybackTimer.currentTime = e.X * mTotalTime / 200;
+                mPlaybackTimer.currentTime = mouseX * mTotalTime / 200;
             }
         }
 
         private void SeekBar_MouseMove(object sender, MouseEventArgs e)
         {
+            this.Invalidate();
             mouseX = e.X;
+            if (e.X < 0)
+                mouseX = 0;
+            if (e.X > 200)
+                mouseX = 200;
+            //mouseX = e.X;
         }
     }
 }

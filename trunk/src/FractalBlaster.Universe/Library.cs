@@ -398,17 +398,15 @@ namespace FractalBlaster.Universe
 
         static Library()
         {
-            LibraryDataFileName = "Library.bin";
-            LibraryPathsFileName = "LibraryPaths.bin";
+            LibraryPathsFileName = "LibraryPaths.fbp";
 
         }
 
         ~Library()
         {
-            //this.Save(); -- Removes serialization error
+            this.Save();
         }
 
-        public static String LibraryDataFileName { get; private set; }
         public static String LibraryPathsFileName { get; private set; }
 
         /// <summary>
@@ -418,7 +416,26 @@ namespace FractalBlaster.Universe
         /// <returns>A library containing all the music in the given directory.</returns>
         public static Library Load(DirectoryInfo defaultDirectory)
         {
-            return new Library(defaultDirectory);
+            try
+            {
+                Library library = new Library();
+                using (StreamReader reader = new StreamReader(File.OpenRead(LibraryPathsFileName)))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (Directory.Exists(line))
+                        {
+                            library.Root.Add(new DirectoryInfo(line));
+                        }
+                    }
+                }
+                return library;
+            }
+            catch (Exception e)
+            {
+                return new Library(defaultDirectory);
+            }
         }
 
         /// <summary>
@@ -426,6 +443,13 @@ namespace FractalBlaster.Universe
         /// </summary>
         public void Save()
         {
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite(LibraryPathsFileName)))
+            {
+                foreach (DirectoryInfo dir in Root)
+                {
+                    writer.WriteLine(dir.FullName);
+                }
+            }
         }
 
         #endregion
@@ -434,16 +458,14 @@ namespace FractalBlaster.Universe
 
         private Library()
         {
-        }
-
-        private Library(DirectoryInfo root)
-        {
-
             Root = new List<DirectoryInfo>();
-            Root.Add(root);
             MediaCollection = this.createTable();
             MediaPaths = new List<String>();
+        }
 
+        private Library(DirectoryInfo root) : this()
+        {
+            Root.Add(root);
         }
 
         private DataTable MediaCollection;

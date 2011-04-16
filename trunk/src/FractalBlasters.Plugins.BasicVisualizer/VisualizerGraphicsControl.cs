@@ -198,9 +198,13 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             long ticks_now = DateTime.Now.Ticks;
             while (_dataQueue.Count > ChunkSampleCount * 1.75f) //1.75 is arbitrary, seems to work the best though.
             {
-                float val;
-                _dataQueue.TryDequeue(out val);
-                _dataQueue.TryDequeue(out val);
+                for (int i = 0; i < kBUFFER_SIZE * 2; i++)
+                {
+
+                    float val;
+                    _dataQueue.TryDequeue(out val);
+                    _dataQueue.TryDequeue(out val);
+                }
             }
 
             //Update our drawn values if it's time.
