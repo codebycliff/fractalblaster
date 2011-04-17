@@ -262,7 +262,6 @@
             this.mPlayToolBarButton.Name = "mPlayToolBarButton";
             this.mPlayToolBarButton.Size = new System.Drawing.Size(52, 52);
             this.mPlayToolBarButton.Text = "Play";
-            this.mPlayToolBarButton.Click += new System.EventHandler(this.PlayMedia);
             // 
             // mStopToolBarButton
             // 

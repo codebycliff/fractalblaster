@@ -106,6 +106,9 @@
       <DependentUpon>ProductForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Runtime\Constants.cs" />
+    <Compile Include="UI\ProductForm.EventHandlers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\SeekBar.cs">
       <SubType>UserControl</SubType>
     </Compile>

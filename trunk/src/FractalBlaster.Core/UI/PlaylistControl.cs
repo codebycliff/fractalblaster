@@ -10,8 +10,17 @@ using FractalBlaster.Universe;
 
 namespace FractalBlaster.Core.UI
 {
+    public delegate void PlaylistControlSongPlayedEventHandler(PlaylistControl sender,int songIndex);
+
     public partial class PlaylistControl : UserControl
     {
+
+        public event PlaylistControlSongPlayedEventHandler SongPlayed;
+
+        public Int32 SelectedIndex
+        {
+            get { return mPlaylistGridView.SelectedRows[0].Index; }
+        }
 
         public Playlist Playlist
         {
@@ -33,6 +42,8 @@ namespace FractalBlaster.Core.UI
                 {
                     AddMediaToPlaylistData(mf);
                 }
+
+                playlist.MediaRequested += new MediaChangeHandler(playlist_MediaRequested);
             }
         }
 
@@ -78,6 +89,14 @@ namespace FractalBlaster.Core.UI
             mPlaylistGridView.CellMouseUp += new DataGridViewCellMouseEventHandler(mPlaylistGridView_CellMouseUp);
             mPlaylistGridView.CellMouseEnter += new DataGridViewCellEventHandler(mPlaylistGridView_CellMouseEnter);
             mPlaylistGridView.MouseMove += new MouseEventHandler(mPlaylistGridView_MouseMove);
+        }
+
+        int playingIndex = 0;
+        void playlist_MediaRequested(MediaFile file)
+        {
+            mPlaylistGridView.Rows[playingIndex].DefaultCellStyle.BackColor = Color.White;
+            playingIndex = playlist.SelectedIndex;
+            mPlaylistGridView.Rows[playlist.SelectedIndex].DefaultCellStyle.BackColor = Color.LightGray;
         }
 
 
@@ -138,8 +157,8 @@ namespace FractalBlaster.Core.UI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Playlist.RequestMediaAt(mPlaylistGridView.CurrentRow.Index);
-
+                if (SongPlayed != null)
+                    SongPlayed(this, mPlaylistGridView.CurrentRow.Index);
                 e.Handled = true;
             }
         }
@@ -351,7 +370,7 @@ namespace FractalBlaster.Core.UI
                 DataGridViewRow row = mPlaylistGridView.SelectedRows[0];
                 if (row.Index <= Playlist.Items.Count())
                 {
-                    Playlist.SelectedIndex = row.Index;
+                    //Playlist.SelectedIndex = row.Index;
                     ExternalSelectionChange = false;
                 }
             }
@@ -371,7 +390,8 @@ namespace FractalBlaster.Core.UI
         }
         private void mPlaylistGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            Playlist.RequestMediaAt(e.RowIndex);
+            if (SongPlayed != null)
+                SongPlayed(this, e.RowIndex);
         }
 
         private void DragEnterHandler(Object sender, DragEventArgs args)

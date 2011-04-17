@@ -110,8 +110,8 @@ namespace FractalBlaster.Universe {
         /// The index of the media file in the playlist.
         /// </param>
         public void RequestMediaAt(Int32 index) {
-            SelectedIndex = index;
             if (MediaRequested != null && !(index >= MediaItems.Count) && (index >= 0)) {
+                SelectedIndex = index;
                 MediaRequested(MediaItems[index]);
             }
         }
