@@ -227,39 +227,43 @@ namespace FractalBlaster.Universe
                     try
                     {
                         MediaFile media = file.CreateMediaFile();
-                        String fullName = file.FullName;
-                        String artist = media.Metadata.Artist;
-                        String album = media.Metadata.Album;
-                        String title = media.Metadata.Title;
 
-                        int bitrate = media.Metadata.BitRate;
-                        int channel = media.Metadata.Channels;
-                        int samplerate = media.Metadata.SampleRate;
-                        int year = media.Metadata.Year;
+                        if (media != null)
+                        {
+                            String fullName = file.FullName;
+                            String artist = media.Metadata.Artist;
+                            String album = media.Metadata.Album;
+                            String title = media.Metadata.Title;
 
-                        TimeSpan duration = media.Metadata.Duration;
+                            int bitrate = media.Metadata.BitRate;
+                            int channel = media.Metadata.Channels;
+                            int samplerate = media.Metadata.SampleRate;
+                            int year = media.Metadata.Year;
 
-                        DataRow dr = MediaCollection.NewRow();
+                            TimeSpan duration = media.Metadata.Duration;
+
+                            DataRow dr = MediaCollection.NewRow();
 
 
-                        //Apostrophes mess with searching and sorting, so we just strip them out
-                        artist = artist.Replace("'", "");
-                        album = album.Replace("'", "");
-                        title = title.Replace("'", "");
+                            //Apostrophes mess with searching and sorting, so we just strip them out
+                            artist = artist.Replace("'", "");
+                            album = album.Replace("'", "");
+                            title = title.Replace("'", "");
 
-                        dr["FullName"] = fullName;
-                        dr["Artist"] = artist;
-                        dr["Album"] = album;
-                        dr["Title"] = title;
-                        dr["BitRate"] = bitrate;
-                        dr["Channel"] = channel;
-                        dr["SampleRate"] = samplerate;
-                        dr["Year"] = year;
-                        dr["Duration"] = duration;
-                        dr["File"] = media;
+                            dr["FullName"] = fullName;
+                            dr["Artist"] = artist;
+                            dr["Album"] = album;
+                            dr["Title"] = title;
+                            dr["BitRate"] = bitrate;
+                            dr["Channel"] = channel;
+                            dr["SampleRate"] = samplerate;
+                            dr["Year"] = year;
+                            dr["Duration"] = duration;
+                            dr["File"] = media;
 
-                        MediaCollection.Rows.Add(dr);
-                        MediaPaths.Add(file.FullName);
+                            MediaCollection.Rows.Add(dr);
+                            MediaPaths.Add(file.FullName);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -474,6 +478,13 @@ namespace FractalBlaster.Universe
         {
             DataTable output = new DataTable();
 
+            try
+            {
+                output.DefaultView.Sort = "FullName";
+            }
+            catch (Exception e)
+            {
+            }
 
             /*
              * Eventually replace this with a global list of supported ID3 tags
@@ -513,7 +524,7 @@ namespace FractalBlaster.Universe
             toAdd.Unique = false;
             output.Columns.Add(toAdd);
             toAdd = new DataColumn("File", typeof(MediaFile));
-            toAdd.Unique = false;
+            toAdd.Unique = true;
             output.Columns.Add(toAdd);
 
             output.CaseSensitive = true;
