@@ -22,6 +22,21 @@ namespace Config
             label4.Text = libraryRoot;
             radioButton2.Checked = true;
             radioButton4.Checked = true;
+            Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked && !checkBox2.Checked &&
+                !checkBox3.Checked && !checkBox4.Checked &&
+                !checkBox5.Checked && !checkBox6.Checked)
+            {
+                button1.Enabled = false;
+            }
+            else
+            {
+                button1.Enabled = true;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
