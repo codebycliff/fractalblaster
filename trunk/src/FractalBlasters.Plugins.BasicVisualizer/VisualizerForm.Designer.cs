@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VisualizerForm));
             this.visualizerGraphicsControl1 = new FractalBlaster.Plugins.BasicVisualizer.VisualizerGraphicsControl();
             this.SuspendLayout();
             // 
@@ -50,6 +51,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(558, 335);
             this.Controls.Add(this.visualizerGraphicsControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VisualizerForm";
             this.ShowInTaskbar = false;
             this.Text = "Visualizer";
