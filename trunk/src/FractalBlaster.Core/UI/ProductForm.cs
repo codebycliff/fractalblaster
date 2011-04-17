@@ -82,9 +82,11 @@ namespace FractalBlaster.Core.UI
                 }
             };
 
-            if (Config.getProperty("saveloadplaylists") == "false")
+            if (Config.getProperty("saveloadplaylists") == "false" ||
+                Config.getProperty("playlistformats") == "")
             {
                 mSaveMenuItem.Enabled = false;
+                mSaveToolBarButton.Enabled = false;
             }
 
             Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
