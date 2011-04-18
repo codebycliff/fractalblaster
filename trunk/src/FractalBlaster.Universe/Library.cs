@@ -231,8 +231,8 @@ namespace FractalBlaster.Universe
             MediaCollection.Clear();
             foreach (FileInfo file in files)
             {
-                if (!MediaPaths.Contains(file.FullName))
-                {
+                //if (!MediaPaths.Contains(file.FullName))
+                //{
                     try
                     {
                         MediaFile media = file.CreateMediaFile();
@@ -279,7 +279,7 @@ namespace FractalBlaster.Universe
                         Console.Error.WriteLine("Problem Opening MediaFile:\nException Type: {0}\nMessage:{1}", e.GetType().FullName, e.Message);
                     }
                 }
-            }
+            //}
         }
 
         /// <summary>
