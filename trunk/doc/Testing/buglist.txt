@@ -35,7 +35,6 @@ Comments: Copy the wave view or the visualizer.
 
 Bug: Dragging the seek bar far to the left results in negative playing times (ex: -4:41 / 10:50)
 
-<<<<<<< .mine
 Bug: Clicking on the very edge of the seek bar plays the song from the beginning. Not the next song, but the current one. 
 Comment: A small detail. As soon as you hit the pause or anything else, the red dot shows up and you can seek correctly. 
 
@@ -43,14 +42,15 @@ Bug: Various interfaces not implemented, like the library options(wrench) not wo
 Comment: We need to clean up the interface. 
 	They include:
 	library options	
-	save (floppy icon)on main player
-
-
-
-=======
+	save (floppy icon)on main play
+	
 Bug: Saving playlist GUI button does nothing.
 
->>>>>>> .r206
+Bug: File, settings menu does nothing.
+
+Bug: Library doesn't pull all of the mp3 from a folder
+Comment: I'm using 3 songs in my music folder. The directory is C:\users\blah\music and the library doesn't contain the 3 songs that I have put in there. 
+		 The tag information is there, as windows fills in the artist, title, and album in. They are of the mp3 file extension.
 *****************************************************************************
 * Fixed Bugs:
 *****************************************************************************
