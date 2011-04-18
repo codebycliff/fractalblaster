@@ -106,7 +106,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
                     pSamples = Marshal.AllocHGlobal(AUDIO_FRAME_SIZE);
                     int size = FFMPEG.avcodec_decode_audio(pAudioCodecContext, pSamples, out frameSize, packet.data, packet.size);
                 }
-                catch (Exception e) { return RetrieveNextFrame();  }
+                catch (Exception e) {/* return RetrieveNextFrame();*/  }
 
                 CurrentFrameNumber++;
 

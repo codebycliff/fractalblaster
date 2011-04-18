@@ -61,6 +61,12 @@ namespace FractalBlaster.Universe
             ReadMetadata();
         }
 
+        public MediaFile(String path, Metadata metadata)
+        {
+            this.Info = new FileInfo(path);
+            this.Metadata = metadata;
+        }
+
 
         protected MediaFile(SerializationInfo info, StreamingContext context)
         {

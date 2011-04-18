@@ -41,6 +41,8 @@ namespace FractalBlaster.Core.UI
 
             this.mMediaTreeView.KeyDown += new KeyEventHandler(mMediaTreeView_KeyDown);
             this.HandleDestroyed += new EventHandler(LibraryCollectionView_HandleDestroyed);
+
+            InitializeTreeView();
         }
 
         void LibraryCollectionView_HandleDestroyed(object sender, EventArgs e)
@@ -76,9 +78,8 @@ namespace FractalBlaster.Core.UI
         {
             base.RefreshItems(sender, args);
             this.mRefreshButton.Enabled = false;
-            mMediaTreeView.Nodes.Clear();
-            mMediaTreeView.Nodes.Add(new TreeNode("Library Collection"));
 
+            mMediaTreeView.Nodes.Clear();
             thread = new Thread(RefreshItems_Threaded);
             thread.Priority = ThreadPriority.Lowest;
             thread.Start();
@@ -102,27 +103,52 @@ namespace FractalBlaster.Core.UI
             mMediaTreeView.Nodes[0].Nodes.Add(n);
         }
 
-        public void RefreshItems_Threaded()
+        private void InitializeTreeView()
+        {
+            TreeNode root = new TreeNode("Library", 3, 3);
+            root.Tag = Library.AllMedia;
+            foreach (String artist in Library.Artists)
+            {
+                TreeNode artistNode = new TreeNode(artist);
+                artistNode.Tag = Library.MediaForArtist(artist);
+                Library.AlbumCollection albums = Library[artist];
+                foreach (Library.Album album in albums)
+                {
+                    TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
+                    albumNode.Tag = album;// Library.MediaForAlbum(artist, album);
+                    foreach (MediaFile file in album)
+                    {
+                        TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
+                        fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
+                        albumNode.Nodes.Add(fileNode);
+                    }
+                    artistNode.Nodes.Add(albumNode);
+                }
+                root.Nodes.Add(artistNode);
+            }
+            mMediaTreeView.Nodes.Add(root);
+        }
+
+        private void RefreshItems_Threaded()
         {
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Scanning Library Directory..." });
             Library.Refresh();
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding music to library..." });
             TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
-
-
+            mMediaTreeView.Invoke((Action)(() => { mMediaTreeView.Nodes.Add(root); }) );
             foreach (String artist in Library.Artists)
             {
                 mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding " + artist });
 
                 TreeNode artistNode = new TreeNode(artist, 0, 0);
                 artistNode.Tag = Library.MediaForArtist(artist);
-                Dictionary<String, List<MediaFile>> albums = Library[artist];
-                foreach (String album in albums.Keys)
+                Library.AlbumCollection albums = Library[artist];
+                foreach (Library.Album album in albums)
                 {
-                    TreeNode albumNode = new TreeNode(album, 1, 1);
-                    albumNode.Tag = Library.MediaForAlbum(artist, album);
-                    foreach (MediaFile file in albums[album])
+                    TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
+                    albumNode.Tag = album.ToList();//Library.MediaForAlbum(artist, album);
+                    foreach (MediaFile file in album)
                     {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
                         fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
