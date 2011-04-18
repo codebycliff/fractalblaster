@@ -115,7 +115,7 @@ namespace FractalBlaster.Core.UI
                 foreach (Library.Album album in albums)
                 {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
-                    albumNode.Tag = album;// Library.MediaForAlbum(artist, album);
+                    albumNode.Tag = album.ToArray();// Library.MediaForAlbum(artist, album);
                     foreach (MediaFile file in album)
                     {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
@@ -147,7 +147,7 @@ namespace FractalBlaster.Core.UI
                 foreach (Library.Album album in albums)
                 {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
-                    albumNode.Tag = album.ToList();//Library.MediaForAlbum(artist, album);
+                    albumNode.Tag = album.ToArray();//Library.MediaForAlbum(artist, album);
                     foreach (MediaFile file in album)
                     {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);

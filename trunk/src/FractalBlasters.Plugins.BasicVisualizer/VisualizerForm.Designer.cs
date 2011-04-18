@@ -53,7 +53,6 @@
             this.Controls.Add(this.visualizerGraphicsControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VisualizerForm";
-            this.ShowInTaskbar = false;
             this.Text = "Visualizer";
             this.Load += new System.EventHandler(this.VisualizerForm_Load);
             this.ResumeLayout(false);

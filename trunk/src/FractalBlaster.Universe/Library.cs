@@ -213,12 +213,12 @@ namespace FractalBlaster.Universe
         public void Refresh()
         {
             FileInfo[] files = new FileInfo[0];
-
             Console.WriteLine("Reading Files");
             foreach (String s in Config.getProperty("fileformats").Split(';', '|'))
             {
                 foreach (DirectoryInfo dir in Root)
                 {
+                    
                     FileInfo[] temp = dir.GetFiles(s, SearchOption.AllDirectories);
                     FileInfo[] temp2 = (FileInfo[])files.Clone();
                     files = new FileInfo[temp.Length + files.Length];
