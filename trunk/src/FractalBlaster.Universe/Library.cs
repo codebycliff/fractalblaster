@@ -229,6 +229,12 @@ namespace FractalBlaster.Universe
                 Load_From_Directories(this);
             }
 
+            //Serializations shouldn't exist during program execution,
+            //as it messes with the way you would expect the commands
+            //to work.
+            File.Delete("library.fbsl");
+
+
 
             /*
             FileInfo[] files = new FileInfo[0];
