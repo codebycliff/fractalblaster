@@ -79,20 +79,28 @@ namespace FractalBlaster.Core.Runtime {
         private static List<IPlugin> GetPluginsFromDirectory(DirectoryInfo dir) {
             List<IPlugin> plugins = new List<IPlugin>();
             foreach (FileInfo f in dir.GetFiles("*.dll")) {
-                try {
+                try
+                {
                     Assembly asm = Assembly.LoadFrom(f.FullName);
-                    foreach (Type t in asm.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IPlugin)))) {
-                        try {
+                    foreach (Type t in asm.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IPlugin))))
+                    {
+                        try
+                        {
                             IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
-                            
+
                             plugins.Add(plugin);
                         }
-                        catch (Exception e) {
+                        catch (Exception e)
+                        {
                         }
                     }
                 }
-                catch (BadImageFormatException ex) {
+                catch (BadImageFormatException ex)
+                {
                     //Console.WriteLine("\n\nFAILED: {0}\n\t{1}: {2}", file.FullName, ex.GetType(), ex.Message);
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
                 }
             }
             foreach (DirectoryInfo directory in dir.GetDirectories())

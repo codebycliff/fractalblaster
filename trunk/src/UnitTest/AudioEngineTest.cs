@@ -22,7 +22,7 @@ namespace UnitTest
         [TestMethod()]
         public void LoadTest()
         {
-            Assert.IsFalse(FamilyKernel.Instance.Context.Plugins.Equals(null));
+            Assert.IsFalse(FamilyKernel.Instance.Context.AllPlugins.Equals(null));
             MediaFile song = new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3");
             Assert.AreEqual(song.Metadata.Album, "Futurism");
             Assert.AreEqual(song.Metadata.Artist, "Muse");

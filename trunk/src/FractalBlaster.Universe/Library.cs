@@ -50,40 +50,6 @@ namespace FractalBlaster.Universe
                     rval[i] = (string)ArtistTable.Rows[i]["Artist"];
                 }
                 return rval;
-                /*
-                DataRow[] quer = ArtistTable.Select();
-                int validCounter = 0;
-                for (int i = 0; i < quer.Length; i++)
-                {
-                    if (quer[i] != null)
-                    {
-                        validCounter++;
-                    }
-                }
-                String[] dataout = new String[validCounter];
-                int dataoutCurLen = 0;
-
-                for (int i = 0; i < quer.Length; i += 1)
-                {
-                    if (quer[i] != null && !dataout.Contains(quer[i]["Artist"]))
-                    {
-                        try
-                        {
-                            dataout[dataoutCurLen] = (String)quer[i]["Artist"];
-                            dataoutCurLen++;
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Source);
-                            Console.WriteLine(e.Message);
-                            Console.WriteLine(e.StackTrace);
-                        }
-                    }
-                }
-
-                String[] rval = new String[dataoutCurLen];
-                Array.Copy(dataout, rval, dataoutCurLen);
-                */
             }
         }
 
@@ -104,34 +70,6 @@ namespace FractalBlaster.Universe
                     rval[i] = (string)AlbumTable.Rows[i]["Album"];
                 }
                 return rval;
-
-                /*
-                DataRow[] quer = AlbumTable.Select();
-                int validCounter = 0;
-                for (int i = 0; i < quer.Length; i++)
-                {
-                    if (quer[i] != null)
-                    {
-                        validCounter++;
-                    }
-                }
-                String[] dataout = new String[validCounter];
-                int dataoutCurLen = 0;
-
-                for (int i = 0; i < quer.Length; i += 1)
-                {
-                    if (quer[i] != null && !dataout.Contains(quer[i]["Album"]))
-                    {
-                        dataout[dataoutCurLen] = (String)quer[i]["Album"];
-                        dataoutCurLen++;
-                    }
-                }
-
-                String[] rval = new String[dataoutCurLen];
-                Array.Copy(dataout, rval, dataoutCurLen);
-
-                return rval;
-                 */
             }
         }
 
@@ -216,7 +154,6 @@ namespace FractalBlaster.Universe
             MediaPaths.Clear();
             MediaCollection.Clear();
 
-            
             //If a library file exists use it, otherwise
             //reload from current directory information
 
@@ -233,81 +170,6 @@ namespace FractalBlaster.Universe
             //as it messes with the way you would expect the commands
             //to work.
             File.Delete("library.fbsl");
-
-
-
-            /*
-            FileInfo[] files = new FileInfo[0];
-            Console.WriteLine("Reading Files");
-            foreach (String s in Config.GetProperty("fileformats").Split(';', '|'))
-            {
-                foreach (DirectoryInfo dir in Root)
-                {
-                    
-                    FileInfo[] temp = dir.GetFiles(s, SearchOption.AllDirectories);
-                    FileInfo[] temp2 = (FileInfo[])files.Clone();
-                    files = new FileInfo[temp.Length + files.Length];
-                    Array.Copy(temp, files, temp.Length);
-                    Array.Copy(temp2, 0, files, temp.Length, temp2.Length);
-                }
-            }
-            Console.WriteLine("Scanning Files");
-            MediaPaths.Clear();
-            MediaCollection.Clear();
-            foreach (FileInfo file in files)
-            {
-                //if (!MediaPaths.Contains(file.FullName))
-                //{
-                    try
-                    {
-                        MediaFile media = file.CreateMediaFile();
-
-                        if (media != null)
-                        {
-                            String fullName = file.FullName;
-                            String artist = media.Metadata.Artist;
-                            String album = media.Metadata.Album;
-                            String title = media.Metadata.Title;
-
-                            int bitrate = media.Metadata.BitRate;
-                            int channel = media.Metadata.Channels;
-                            int samplerate = media.Metadata.SampleRate;
-                            int year = media.Metadata.Year;
-                            int track = media.Metadata.Track;
-
-                            TimeSpan duration = media.Metadata.Duration;
-
-                            DataRow dr = MediaCollection.NewRow();
-
-
-                            //Apostrophes mess with searching and sorting, so we just strip them out
-                            artist = artist.Replace("'", "");
-                            album = album.Replace("'", "");
-                            title = title.Replace("'", "");
-
-                            dr["FullName"] = fullName;
-                            dr["#"] = track;
-                            dr["Artist"] = artist;
-                            dr["Album"] = album;
-                            dr["Title"] = title;
-                            dr["BitRate"] = bitrate;
-                            dr["Channel"] = channel;
-                            dr["SampleRate"] = samplerate;
-                            dr["Year"] = year;
-                            dr["Duration"] = duration;
-                            dr["File"] = media;
-
-                            MediaCollection.Rows.Add(dr);
-                            MediaPaths.Add(file.FullName);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Error.WriteLine("Problem Opening MediaFile:\nException Type: {0}\nMessage:{1}", e.GetType().FullName, e.Message);
-                    }
-                }
-            //}
-             */
         }
 
         /// <summary>
@@ -319,7 +181,6 @@ namespace FractalBlaster.Universe
         {
             string searchExpression = "Artist = '" + artist + "'";
             return GetFiles(MediaCollection.Select(searchExpression));
-            //return this.SearchStrict("Artist", artist, "ASC");
         }
 
         /// <summary>
@@ -333,22 +194,6 @@ namespace FractalBlaster.Universe
             string searchExpression = "Artist = '" + artist + "' " +
                                       "AND Album = '" + album + "'";
             DataRow[] SongsbyArtist = MediaCollection.Select(searchExpression);
-            /*
-            DataRow[] validSongs = new DataRow[MediaCollection.Rows.Count];
-            int i = 0;
-            foreach (DataRow row in MediaCollection.Rows)
-            {
-                if (row["Artist"].Equals(artist) && row["Album"].Equals(album))
-                {
-                    validSongs[i] = row;
-                    i++;
-                }
-            }
-            DataRow[] SongsbyArtist = new DataRow[i];
-            for (int j = 0; j < i; j++)
-            {
-                SongsbyArtist[j] = validSongs[j];
-            }*/
 
             return this.GetFiles(SongsbyArtist);
 
@@ -448,18 +293,18 @@ namespace FractalBlaster.Universe
             LibraryPathsFileName = "LibraryPaths.fbp";
 
             // Designate the schema to be used for the datatable
-            schema.Add("FullName",      typeof(String));
-            schema.Add("#",             typeof(Int32));
-            schema.Add("Artist",        typeof(String));
-            schema.Add("Album",         typeof(String));
-            schema.Add("BitRate",       typeof(Int32));
-            schema.Add("Channel",       typeof(Int32));
-            schema.Add("Codec",         typeof(String));
-            schema.Add("Duration",      typeof(TimeSpan));
-            schema.Add("SampleRate",    typeof(Int32));
-            schema.Add("Title",         typeof(String));
-            schema.Add("Year",          typeof(Int32));
-            schema.Add("File",          typeof(MediaFile));
+            schema.Add("FullName", typeof(String));
+            schema.Add("#", typeof(Int32));
+            schema.Add("Artist", typeof(String));
+            schema.Add("Album", typeof(String));
+            schema.Add("BitRate", typeof(Int32));
+            schema.Add("Channel", typeof(Int32));
+            schema.Add("Codec", typeof(String));
+            schema.Add("Duration", typeof(TimeSpan));
+            schema.Add("SampleRate", typeof(Int32));
+            schema.Add("Title", typeof(String));
+            schema.Add("Year", typeof(Int32));
+            schema.Add("File", typeof(MediaFile));
         }
 
         public static String LibraryPathsFileName { get; private set; }
@@ -484,12 +329,10 @@ namespace FractalBlaster.Universe
                 }
             }
             Console.WriteLine("Scanning Files");
-            
+
 
             foreach (FileInfo file in files)
             {
-                //if (!MediaPaths.Contains(file.FullName))
-                //{
                 try
                 {
                     MediaFile media = file.CreateMediaFile();
@@ -541,7 +384,6 @@ namespace FractalBlaster.Universe
                     Console.Error.WriteLine("Problem Opening MediaFile:\nException Type: {0}\nMessage:{1}", e.GetType().FullName, e.Message);
                 }
             }
-            //}
         }
 
         private static void Load_From_Save(Library library)
@@ -618,95 +460,6 @@ namespace FractalBlaster.Universe
             Library library = new Library(defaultDirectory);
 
             return library;
-            /*
-            try
-            {
-                using (StreamReader reader = new StreamReader(File.OpenRead(LibraryPathsFileName)))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        if (Directory.Exists(line))
-                        {
-                            library.Root.Add(new DirectoryInfo(line));
-                        }
-                    }
-                }
-
-                if (!File.Exists("library.fbsl"))
-                {
-                    Stream wtf = File.Create("library.fbsl");
-                    wtf.Close();
-                }
-                else
-                    using (StreamReader reader = new StreamReader(File.OpenRead("library.fbsl")))
-                    {
-                        string line;
-                        Dictionary<String, Object> values = new Dictionary<String, Object>();
-
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            DataRow row = library.MediaCollection.NewRow();
-                            Metadata metadata = new Metadata();
-
-                            values["FullName"]  = line;
-                            values["#"]         = Int32.Parse(reader.ReadLine());
-                            values["Artist"]    = reader.ReadLine();
-                            values["Album"]     = reader.ReadLine();
-                            values["BitRate"]   = Int32.Parse(reader.ReadLine());
-                            values["Channel"]   = Int32.Parse(reader.ReadLine());
-                            values["Codec"]     = reader.ReadLine();
-                            values["Duration"]  = TimeSpan.Parse(reader.ReadLine());
-                            values["SampleRate"]= Int32.Parse(reader.ReadLine());
-                            values["Title"]     = reader.ReadLine();
-                            values["Year"]      = Int32.Parse(reader.ReadLine());
-
-
-                            foreach (String column_name in schema.Keys)
-                            {
-                                if (!column_name.Equals("File"))
-                                {
-                                    row[column_name] = values[column_name];
-                                    metadata[column_name] = MediaProperty.Create(column_name, values[column_name], schema[column_name]);
-                                }
-                            }
-                            
-                            
-                            row["FullName"] = fullname;
-                            row["#"] = track;
-                            row["Artist"] = artist;
-                            row["Album"] = album;
-                            row["Title"] = title;
-                            row["BitRate"] = bitrate;
-                            row["Channel"] = channels;
-                            row["Codec"] = codec;
-                            row["SampleRate"] = samplerate;
-                            row["Year"] = year;
-                            row["Duration"] = duration;
-                            
-                            metadata["Artist"] = MediaProperty.Create("Artist", artist, typeof(String));
-                            metadata["Album"] = MediaProperty.Create("Album", album, typeof(string));
-                            metadata["Title"] = MediaProperty.Create("Title", title, typeof(string));
-                            metadata["BitRate"] = MediaProperty.Create("BitRate", bitrate, typeof(int));
-                            metadata["Channel"] = MediaProperty.Create("Channel", channels, typeof(int));
-                            metadata["Duration"] = MediaProperty.Create("Duration", duration, typeof(TimeSpan));
-                            metadata["SampleRate"] = MediaProperty.Create("SampleRate", samplerate, typeof(int));
-                            metadata["Year"] = MediaProperty.Create("Year", year, typeof(int));
-                            
-
-                            row["File"] = new MediaFile(values["FullName"].ToString(), metadata);
-
-                            library.MediaPaths.Add(values["FullName"].ToString());
-                            library.MediaCollection.Rows.Add(row);
-                        }
-                    }
-
-            }
-            catch (Exception e)
-            {
-            }
-
-            */
         }
 
         /// <summary>
@@ -725,28 +478,17 @@ namespace FractalBlaster.Universe
 
             using (StreamWriter write = new StreamWriter(File.OpenWrite("library.fbsl")))
             {
-                foreach (DataRow row in MediaCollection.Rows)
+                for (int i = 0; i < MediaCollection.Rows.Count; i++)
                 {
-                    foreach (String column_name in schema.Keys)
+                    DataRow row = MediaCollection.Rows[i];
+                    for (int j = 0; j < schema.Keys.Count; j++)
                     {
+                        String column_name = schema.Keys.ElementAt(j);
                         // For every entry in the table write out all data according to the schema, except for the actual file.
                         if (!column_name.Equals("File")) { write.WriteLine(row[column_name]); }
                     }
-                    /*
-                    write.WriteLine(row["FullName"]);
-                    write.WriteLine(row["Artist"]);
-                    write.WriteLine(row["Album"]);
-                    write.WriteLine(row["Title"]);
-                    write.WriteLine(row["BitRate"]);
-                    write.WriteLine(row["Channel"]);
-                    write.WriteLine(row["SampleRate"]);
-                    write.WriteLine(row["Year"]);
-                    write.WriteLine(row["Duration"]);
-                    */
                 }
-
             }
-
         }
 
         #endregion
@@ -771,66 +513,20 @@ namespace FractalBlaster.Universe
         private DataTable createTable()
         {
             DataTable output = new DataTable();
-            
-            try                 { output.DefaultView.Sort = "FullName"; }
+
+            try { output.DefaultView.Sort = "FullName"; }
             catch (Exception e) { }
 
             DataColumn toAdd;
 
-            foreach(String column_name in schema.Keys)
+            foreach (String column_name in schema.Keys)
             {
                 toAdd = new DataColumn(column_name, schema[column_name]);
 
-                if(column_name.Equals("FullName"))  { toAdd.Unique = true; }
+                if (column_name.Equals("FullName")) { toAdd.Unique = true; }
 
                 output.Columns.Add(toAdd);
             }
-
-            /*
-            toAdd = new DataColumn("FullName", typeof(String));
-            toAdd.Unique = true;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Artist", typeof(String));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Album", typeof(String));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("BitRate", typeof(Int32));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Channel", typeof(Int32));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Codec", typeof(String));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Duration", typeof(TimeSpan));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("SampleRate", typeof(Int32));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Title", typeof(String));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("Year", typeof(Int32));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-
-            toAdd = new DataColumn("File", typeof(MediaFile));
-            toAdd.Unique = false;
-            output.Columns.Add(toAdd);
-            */
 
             output.CaseSensitive = true;
             output.EndInit();
@@ -846,10 +542,6 @@ namespace FractalBlaster.Universe
             for (int i = 0; i < rows.Length; i += 1)
             {
                 dataout[i] = (MediaFile)rows[i]["File"];
-                //if (rows[i] != null && rows[i]["File"] != null && !System.DBNull.Value.Equals(rows[i]["File"]))
-                //{
-                //    dataout[i] = (MediaFile)rows[i]["File"];
-                //}
             }
 
             return dataout;

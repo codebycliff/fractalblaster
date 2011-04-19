@@ -36,6 +36,16 @@ namespace FractalBlaster.Core.UI {
             this.mMediaTreeView.KeyDown += new KeyEventHandler(mMediaTreeView_KeyDown);
             this.HandleDestroyed += new EventHandler(LibraryCollectionView_HandleDestroyed);
 
+            mConfigureButton.Click += (sender, args) =>
+            {
+                LibraryConfigurationDialog form = ConfigurationDialog;
+                form.Saved += (sender2, args2) =>
+                {
+                    this.RefreshItems(sender2, args2);
+                };
+                form.ShowDialog(this);
+            };
+
             InitializeTreeView();
         }
 
@@ -70,7 +80,7 @@ namespace FractalBlaster.Core.UI {
         /// <summary>
         /// Gets the configuration dialog for this Library collection view.
         /// </summary>
-        public override Form ConfigurationDialog { get { return new LibraryConfigurationDialog(Library); } }
+        public LibraryConfigurationDialog ConfigurationDialog { get { return new LibraryConfigurationDialog(Library); } }
 
         /// <summary>
         /// Event handler that refreshes the actual collection view.
@@ -169,11 +179,12 @@ namespace FractalBlaster.Core.UI {
             mMediaTreeView.Nodes[0].Nodes.Add(n);
         }
 
+        
         /// <summary>
         /// Private helper that initializes the tree view.
         /// </summary>
         private void InitializeTreeView() {
-            TreeNode root = new TreeNode("Library", 3, 3);
+            TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
             foreach (String artist in Library.Artists) {
                 TreeNode artistNode = new TreeNode(artist);
@@ -181,7 +192,7 @@ namespace FractalBlaster.Core.UI {
                 Library.AlbumCollection albums = Library[artist];
                 foreach (Library.Album album in albums) {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
-                    albumNode.Tag = album.ToArray();// Library.MediaForAlbum(artist, album);
+                    albumNode.Tag = album.ToArray();
                     foreach (MediaFile file in album) {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
                         fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
@@ -198,21 +209,19 @@ namespace FractalBlaster.Core.UI {
         /// Refreshes the items in threaded fashion.
         /// </summary>
         private void RefreshItems_Threaded() {
+            TreeNode root = new TreeNode("Library Collection", 3, 3);
+            
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Scanning Library Directory..." });
             Library.Refresh();
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding music to library..." });
-            TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
-            mMediaTreeView.Invoke((Action)(() => { mMediaTreeView.Nodes.Add(root); }));
             foreach (String artist in Library.Artists) {
-                mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding " + artist });
-
                 TreeNode artistNode = new TreeNode(artist, 0, 0);
                 artistNode.Tag = Library.MediaForArtist(artist);
                 Library.AlbumCollection albums = Library[artist];
                 foreach (Library.Album album in albums) {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
-                    albumNode.Tag = album.ToArray();//Library.MediaForAlbum(artist, album);
+                    albumNode.Tag = album.ToArray();
                     foreach (MediaFile file in album) {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
                         fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
@@ -220,9 +229,9 @@ namespace FractalBlaster.Core.UI {
                     }
                     artistNode.Nodes.Add(albumNode);
                 }
-                mMediaTreeView.Invoke(new Add(AddNode), artistNode);
-                mMediaTreeView.Invoke(new MethodInvoker(Refresh));
+                root.Nodes.Add(artistNode);
             }
+            mMediaTreeView.Invoke((Action)(() => { mMediaTreeView.Nodes.Add(root); }));
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "" });
             mMediaTreeView.Invoke(new MethodInvoker(EnableRefreshButton));
         }

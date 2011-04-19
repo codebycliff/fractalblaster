@@ -149,7 +149,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             EffectParameterCollection parameters = combine.Parameters;
             parameters["LastFrameIntensity"].SetValue(settings.LastFrameIntensity);
             parameters["SceneIntensity"].SetValue(settings.SceneIntensity);
-            //parameters["threshold"].SetValue(0.4f);
+            //parameters["threshold"].SetValue(0.015f);
 
             //Set render target to the currentFrame
             device.SetRenderTarget(destination);

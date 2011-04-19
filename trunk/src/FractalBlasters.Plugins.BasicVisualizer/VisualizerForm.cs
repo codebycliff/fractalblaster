@@ -36,6 +36,12 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         {
             _owner = owner;
             InitializeComponent();
+            this.Shown += new EventHandler(VisualizerForm_Shown);
+        }
+
+        private void VisualizerForm_Shown(object sender, EventArgs e)
+        {
+            this.ShowInTaskbar = true;
         }
 
         /// <summary>

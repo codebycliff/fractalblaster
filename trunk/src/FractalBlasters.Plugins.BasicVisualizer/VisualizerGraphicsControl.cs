@@ -158,7 +158,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
             _trails.LoadContent(_content);
             _trails.Settings = TrailsSettings.PresetSettings[0];
             _trails.Settings.LastFrameIntensity = 0.9f;
-            _trails.Settings.SceneIntensity = 0.3f;
+            _trails.Settings.SceneIntensity = 0.45f;
 
             //Create our render targets.
             _target = new RenderTarget2D(GraphicsDevice,

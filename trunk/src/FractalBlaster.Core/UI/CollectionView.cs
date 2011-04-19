@@ -68,15 +68,6 @@ namespace FractalBlaster.Core.UI {
 
             // If the view has configuration...
             if (HasConfiguration) {
-                mConfigureButton.Click += (sender, args) => {
-                    Form form = ConfigurationDialog;
-
-                    form.FormClosed += (sender2, args2) =>
-                        {
-                            this.RefreshItems(sender2, args2);
-                        };
-                    form.ShowDialog(this);
-                };
             }
             else {
                 mConfigureButton.Enabled = false;

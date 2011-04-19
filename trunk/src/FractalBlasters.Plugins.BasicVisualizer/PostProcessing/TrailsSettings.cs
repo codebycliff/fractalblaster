@@ -48,7 +48,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         public static TrailsSettings[] PresetSettings =
         {
             //                Name           last  scene
-            new TrailsSettings("Best",       0.9f, 0.55f),
+            new TrailsSettings("Best",       1.0f, 0.75f),
             new TrailsSettings("Default",    0.3f, 1.0f),
             new TrailsSettings("Soft",       1,     1),
             new TrailsSettings("Desaturated",2,     1),
