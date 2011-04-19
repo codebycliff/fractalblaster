@@ -170,7 +170,7 @@ namespace FractalBlaster.Core.UI {
         private void SetupCollectionTabs() {
             Library lib = Library.Load(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)));
             Library = lib;
-            LibraryCollectionView libraryView = new LibraryCollectionView(lib);
+            libraryView = new LibraryCollectionView(lib);
             libraryView.Dock = DockStyle.Fill;
             mLibraryCollectionTabPage.Controls.Add(libraryView);
             mLibraryCollectionTabPage.Text = libraryView.Label;
@@ -305,6 +305,8 @@ namespace FractalBlaster.Core.UI {
         /// The library.
         /// </value>
         private Library Library { get; set; }
+
+        private LibraryCollectionView libraryView { get; set; }
 
         /// <summary>
         /// The application's context it was initialized with.

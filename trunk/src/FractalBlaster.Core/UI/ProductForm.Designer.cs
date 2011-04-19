@@ -174,6 +174,7 @@
             this.mStandardToolBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
             this.mStandardToolBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseMove);
             this.mStandardToolBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseUp);
+            this.Shown += new System.EventHandler(this.ProductForm_Shown);
             // 
             // mOpenToolBarDropDown
             // 

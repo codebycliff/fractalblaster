@@ -460,6 +460,19 @@ namespace FractalBlaster.Core.UI {
         }
 
         #endregion
-    
+
+        #region [Product Form Shown Handler]
+
+        /// <summary>
+        /// Event handler to initialize items in the library on application start.
+        /// </summary>
+        /// <param name="sender">The source of the event</param>
+        /// <param name="e">The instance containing the event data</param>
+        private void ProductForm_Shown(object sender, EventArgs e)
+        {
+            libraryView.RefreshItems(sender, e);
+        }
+
+        #endregion
     }
 }
