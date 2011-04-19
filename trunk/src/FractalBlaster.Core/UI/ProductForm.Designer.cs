@@ -32,7 +32,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.mConfigureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mViewsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +80,7 @@
             this.mEffectsMenu});
             this.mMenuStrip.Location = new System.Drawing.Point(0, 27);
             this.mMenuStrip.Name = "mMenuStrip";
-            this.mMenuStrip.Size = new System.Drawing.Size(148, 24);
+            this.mMenuStrip.Size = new System.Drawing.Size(240, 24);
             this.mMenuStrip.TabIndex = 0;
             this.mMenuStrip.Text = "menuStrip1";
             this.mMenuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ProductForm_MouseDown);
@@ -96,7 +95,6 @@
             this.toolStripSeparator2,
             this.mSaveMenuItem,
             this.toolStripSeparator3,
-            this.mConfigureMenuItem,
             this.toolStripSeparator1,
             this.mExitMenuItem});
             this.mFileMenu.Name = "mFileMenu";
@@ -106,7 +104,7 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFileToolStripMenuItem.Text = "Open File";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.mOpenToolBarDropDown_Click);
             // 
@@ -114,43 +112,36 @@
             // 
             this.mNewPlaylistMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_new;
             this.mNewPlaylistMenuItem.Name = "mNewPlaylistMenuItem";
-            this.mNewPlaylistMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.mNewPlaylistMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mNewPlaylistMenuItem.Text = "New Playlist";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // mSaveMenuItem
             // 
             this.mSaveMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.document_save;
             this.mSaveMenuItem.Name = "mSaveMenuItem";
-            this.mSaveMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.mSaveMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mSaveMenuItem.Text = "Save";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(135, 6);
-            // 
-            // mConfigureMenuItem
-            // 
-            this.mConfigureMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.configure;
-            this.mConfigureMenuItem.Name = "mConfigureMenuItem";
-            this.mConfigureMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.mConfigureMenuItem.Text = "Settings";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // mExitMenuItem
             // 
             this.mExitMenuItem.Image = global::FractalBlaster.Core.Properties.Resources.application_exit;
             this.mExitMenuItem.Name = "mExitMenuItem";
-            this.mExitMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.mExitMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mExitMenuItem.Text = "Exit";
             this.mExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
@@ -471,7 +462,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStrip mStandardToolBar;
         private System.Windows.Forms.ToolStripButton mExitToolBarButton;
-        private System.Windows.Forms.ToolStripMenuItem mConfigureMenuItem;
         private System.Windows.Forms.ToolStripButton mSaveToolBarButton;
         private System.Windows.Forms.ToolStripMenuItem mEffectsMenu;
         private System.Windows.Forms.ToolStripButton mNewToolBarButton;
