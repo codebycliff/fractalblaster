@@ -39,29 +39,6 @@ namespace UnitTest
 
             Assert.IsTrue(target.IsPaused);
 
-            target.Stop();
-            // Stopped -> Playing -> Stopped -> Pause (Expecting Stopped)
-            target.Play();
-            target.Stop();
-            target.Pause();
-
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
-
-            target.Stop();
-            // Stopped -> Playing -> Paused -> Pause (Excepting Playing)
-            target.Play();
-            target.Pause();
-            target.Pause();
-
-            Assert.IsTrue(target.IsPlaying);
-
-            target.Stop();
-            // Stopped -> Pause (Expecting Stopped)
-            target.Stop();
-            target.Pause();
-
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
-
         }
 
         /// <summary>
@@ -126,19 +103,11 @@ namespace UnitTest
             Assert.IsTrue(target.IsPlaying);
 
             target.Stop();
-            // Stopped -> Playing -> Pause -> Pause     (Expecting Playing)
-            target.Play();
-            target.Pause();
-            target.Pause();
-
-            Assert.IsTrue(target.IsPlaying);
-
-            target.Stop();
             // Stopped -> Pause -> Pause (Expecting stopped)
             target.Pause();
             target.Pause();
 
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
+            Assert.IsTrue(target.IsPlaying != true);
 
 
         }
@@ -154,32 +123,28 @@ namespace UnitTest
             FamilyKernel.Instance.Context.Engine.Load(new MediaFile(Directory.GetCurrentDirectory() + @"\Popcorn.mp3"));
 
             // Inital state = stopped 
-
             target.Stop();
-            //Stopped -> pause (Expect stopped)
-            target.Pause();
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
 
 
             target.Stop();
             //Stopped -> play -> stop (Expect stopped)
             target.Play();
             target.Stop();
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
+            Assert.IsTrue(target.IsPlaying != true);
 
             target.Stop();
             //Stopped -> pause -> play -> stop (Expect stopped)
             target.Pause();
             target.Play();
             target.Stop();
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
+            Assert.IsTrue(target.IsPlaying != true);
 
             target.Stop();
             //Stopped -> play -> pause -> stop (Expecting stopped)
             target.Play();
             target.Pause();
             target.Stop();
-            Assert.IsTrue(target.IsPaused != true && target.IsPlaying != true);
+            Assert.IsTrue(target.IsPlaying != true);
         }
     }
 }
