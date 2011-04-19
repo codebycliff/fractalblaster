@@ -11,60 +11,84 @@ using FractalBlaster.Universe;
 using FractalBlaster.Core.Runtime;
 using System.Timers;
 
-namespace FractalBlaster.Core.UI
-{
-    public partial class SeekBar : UserControl
-    {
-        int mTime;
-        int mTotalTime;
-        IInputPlugin mInput;
-        IOutputPlugin mOutput;
-        IPlaybackTimer mPlaybackTimer;
+namespace FractalBlaster.Core.UI {
 
-        public SeekBar()
-        {
-            mTime = 0;
+    /// <remarks>
+    /// User control to seek the position of the audio being played.
+    /// </remarks>
+    public partial class SeekBar : UserControl {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SeekBar"/> class.
+        /// </summary>
+        public SeekBar() {
+            Time = 0;
+            IsMouseDown = false;
             InitializeComponent();
+
         }
+        
+        #region [ Properties ]
 
-        public int time
-        {
-            set
-            {
-                mTime = value;
-            }
-        }
+        /// <summary>
+        /// Sets the user interface which represented as a 
+        /// <see cref="ProductForm"/> instance.
+        /// </summary>
+        /// <value>
+        /// The product form user interface.
+        /// </value>
+        public ProductForm UI { set; private get; }
 
-        public ProductForm UI
-        {
-            set;
-            private get;
-        }
+        /// <summary>
+        /// Gets or sets the current time position.
+        /// </summary>
+        /// <value>
+        /// The current time.
+        /// </value>
+        public Int32 Time { get; set; }
 
-        public int totalTime
-        {
-            set { mTotalTime = value; }
-        }
+        /// <summary>
+        /// Gets or sets the total time.
+        /// </summary>
+        /// <value>
+        /// The total time.
+        /// </value>
+        public Int32 TotalTime { get; set; }
 
-        public IInputPlugin Input
-        {
-            set { mInput = value; }
-        }
+        /// <summary>
+        /// Gets or sets the input plugin responsible for inputting the audio.
+        /// </summary>
+        /// <value>
+        /// The input plugin.
+        /// </value>
+        public IInputPlugin Input { get; set; }
 
-        public IOutputPlugin Output
-        {
-            set { mOutput = value; }
-        }
+        /// <summary>
+        /// Gets or sets the output plugin responsible for outputting the audio.
+        /// </summary>
+        /// <value>
+        /// The output plugin.
+        /// </value>
+        public IOutputPlugin Output { get; set; }
 
-        public IPlaybackTimer PlaybackTimer
-        {
-            set { mPlaybackTimer = value; }
-            get { return mPlaybackTimer; }
-        }
+        /// <summary>
+        /// Gets or sets the playback timer for the audio file.
+        /// </summary>
+        /// <value>
+        /// The playback timer.
+        /// </value>
+        public IPlaybackTimer PlaybackTimer { get; set; }
+        
+        #endregion    
+        
+        #region [ Private ]
 
-
-        private void SeekBar_Paint(object sender, PaintEventArgs e)
-        {
+        /// <summary>
+        /// Handles the Paint event of the SeekBar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
+        private void SeekBar_Paint(object sender, PaintEventArgs e) {
             GraphicsPath seekBorder = new GraphicsPath();
             Rectangle seekBarRect = new Rectangle(1, 5, 200, 10);
             seekBorder.AddRectangle(seekBarRect);
@@ -73,73 +97,95 @@ namespace FractalBlaster.Core.UI
             e.Graphics.DrawPath(Pens.Black, seekBorder);
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (mTotalTime != 0 && mTime < mTotalTime && mTime >= 0)
-            {
-                Rectangle seekRectangle = new Rectangle((mTime * 200 / mTotalTime) - 6, 3, 14, 14);
+            if (TotalTime != 0 && Time < TotalTime && Time >= 0) {
+                Rectangle seekRectangle = new Rectangle((Time * 200 / TotalTime) - 6, 3, 14, 14);
                 e.Graphics.FillEllipse(Brushes.DarkRed, seekRectangle);
 
-                if (mouseDown)
-                {
-                    Rectangle newSeekRect = new Rectangle(mouseX - 6, 3, 14, 14);
+                if (IsMouseDown) {
+                    Rectangle newSeekRect = new Rectangle(MouseX - 6, 3, 14, 14);
                     e.Graphics.FillEllipse(Brushes.IndianRed, newSeekRect);
                 }
             }
 
-            if (mTime >= mTotalTime)
-            {
-                PlaybackTimer.timerStop();
-                mTime = 0;
+            if (Time >= TotalTime) {
+                PlaybackTimer.Timer.Stop();
+                Time = 0;
 
                 // Shift to next track if available
                 UI.SkipMediaForward(this, new EventArgs());
             }
-            if (mTime < 0)
-            {
-                mTime = 0;
+            if (Time < 0) {
+                Time = 0;
             }
-            
+
             label1.Text = String.Format("{0:d2}:{1:d2}/{2:d2}:{3:d2}",
-                mTime / 60, mTime % 60, mTotalTime / 60, mTotalTime % 60);
+                Time / 60, Time % 60, TotalTime / 60, TotalTime % 60);
         }
 
-        bool mouseDown = false;
-        int mouseX;
-
-        private void SeekBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (FamilyKernel.Instance.Context.Engine.IsMediaLoaded)
-            {
-                mouseDown = true;
-                mouseX = e.X;
+        /// <summary>
+        /// Handles the MouseDown event of the SeekBar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void SeekBar_MouseDown(object sender, MouseEventArgs e) {
+            if (FamilyKernel.Instance.Context.Engine.IsMediaLoaded) {
+                IsMouseDown = true;
+                MouseX = e.X;
             }
         }
 
-        private void SeekBar_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (mouseDown == true)
-            {
+        /// <summary>
+        /// Handles the MouseUp event of the SeekBar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void SeekBar_MouseUp(object sender, MouseEventArgs e) {
+            if (IsMouseDown == true) {
                 if (e.X < 0)
-                    mouseX = 0;
+                    MouseX = 0;
                 if (e.X > 200)
-                    mouseX = 200;
-                mouseDown = false;
-                Debug.printline("seek(" + (mouseX * mTotalTime / 200).ToString() + ")");
-                mOutput.Stop();
-                mInput.Seek(mouseX * mTotalTime / 200);
-                mOutput.Play();
-                mPlaybackTimer.currentTime = mouseX * mTotalTime / 200;
+                    MouseX = 200;
+                IsMouseDown = false;
+                Debug.printline("seek(" + (MouseX * TotalTime / 200).ToString() + ")");
+                Output.Stop();
+                Input.Seek(MouseX * TotalTime / 200);
+                Output.Play();
+                PlaybackTimer.CurrentTime = MouseX * TotalTime / 200;
             }
         }
 
-        private void SeekBar_MouseMove(object sender, MouseEventArgs e)
-        {
+        /// <summary>
+        /// Handles the MouseMove event of the SeekBar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void SeekBar_MouseMove(object sender, MouseEventArgs e) {
             this.Invalidate();
-            mouseX = e.X;
+            MouseX = e.X;
             if (e.X < 0)
-                mouseX = 0;
+                MouseX = 0;
             if (e.X > 200)
-                mouseX = 200;
-            //mouseX = e.X;
+                MouseX = 200;
+            //MouseX = e.X;
         }
+        
+        /// <summary>
+        /// Private property indicating whether the mouse is currently down.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is mouse down; otherwise, <c>false</c>.
+        /// </value>
+        private Boolean IsMouseDown { get; set; }
+
+        /// <summary>
+        /// Private property containing the x-coordination of the mouse.
+        /// </summary>
+        /// <value>
+        /// The mouse X.
+        /// </value>
+        private Int32 MouseX { get; set; }
+
+        #endregion
+
     }
 }

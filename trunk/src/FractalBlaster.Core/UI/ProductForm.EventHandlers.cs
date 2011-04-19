@@ -11,16 +11,24 @@ using FractalBlaster.Core.Runtime;
 using System.IO;
 using System.Drawing.Drawing2D;
 
-namespace FractalBlaster.Core.UI
-{
-    public partial class ProductForm : Form
-    {
-        #region Media Playback Control
-        private void PlayMedia(object sender, EventArgs args)
-        {
+namespace FractalBlaster.Core.UI {
+
+    /// <remarks>
+    /// This partial class contains event handlers and other private 
+    /// members for the <see cref="ProductForm"/> class.
+    /// </remarks>
+    public partial class ProductForm : Form {
+        
+        #region [ Media Playback Control Event Handlers ]
+
+        /// <summary>
+        /// Event handler that plays a media file.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void PlayMedia(object sender, EventArgs args) {
             Playlist pl = PlayingPlaylistControl.Playlist;
-            if (pl.SelectedIndex >= pl.Items.Count())
-            {
+            if (pl.SelectedIndex >= pl.Items.Count()) {
                 return;
             }
 
@@ -31,206 +39,232 @@ namespace FractalBlaster.Core.UI
             media.Metadata["Title"].Value.ToString());
 
             Engine.OutputPlugin.Stop();
-            if (Engine.IsMediaLoaded)
-            {
-                if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName))
-                {
+            if (Engine.IsMediaLoaded) {
+                if (!Engine.CurrentMedia.Info.FullName.Equals(media.Info.FullName)) {
                     Engine.Unload();
                     Engine.Load(media);
                 }
             }
-            else
-            {
+            else {
                 Engine.Load(media);
             }
             Engine.OutputPlugin.Play();
         }
 
-        private void PauseMedia(object sender, EventArgs args)
-        {
+        /// <summary>
+        /// Pauses the media.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void PauseMedia(object sender, EventArgs args) {
             Engine.OutputPlugin.Pause();
         }
 
-        private void StopMedia(object sender, EventArgs args)
-        {
+        /// <summary>
+        /// Stops the media.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void StopMedia(object sender, EventArgs args) {
             Engine.OutputPlugin.Stop();
         }
 
-        public void SkipMediaForward(object sender, EventArgs args)
-        {
-            if (PlayingPlaylistControl != null)
-            {
-                if (PlayingPlaylistControl.Playlist.SelectedIndex + 1 >= PlayingPlaylistControl.Playlist.Count())
-                {
+        /// <summary>
+        /// Skips the media forward.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        public void SkipMediaForward(object sender, EventArgs args) {
+            if (PlayingPlaylistControl != null) {
+                if (PlayingPlaylistControl.Playlist.SelectedIndex + 1 >= PlayingPlaylistControl.Playlist.Count()) {
                     return;
                 }
-                else if (Engine.IsMediaLoaded)
-                {
+                else if (Engine.IsMediaLoaded) {
                     PlayingPlaylistControl.Playlist.RequestMediaAt(++PlayingPlaylistControl.Playlist.SelectedIndex);
                 }
             }
         }
 
-        private void SkipMediaBackward(object sender, EventArgs args)
-        {
-            if (PlayingPlaylistControl != null)
-            {
-                if (PlayingPlaylistControl.Playlist.SelectedIndex == 0)
-                {
+        /// <summary>
+        /// Skips the media backward.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void SkipMediaBackward(object sender, EventArgs args) {
+            if (PlayingPlaylistControl != null) {
+                if (PlayingPlaylistControl.Playlist.SelectedIndex == 0) {
                     return;
                 }
-                else if (Engine.IsMediaLoaded)
-                {
+                else if (Engine.IsMediaLoaded) {
                     PlayingPlaylistControl.Playlist.RequestMediaAt(--PlayingPlaylistControl.Playlist.SelectedIndex);
                 }
             }
         }
 
-        private void mPlayToolBarButton_Click(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Handles the Click event of the mPlayToolBarButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void mPlayToolBarButton_Click(object sender, EventArgs e) {
             PlayingPlaylistControl = CurrentPlaylistControl;
             pc_SongPlayed(PlayingPlaylistControl, PlayingPlaylistControl.SelectedIndex);
         }
 
         #endregion
 
-        #region Playlist Manipulation
+        #region [ Playlist Manipulation Event Handlers ]
 
-        private void OpenPlaylist(object sender, EventArgs args)
-        {
+        /// <summary>
+        /// Opens the playlist.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void OpenPlaylist(object sender, EventArgs args) {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = GetFilterString();
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
+            if (ofd.ShowDialog() == DialogResult.OK) {
                 FileInfo f = new FileInfo(ofd.FileName);
-                try
-                {
+                try {
                     IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
                     Playlist blarg = plugin.Read(f.FullName);
 
-                    foreach (MediaFile mediaFile in blarg)
-                    {
+                    foreach (MediaFile mediaFile in blarg) {
                         CurrentPlaylistControl.Playlist.AddItem(mediaFile);
                     }
                 }
-                catch (KeyNotFoundException)
-                {
+                catch (KeyNotFoundException) {
                     Console.WriteLine("KeyNotFoundException");
                 }
             }
         }
 
-        private void SavePlaylist(object sender, EventArgs args)
-        {
+        /// <summary>
+        /// Saves the playlist.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void SavePlaylist(object sender, EventArgs args) {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = GetFilterString();
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
+            if (sfd.ShowDialog() == DialogResult.OK) {
                 FileInfo f = new FileInfo(sfd.FileName);
-                try
-                {
+                try {
                     IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
                     plugin.Write(CurrentPlaylistControl.Playlist, f.FullName);
                 }
-                catch (KeyNotFoundException e)
-                {
+                catch (KeyNotFoundException e) {
 
                 }
             }
         }
 
-        private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Handles the Click event of the addFileToPlaylistToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
             ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string s in ofd.FileNames)
-                {
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                foreach (string s in ofd.FileNames) {
                     CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
                 }
 
             }
         }
 
-        void mOpenToolBarDropDown_Click(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Handles the Click event of the mOpenToolBarDropDown control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void mOpenToolBarDropDown_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
             ofd.Filter = GetAllFilesFilterString();
 
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string filename in ofd.FileNames)
-                {
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                foreach (string filename in ofd.FileNames) {
                     FileInfo f = new FileInfo(filename);
                     IPlaylistPlugin playlist_plugin;
-                    if (PlaylistPluginMap.TryGetValue(f.Extension, out playlist_plugin))
-                    {
+                    if (PlaylistPluginMap.TryGetValue(f.Extension, out playlist_plugin)) {
                         IPlaylistPlugin plugin = PlaylistPluginMap[f.Extension];
                         Playlist blarg = plugin.Read(f.FullName);
 
-                        foreach (MediaFile mediaFile in blarg)
-                        {
+                        foreach (MediaFile mediaFile in blarg) {
                             CurrentPlaylistControl.Playlist.AddItem(mediaFile);
                         }
                     }
-                    else
-                    {
-                        try
-                        {
+                    else {
+                        try {
                             MediaFile media = new MediaFile(f.FullName);
                             CurrentPlaylistControl.Playlist.AddItem(media);
                         }
-                        catch
-                        {
+                        catch {
                         }
                     }
                 }
             }
         }
 
-        void pc_SongPlayed(PlaylistControl sender, int songIndex)
-        {
+        /// <summary>
+        /// Handles the song played event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="songIndex">Index of the song.</param>
+        void pc_SongPlayed(PlaylistControl sender, int songIndex) {
             PlayingPlaylistControl = sender;
             sender.Playlist.RequestMediaAt(songIndex);
         }
 
         #endregion
 
-        #region Application Exit
-        private void ExitApplication(object sender, EventArgs args)
-        {
-            foreach (Form f in PluginViews)
-            {
+        #region [ Application Exit Event Handler ]
+
+        /// <summary>
+        /// Exits the application.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void ExitApplication(object sender, EventArgs args) {
+            foreach (Form f in PluginViews) {
                 f.Close();
             }
-            library.Save();
+            Library.Save();
             Application.ExitThread();
             Application.Exit();
         }
 
         #endregion
 
-        #region Seek Bar Event Handlers
+        #region [ Seek Bar Event Handlers ]
 
-        private void seekBarRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            if (Engine.IsMediaLoaded)
-            {
-                mSeekBar.time = Engine.Timer.currentTime;
-                mSeekBar.totalTime = (int)Engine.CurrentMedia.Metadata.Duration.TotalSeconds;
-                mSeekBar.Refresh();
+        /// <summary>
+        /// Handles the Tick event of the seekBarRefreshTimer control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void seekBarRefreshTimer_Tick(object sender, EventArgs e) {
+            if (Engine.IsMediaLoaded) {
+                SeekBar.Time = Engine.Timer.CurrentTime;
+                SeekBar.TotalTime = (int)Engine.CurrentMedia.Metadata.Duration.TotalSeconds;
+                SeekBar.Refresh();
             }
         }
 
         #endregion
 
-        #region Volume Control
+        #region [ Volume Control Event Handlers ]
 
-        private void VolumeControl_Paint(object sender, PaintEventArgs e)
-        {
+        /// <summary>
+        /// Handles the Paint event of the VolumeControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
+        private void VolumeControl_Paint(object sender, PaintEventArgs e) {
             int volume = Engine.OutputPlugin.Volume;
             GraphicsPath outline = new GraphicsPath();
             outline.AddLine(0, 39, 100, 0);
@@ -246,43 +280,51 @@ namespace FractalBlaster.Core.UI
             e.Graphics.FillPath(Brushes.Green, fill);
         }
 
-        private bool volumeMouseDown;
-
-        private void VolumeControl_MouseUp(object sender, MouseEventArgs e)
-        {
-            volumeMouseDown = false;
+        /// <summary>
+        /// Handles the MouseUp event of the VolumeControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void VolumeControl_MouseUp(object sender, MouseEventArgs e) {
+            IsVolumeMouseDown = false;
         }
 
-        private void VolumeControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (volumeMouseDown)
-            {
+        /// <summary>
+        /// Handles the MouseMove event of the VolumeControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void VolumeControl_MouseMove(object sender, MouseEventArgs e) {
+            if (IsVolumeMouseDown) {
                 changeVolume(e);
             }
         }
 
-        private void VolumeControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            if ((39 - e.Y) <= e.X * 39 / 100)
-            {
-                volumeMouseDown = true;
+        /// <summary>
+        /// Handles the MouseDown event of the VolumeControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void VolumeControl_MouseDown(object sender, MouseEventArgs e) {
+            if ((39 - e.Y) <= e.X * 39 / 100) {
+                IsVolumeMouseDown = true;
                 changeVolume(e);
             }
         }
 
-        private void changeVolume(MouseEventArgs e)
-        {
+        /// <summary>
+        /// Changes the volume.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void changeVolume(MouseEventArgs e) {
             int volume;
-            if ((e.X >= 0) && (e.X <= 100))
-            {
+            if ((e.X >= 0) && (e.X <= 100)) {
                 volume = e.X;
             }
-            else if (e.X < 0)
-            {
+            else if (e.X < 0) {
                 volume = 0;
             }
-            else
-            {
+            else {
                 volume = 100;
             }
             Engine.OutputPlugin.Volume = volume;
@@ -291,73 +333,101 @@ namespace FractalBlaster.Core.UI
 
         #endregion
 
-        #region Playlist Tab Event Handlers
+        #region [ Playlist Tab Event Handlers ]
 
-        struct closeButton
-        {
+        /// <summary>
+        /// Struct representing a close button on a tab.
+        /// </summary>
+        private struct CloseButton {
+
+            /// <summary>
+            /// The rectangle occupied by the close button.
+            /// </summary>
             public Rectangle rect;
+
+            /// <summary>
+            /// The index of the tab for this close button?
+            /// </summary>
             public int index;
+
         }
 
-        closeButton[] tabCloseButtons = new closeButton[0];
+        /// <summary>
+        /// Private member array of tab close buttons.
+        /// </summary>
+        CloseButton[] TabCloseButtons = new CloseButton[0];
 
-        private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            closeButton[] newArray = new closeButton[mPlaylistTabControl.TabCount];
-            for (int i = 0; (i < tabCloseButtons.Length) && (i < newArray.Length); i++)
-            {
-                newArray[i] = tabCloseButtons[i];
+        /// <summary>
+        /// Handles the DrawItem event of the mPlaylistTabControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.DrawItemEventArgs"/> instance containing the event data.</param>
+        private void mPlaylistTabControl_DrawItem(object sender, DrawItemEventArgs e) {
+            CloseButton[] newArray = new CloseButton[mPlaylistTabControl.TabCount];
+            for (int i = 0; (i < TabCloseButtons.Length) && (i < newArray.Length); i++) {
+                newArray[i] = TabCloseButtons[i];
             }
-            tabCloseButtons = newArray;
+            TabCloseButtons = newArray;
             e.Graphics.DrawString(mPlaylistTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 4, e.Bounds.Top + 4);
-            closeButton c;
+            CloseButton c;
             Rectangle r = new Rectangle(e.Bounds.Right - 17, e.Bounds.Top + 5, 12, 12);
             c.rect = r;
             c.index = e.Index;
-            tabCloseButtons[e.Index] = c;
+            TabCloseButtons[e.Index] = c;
             e.Graphics.DrawImage(FractalBlaster.Core.Properties.Resources.application_exit_12x12, r);
         }
 
-        private void mPlaylistTabControl_MouseClick(object sender, MouseEventArgs e)
-        {
-            foreach (closeButton c in tabCloseButtons)
-            {
-                if (c.rect.Contains(e.Location))
-                {
-                    if (mPlaylistTabControl.TabPages.Count != 1)
-                    {
+        /// <summary>
+        /// Handles the MouseClick event of the mPlaylistTabControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void mPlaylistTabControl_MouseClick(object sender, MouseEventArgs e) {
+            foreach (CloseButton c in TabCloseButtons) {
+                if (c.rect.Contains(e.Location)) {
+                    if (mPlaylistTabControl.TabPages.Count != 1) {
                         mPlaylistTabControl.TabPages.RemoveAt(c.index);
                     }
                 };
             }
         }
 
-        private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the mPlaylistTabControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void mPlaylistTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             Context.Engine.CurrentPlaylist = (mPlaylistTabControl.SelectedTab.Tag as PlaylistControl).Playlist;
         }
 
-        private void AddNewPlaylistTab(object sender, EventArgs args)
-        {
+        /// <summary>
+        /// Adds the new playlist tab.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void AddNewPlaylistTab(object sender, EventArgs args) {
             mPlaylistTabControl.TabPages.Add(CreateNewPlaylistTab());
         }
 
         #endregion
 
-        #region Product Form Mouse Event Handlers
-        private void ProductForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (mouseDown)
-            {
+        #region [ Product Form Mouse Event Handlers ]
+
+        /// <summary>
+        /// Handles the MouseMove event of the ProductForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void ProductForm_MouseMove(object sender, MouseEventArgs e) {
+            if (IsMouseDown) {
                 Point mousePos = Control.MousePosition;
-                mousePos.Offset(mouse_offset);
-                for (int i = 0; i < OwnedForms.Length; i++)
-                {
-                    if (!OwnedForms.ElementAt(i).Location.IsEmpty)
-                    {
+                mousePos.Offset(MouseOffset);
+                for (int i = 0; i < OwnedForms.Length; i++) {
+                    if (!OwnedForms.ElementAt(i).Location.IsEmpty) {
                         Point subwindowPos = Control.MousePosition;
-                        subwindowPos.Offset(mouse_offset);
-                        subwindowPos.Offset(window_offset.ElementAt(i));
+                        subwindowPos.Offset(MouseOffset);
+                        subwindowPos.Offset(WindowOffset.ElementAt(i));
                         OwnedForms.ElementAt(i).Location = subwindowPos;
                     }
                 }
@@ -365,23 +435,31 @@ namespace FractalBlaster.Core.UI
             }
         }
 
-        private void ProductForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            mouseDown = false;
+        /// <summary>
+        /// Handles the MouseUp event of the ProductForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void ProductForm_MouseUp(object sender, MouseEventArgs e) {
+            IsMouseDown = false;
         }
 
-        private void ProductForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            mouseDown = true;
-            mouse_offset = new Point(-e.X, -e.Y);
-            window_offset = new List<Point>();
-            for (int i = 0; i < OwnedForms.Length; i++)
-            {
+        /// <summary>
+        /// Handles the MouseDown event of the ProductForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void ProductForm_MouseDown(object sender, MouseEventArgs e) {
+            IsMouseDown = true;
+            MouseOffset = new Point(-e.X, -e.Y);
+            WindowOffset = new List<Point>();
+            for (int i = 0; i < OwnedForms.Length; i++) {
                 Point subwindowLocation = OwnedForms.ElementAt(i).Location;
-                window_offset.Insert(i, new Point(subwindowLocation.X - this.Location.X, subwindowLocation.Y - this.Location.Y));
+                WindowOffset.Insert(i, new Point(subwindowLocation.X - this.Location.X, subwindowLocation.Y - this.Location.Y));
             }
         }
 
         #endregion
+    
     }
 }

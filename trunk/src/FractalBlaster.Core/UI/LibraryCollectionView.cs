@@ -10,25 +10,19 @@ using FractalBlaster.Universe;
 using FractalBlaster.Core.Runtime;
 using System.Threading;
 
-namespace FractalBlaster.Core.UI
-{
+namespace FractalBlaster.Core.UI {
 
-    public partial class LibraryCollectionView : CollectionView
-    {
-
-        public override bool HasCustomToolStrip { get { return false; } }
-
-        public override bool HasConfiguration { get { return true; } }
-
-        public override string Label { get { return "Library"; } }
-
-        public override Form ConfigurationDialog { get { return new LibraryConfigurationDialog(Library); } }
-
-        public Library Library { get; private set; }
-
-        public LibraryCollectionView(Library library)
-            : base()
-        {
+    /// <remarks>
+    /// Class that extends <see cref="CollectionView"/> to provide a user interface
+    /// to view and interact with the audio Library.
+    /// </remarks>
+    public partial class LibraryCollectionView : CollectionView {
+       
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LibraryCollectionView"/> class.
+        /// </summary>
+        /// <param name="Library">The Library.</param>
+        public LibraryCollectionView(Library library) : base() {
             InitializeComponent();
             Library = library;
 
@@ -45,27 +39,106 @@ namespace FractalBlaster.Core.UI
             InitializeTreeView();
         }
 
-        void LibraryCollectionView_HandleDestroyed(object sender, EventArgs e)
-        {
-            thread.Abort();
+        /// <summary>
+        /// Gets the Library represented by this Library collection view.
+        /// </summary>
+        public Library Library { get; private set; }
+
+        #region [ CollectionView Overrides ]
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has custom tool strip.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance has custom tool strip; otherwise, <c>false</c>.
+        /// </value>
+        public override bool HasCustomToolStrip { get { return false; } }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has configuration.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance has configuration; otherwise, <c>false</c>.
+        /// </value>
+        public override bool HasConfiguration { get { return true; } }
+
+        /// <summary>
+        /// Gets the label for the collection view.
+        /// </summary>
+        public override string Label { get { return "Library"; } }
+
+        /// <summary>
+        /// Gets the configuration dialog for this Library collection view.
+        /// </summary>
+        public override Form ConfigurationDialog { get { return new LibraryConfigurationDialog(Library); } }
+
+        /// <summary>
+        /// Event handler that refreshes the actual collection view.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        public override void RefreshView(object sender, EventArgs args) {
+            base.RefreshView(sender, args);
         }
 
-        private void MouseDownOnTreeView(Object sender, MouseEventArgs args)
-        {
+        /// <summary>
+        /// Event handler that refreshes the items in the collection view.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        public override void RefreshItems(object sender, EventArgs args) {
+            base.RefreshItems(sender, args);
+            this.mRefreshButton.Enabled = false;
+
+            mMediaTreeView.Nodes.Clear();
+            LocalThread = new Thread(RefreshItems_Threaded);
+            LocalThread.Priority = ThreadPriority.Lowest;
+            LocalThread.Start();
+        }
+
+
+        #endregion
+
+        #region [ Private ]
+
+        /// <summary>
+        /// Private delegate to handle the adding of the tree node.
+        /// </summary>
+        /// <param name="n">The tree node.</param>
+        private delegate void Add(TreeNode n);
+
+        /// <summary>
+        /// Private delegate to handle the changing of text.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private delegate void ChangeText(string text);
+
+        /// <summary>
+        /// Handles the HandleDestroyed event of the LibraryCollectionView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void LibraryCollectionView_HandleDestroyed(object sender, EventArgs e) {
+            LocalThread.Abort();
+        }
+
+        /// <summary>
+        /// Mouses down on tree view.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        private void MouseDownOnTreeView(Object sender, MouseEventArgs args) {
             TreeView view = sender as TreeView;
-            if (view != null)
-            {
+            if (view != null) {
                 TreeNode node = view.GetNodeAt(args.X, args.Y) ?? null;
-                if (node == null)
-                {
+                if (node == null) {
                     return;
                 }
 
                 IEnumerable<MediaFile> items = node.Tag as IEnumerable<MediaFile>;
 
                 Playlist p = new Playlist();
-                foreach (MediaFile m in items)
-                {
+                foreach (MediaFile m in items) {
                     p.AddItem(m);
                 }
                 //MessageBox.Show(String.Format("Name: {0}\nTag null?: {1}\nCount: {2}", node.Text, node.Tag == null ? "Yes" : "No", items.Count().ToString()));
@@ -73,51 +146,43 @@ namespace FractalBlaster.Core.UI
             }
         }
 
-        Thread thread;
-        public override void RefreshItems(object sender, EventArgs args)
-        {
-            base.RefreshItems(sender, args);
-            this.mRefreshButton.Enabled = false;
-
-            mMediaTreeView.Nodes.Clear();
-            thread = new Thread(RefreshItems_Threaded);
-            thread.Priority = ThreadPriority.Lowest;
-            thread.Start();
-        }
-
-        private delegate void Add(TreeNode n);
-        private delegate void ChangeText(string text);
-
-        private void ChangeStatusStrip1Text(string text)
-        {
+        /// <summary>
+        /// Private helper that changes the status strip1 text.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private void ChangeStatusStrip1Text(string text) {
             label1.Text = text;
         }
 
-        private void EnableRefreshButton()
-        {
+        /// <summary>
+        /// Enables the refresh button.
+        /// </summary>
+        private void EnableRefreshButton() {
             mRefreshButton.Enabled = true;
         }
 
-        private void AddNode(TreeNode n)
-        {
+        /// <summary>
+        /// Adds a tree node.
+        /// </summary>
+        /// <param name="n">The tree node.</param>
+        private void AddNode(TreeNode n) {
             mMediaTreeView.Nodes[0].Nodes.Add(n);
         }
 
-        private void InitializeTreeView()
-        {
+        /// <summary>
+        /// Private helper that initializes the tree view.
+        /// </summary>
+        private void InitializeTreeView() {
             TreeNode root = new TreeNode("Library", 3, 3);
             root.Tag = Library.AllMedia;
-            foreach (String artist in Library.Artists)
-            {
+            foreach (String artist in Library.Artists) {
                 TreeNode artistNode = new TreeNode(artist);
                 artistNode.Tag = Library.MediaForArtist(artist);
                 Library.AlbumCollection albums = Library[artist];
-                foreach (Library.Album album in albums)
-                {
+                foreach (Library.Album album in albums) {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
                     albumNode.Tag = album.ToArray();// Library.MediaForAlbum(artist, album);
-                    foreach (MediaFile file in album)
-                    {
+                    foreach (MediaFile file in album) {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
                         fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
                         albumNode.Nodes.Add(fileNode);
@@ -129,27 +194,26 @@ namespace FractalBlaster.Core.UI
             mMediaTreeView.Nodes.Add(root);
         }
 
-        private void RefreshItems_Threaded()
-        {
+        /// <summary>
+        /// Refreshes the items in threaded fashion.
+        /// </summary>
+        private void RefreshItems_Threaded() {
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Scanning Library Directory..." });
             Library.Refresh();
             mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding music to library..." });
             TreeNode root = new TreeNode("Library Collection", 3, 3);
             root.Tag = Library.AllMedia;
-            mMediaTreeView.Invoke((Action)(() => { mMediaTreeView.Nodes.Add(root); }) );
-            foreach (String artist in Library.Artists)
-            {
+            mMediaTreeView.Invoke((Action)(() => { mMediaTreeView.Nodes.Add(root); }));
+            foreach (String artist in Library.Artists) {
                 mMediaTreeView.Invoke(new ChangeText(ChangeStatusStrip1Text), new object[] { "Adding " + artist });
 
                 TreeNode artistNode = new TreeNode(artist, 0, 0);
                 artistNode.Tag = Library.MediaForArtist(artist);
                 Library.AlbumCollection albums = Library[artist];
-                foreach (Library.Album album in albums)
-                {
+                foreach (Library.Album album in albums) {
                     TreeNode albumNode = new TreeNode(album.AlbumName, 1, 1);
                     albumNode.Tag = album.ToArray();//Library.MediaForAlbum(artist, album);
-                    foreach (MediaFile file in album)
-                    {
+                    foreach (MediaFile file in album) {
                         TreeNode fileNode = new TreeNode(file.Metadata.Title, 2, 2);
                         fileNode.Tag = new MediaFile[] { file }.AsEnumerable();
                         albumNode.Nodes.Add(fileNode);
@@ -163,46 +227,37 @@ namespace FractalBlaster.Core.UI
             mMediaTreeView.Invoke(new MethodInvoker(EnableRefreshButton));
         }
 
-        public override void RefreshView(object sender, EventArgs args)
-        {
-            base.RefreshView(sender, args);
-        }
-
-        private ImageList ImageList { get; set; }
-
-        private void mMediaTreeView_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mMediaTreeView_DoubleClick(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Handles the DoubleClick event of the mMediaTreeView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void mMediaTreeView_DoubleClick(object sender, EventArgs e) {
             if (mMediaTreeView.SelectedNode == null)
                 return;
 
             MediaFile[] m = (MediaFile[])mMediaTreeView.SelectedNode.Tag;
-            if (m != null && m.Count() == 1)
-            {
+            if (m != null && m.Count() == 1) {
                 FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(m[0]);
             }
         }
 
-        void mMediaTreeView_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (mMediaTreeView.SelectedNode == null)
-                {
+        /// <summary>
+        /// Handles the KeyDown event of the mMediaTreeView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
+        private void mMediaTreeView_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                if (mMediaTreeView.SelectedNode == null) {
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                     return;
                 }
 
                 MediaFile[] m = (MediaFile[])mMediaTreeView.SelectedNode.Tag;
-                if (m != null)
-                {
-                    foreach (MediaFile mediaFile in m)
-                    {
+                if (m != null) {
+                    foreach (MediaFile mediaFile in m) {
                         FamilyKernel.Instance.Context.Engine.CurrentPlaylist.AddItem(mediaFile);
                     }
                 }
@@ -210,5 +265,22 @@ namespace FractalBlaster.Core.UI
                 e.SuppressKeyPress = true;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the image list containing 
+        /// </summary>
+        /// <value> The image list. </value>
+        private ImageList ImageList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the local thread.
+        /// </summary>
+        /// <value>
+        /// The local thread.
+        /// </value>
+        private Thread LocalThread { get; set; }
+        
+        #endregion
+    
     }
 }

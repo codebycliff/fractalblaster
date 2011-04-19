@@ -5,50 +5,40 @@ using System.Text;
 using FractalBlaster.Universe;
 using System.Timers;
 
-namespace FractalBlaster.Core.Runtime
-{
-    class PlaybackTimer : IPlaybackTimer
-    {
+namespace FractalBlaster.Core.Runtime {
 
-        Timer mTimer;
-        int mCurrentTime;
+    /// <remarks>
+    /// Timer for keeping track of the playback.
+    /// </remarks>
+    public class PlaybackTimer : IPlaybackTimer {
 
-        public PlaybackTimer()
-        {
-            mCurrentTime = 0;
-            mTimer = new Timer(1000);
-            mTimer.Elapsed += new ElapsedEventHandler(mTimer_Elapsed);
+        /// <summary>
+        /// Gets the timer instance.
+        /// </summary>
+        public Timer Timer { get; private set; }
+
+        /// <summary>
+        /// Gets the current Time according to the timer.
+        /// </summary>
+        public int CurrentTime { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlaybackTimer"/> class.
+        /// </summary>
+        public PlaybackTimer() {
+            CurrentTime = 0;
+            Timer = new Timer(1000);
+            Timer.Elapsed += new ElapsedEventHandler(TimeElapsed);
         }
 
-        void mTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            mCurrentTime++;
+        /// <summary>
+        /// Event handler for Time elapsing on the Timer.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        private void TimeElapsed(object sender, ElapsedEventArgs e) {
+            CurrentTime++;
         }
-
-        #region IPlaybackTimer Members
-
-        public int currentTime
-        {
-            get
-            {
-                return mCurrentTime;
-            }
-            set
-            {
-                mCurrentTime = value;
-            }
-        }
-
-        public void timerStart()
-        {
-            mTimer.Start();
-        }
-
-        public void timerStop()
-        {
-            mTimer.Stop();
-        }
-
-        #endregion
+    
     }
 }
