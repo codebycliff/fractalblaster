@@ -22,7 +22,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
         private String _displayString;
 
         /// <summary>
-        /// Number of ticks at the time the song title was displayed.
+        /// Number of ticks at the Time the song title was displayed.
         /// </summary>
         private long _ticksAtTitleDisplayTime;
 

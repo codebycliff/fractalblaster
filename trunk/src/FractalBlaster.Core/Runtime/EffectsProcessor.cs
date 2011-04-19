@@ -50,7 +50,7 @@ namespace FractalBlaster.Core.Runtime {
         /// <param name="context">The context.</param>
         public void Initialize(AppContext context) {
             Context = context;
-            Effects = Context.Plugins.OfType<IEffectPlugin>();
+            Effects = Context.AllPlugins.OfType<IEffectPlugin>();
         }
 
         /// <summary>

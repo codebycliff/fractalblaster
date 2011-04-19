@@ -9,8 +9,8 @@ namespace FractalBlaster.Universe
     static public class Debug
     {
         static DebugForm myForm;
-        static Debug()
-        {
+
+        static Debug() {
             myForm = new DebugForm();
             File.Delete("debugLog.txt");
         }

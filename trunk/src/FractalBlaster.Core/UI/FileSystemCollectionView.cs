@@ -174,7 +174,7 @@ namespace FractalBlaster.Core.UI {
         /// <param name="node">The node to be refreshed.</param>
         private void RefreshNode(TreeNode node) {
             node.Nodes.Clear();
-            string[] formats = Config.getProperty("fileformats").Split(';');
+            string[] formats = Config.GetProperty("fileformats").Split(';');
             bool search_directory = false;
             try {
                 DirectoryInfo rootdir = new DirectoryInfo(node.FullPath);

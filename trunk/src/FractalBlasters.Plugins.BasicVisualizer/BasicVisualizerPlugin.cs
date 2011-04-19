@@ -95,7 +95,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
                 //Copy, process, and submit to VisualizerForm
                 for (int i = 0; i < stream.Length; i += 4)
                 {
-                    //Check the number of bytes we're reading each time.
+                    //Check the number of bytes we're reading each Time.
                     int bytes_read;
                     //Allocate memory to read each sample into
                     byte[] temp = new byte[2];

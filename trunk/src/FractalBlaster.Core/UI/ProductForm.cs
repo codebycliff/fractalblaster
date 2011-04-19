@@ -34,15 +34,15 @@ namespace FractalBlaster.Core.UI {
             SeekBar = new SeekBar();
             SeekBar.Input = Engine.InputPlugin;
             SeekBar.Output = Engine.OutputPlugin;
-            SeekBar.PlaybackTimer = Engine.Timer;
+            SeekBar.PlaybackTimer = Engine.PlaybackTimer;
             SeekBar.UI = this;
             SeekBarPanel.Controls.Add(SeekBar);
             seekBarRefreshTimer.Start();
 
             //Get references to plugins
-            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.Plugins.OfType<IPlaylistPlugin>()) {
+            foreach (IPlaylistPlugin plugin in FamilyKernel.Instance.Context.AllPlugins.OfType<IPlaylistPlugin>()) {
                 foreach (String f in plugin.SupportedFileExtensions) {
-                    if (Config.getProperty("playlistformats").Contains(f)) {
+                    if (Config.GetProperty("playlistformats").Contains(f)) {
                         PlaylistPluginMap.Add(f, plugin);
                     }
                 }
@@ -63,8 +63,8 @@ namespace FractalBlaster.Core.UI {
             }
 
             //Disable buttons as specified by config file.
-            if (Config.getProperty("saveloadplaylists") == "false" ||
-                Config.getProperty("playlistformats") == "") {
+            if (Config.GetProperty("saveloadplaylists") == "false" ||
+                Config.GetProperty("playlistformats") == "") {
                 mSaveMenuItem.Enabled = false;
                 mSaveToolBarButton.Enabled = false;
             }
@@ -203,8 +203,8 @@ namespace FractalBlaster.Core.UI {
         /// </summary>
         /// <returns>Filter string for all files.</returns>
         private String GetAllFilesFilterString() {
-            List<string> file_extensions = Config.getProperty("fileformats").Split(';').ToList<string>();
-            IEnumerable<string> pl_extensions = Config.getProperty("playlistformats").Split(';').ToList<string>();
+            List<string> file_extensions = Config.GetProperty("fileformats").Split(';').ToList<string>();
+            IEnumerable<string> pl_extensions = Config.GetProperty("playlistformats").Split(';').ToList<string>();
 
             file_extensions.AddRange(pl_extensions);
             string filters = "";

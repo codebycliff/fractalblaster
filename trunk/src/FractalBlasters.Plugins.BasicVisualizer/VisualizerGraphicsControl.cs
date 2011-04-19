@@ -207,7 +207,7 @@ namespace FractalBlaster.Plugins.BasicVisualizer
                 }
             }
 
-            //Update our drawn values if it's time.
+            //Update our drawn values if it's Time.
             if (_dataQueue.Count > kBUFFER_SIZE * 2 && ticks_now - _ticks_last_update > kTICKS_PER_BUFFER)
             {
                 _ticks_last_update = ticks_now;

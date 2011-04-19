@@ -8,7 +8,7 @@ using System.Timers;
 namespace FractalBlaster.Core.Runtime {
 
     /// <remarks>
-    /// Timer for keeping track of the playback.
+    /// PlaybackTimer for keeping track of the playback.
     /// </remarks>
     public class PlaybackTimer : IPlaybackTimer {
 
@@ -32,7 +32,7 @@ namespace FractalBlaster.Core.Runtime {
         }
 
         /// <summary>
-        /// Event handler for Time elapsing on the Timer.
+        /// Event handler for Time elapsing on the PlaybackTimer.
         /// </summary>
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>

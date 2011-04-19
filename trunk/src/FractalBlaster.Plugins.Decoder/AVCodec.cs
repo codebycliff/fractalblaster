@@ -1476,7 +1476,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG
             /**
              * the average bitrate.
              * - encoding: set by user. unused for constant quantizer encoding
-             * - decoding: set by lavc. 0 or some bitrate if this info is available in the stream
+             * - decoding: set by lavc. 0 or some bitrate if this FileInfo is available in the stream
              */
             [MarshalAs(UnmanagedType.I4)]
             public int bit_rate;
@@ -1499,7 +1499,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG
             public int flags;
 
             /**
-             * some codecs needs additionnal format info. It is stored here
+             * some codecs needs additionnal format FileInfo. It is stored here
              * - encoding: set by user.
              * - decoding: set by lavc. (FIXME is this ok?)
              */
@@ -3014,7 +3014,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG
             [MarshalAs(UnmanagedType.I8)]
             public Int64 last_frame_offset; // offset of the last frame
 
-            /* video info */
+            /* video FileInfo */
             [MarshalAs(UnmanagedType.I4)]
             public int pict_type; /* XXX: put it back in AVCodecContext */
 

@@ -4,19 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FractalBlaster.Universe
-{
+namespace FractalBlaster.Universe {
+    
     #region [ Gloabals ]
-    public static class GlobalVariables
-    {
-        public static int m_BufferSize = 50;
 
-        public static int BufferSize
-        {
-            get { return m_BufferSize; }
-            set { m_BufferSize = value; }
+    /// <remarks>
+    /// Static class containing global variables.
+    /// </remarks>
+    public static class GlobalVariables {
+
+        /// <summary>
+        /// Initializes the <see cref="GlobalVariables"/> class.
+        /// </summary>
+        static GlobalVariables () {
+            BufferSize = 50;
         }
+
+        /// <summary>
+        /// The integer representing the audio buffer size.
+        /// </summary>
+        public static Int32 BufferSize { get; set; }
+    
     }
+
     #endregion
 
     #region [ Delegates ]
@@ -53,7 +63,6 @@ namespace FractalBlaster.Universe
     /// <returns></returns>
     public delegate IntPtr BufferHandler(Boolean gc);
 
-
     #endregion
 
     #region [ Structs ]
@@ -63,68 +72,84 @@ namespace FractalBlaster.Universe
     /// as metadata for audio files.
     /// </remarks>
     public struct AudioMetadata {
+
         /// <summary>
         /// The artist of the audio file.
         /// </summary>
         public String Artist;
+
         /// <summary>
         /// The title of the audio file.
         /// </summary>
         public String Title;
+
         /// <summary>
         /// The album the audio file belongs to.
         /// </summary>
         public String Album;
+
         /// <summary>
         /// The audio file's codec.
         /// </summary>
         public String Codec;
+
         /// <summary>
         /// The year number with respect to the audio file's album.
         /// </summary>
         public Int32 TrackNumber;
+
         /// <summary>
         /// The year the audio file was released.
         /// </summary>
         public Int32 Year;
+
         /// <summary>
         /// The number of channels in the audio file.
         /// </summary>
         public Int32 Channels;
+
         /// <summary>
         /// The sample rate of the audio file.
         /// </summary>
         public Int32 SampleRate;
+
         /// <summary>
         /// The audio file's bit rate.
         /// </summary>
         public Int32 BitRate;
+
         /// <summary>
         /// The duration or length of the audio file.
         /// </summary>
         public TimeSpan Duration;
+
         /// <summary>
         /// The path where the audio file is located.
         /// </summary>
         public String Path;
+
     }
 
     /// <remarks>
     /// Structure representing a media file property (metadata item).
     /// </remarks>
     public struct MediaProperty {
+
         /// <summary>
         /// The name (key) of the media property.
         /// </summary>
         public String Name;
+
         /// <summary>
         /// The value of the media property.
         /// </summary>
         public Object Value;
+
         /// <summary>
         /// The type of the media property's value.
         /// </summary>
         public Type Type;
+
         /// <summary>
         /// Static method designed to provide a standard way of creating
         /// media properties that ensures that resulting structure contains all
@@ -144,7 +169,7 @@ namespace FractalBlaster.Universe
                 Value = value
             };
         }
-
+    
     }
 
     #endregion

@@ -4,53 +4,60 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace FractalBlaster.Universe
-{
-    public static class Config
-    {
+namespace FractalBlaster.Universe {
+
+    /// <remarks>
+    /// Static class providing configuration to the application.
+    /// </remarks>
+    public static class Config {
+
+        /// <summary>
+        /// Private static dictionary of config settings.
+        /// </summary>
         static Dictionary<string, string> Properties;
 
-
-        static Config()
-        {
-            Properties = new Dictionary<string,string>();
+        /// <summary>
+        /// Initializes the <see cref="Config"/> class.
+        /// </summary>
+        static Config() {
+            Properties = new Dictionary<string, string>();
             StreamReader configFile;
-            try
-            {
+            try {
                 configFile = new StreamReader("config.ini");
-            
+
                 string configLine;
                 string propertyKey;
                 string propertyValue;
                 int i;
-                while ((configLine = configFile.ReadLine()) != null)
-                {
+                while ((configLine = configFile.ReadLine()) != null) {
                     propertyKey = string.Empty;
                     propertyValue = string.Empty;
-                    for (i = 0; (configLine[i] != '=') && (i < configLine.Length); i++)
-                    {
+                    for (i = 0; (configLine[i] != '=') && (i < configLine.Length); i++) {
                         propertyKey += configLine[i];
                     }
                     i++;
-                    for (; i < configLine.Length; i++)
-                    {
+                    for (; i < configLine.Length; i++) {
                         propertyValue += configLine[i];
                     }
                     Debug.printline(propertyKey + "=" + propertyValue);
                     Properties.Add(propertyKey, propertyValue);
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 Debug.printline("Config Exception! : " + e.GetType().ToString() + " , " + e.Message);
             }
         }
 
-        public static string getProperty(string key)
-        {
+        /// <summary>
+        /// Gets the property with the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public static string GetProperty(string key) {
             string retValue;
             Properties.TryGetValue(key, out retValue);
             return retValue;
         }
+
     }
 }

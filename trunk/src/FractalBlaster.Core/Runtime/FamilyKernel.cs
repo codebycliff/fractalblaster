@@ -70,16 +70,16 @@ namespace FractalBlaster.Core.Runtime {
             
             form.Text = String.Format("FractalBlaster - {0} Edition", Product.Name);
 
-            foreach(IEffectPlugin effect in Context.Plugins.OfType<IEffectPlugin>()) {
+            foreach(IEffectPlugin effect in Context.AllPlugins.OfType<IEffectPlugin>()) {
                 effect.Enabled = false;
                 form.AddEffectPlugin(effect);
             }
 
-            foreach (IViewPlugin v in Context.Plugins.OfType<IViewPlugin>()) {
+            foreach (IViewPlugin v in Context.AllPlugins.OfType<IViewPlugin>()) {
                 form.AddViewPlugin(v);
             }
 
-            foreach (IPlaylistPlugin p in Context.Plugins.OfType<IPlaylistPlugin>()) {
+            foreach (IPlaylistPlugin p in Context.AllPlugins.OfType<IPlaylistPlugin>()) {
                 form.AddPlaylistPlugin(p);
             }
 
@@ -96,15 +96,15 @@ namespace FractalBlaster.Core.Runtime {
         private FamilyKernel() {
             Context = new AppContext();
             PluginManager.Refresh();
-            Context.Plugins = PluginManager.AllPlugins;
+            Context.AllPlugins = PluginManager.AllPlugins;
             Context.DefaultPlugins = PluginManager.AllPlugins;
             Context.Settings = new AppSettingsReader();
             Context.Engine = new AudioEngine(Context);
 
-            foreach (IPlugin plugin in Context.Plugins) {
+            foreach (IPlugin plugin in Context.AllPlugins) {
                 plugin.Initialize(Context);
             }
-            MediaFile.MetadataPlugins = Context.Plugins.OfType<IMetadataPlugin>();
+            MediaFile.MetadataPlugins = Context.AllPlugins.OfType<IMetadataPlugin>();
         }
 
         /// <summary>

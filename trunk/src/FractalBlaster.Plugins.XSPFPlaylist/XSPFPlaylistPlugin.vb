@@ -5,20 +5,32 @@ Imports System.IO
 Imports System.Xml
 Imports System.Xml.Linq
 
-''' <summary>
-''' 
-''' </summary>
-''' <remarks></remarks>
-<PluginAttribute(Name:="XSPF Playlist", Description:="Reads and writes XSPF playlists")>
+''' <remarks>
+''' Class providing a playlist plugin implementation for the XSPF playlist format.
+''' </remarks> 
+<PluginAttribute(
+    Name:="XSPF Playlist",
+    Description:="Reads and writes XSPF playlists",
+    Author:="Cliff Braton @ FractalBlasters",
+    Version:="0.01beta"
+)>
 Public Class XSPFPlaylistPlugin
     Implements IPlaylistPlugin
 
+    ''' <summary>
+    ''' Gets the supported file extensions.
+    ''' </summary>
     Public ReadOnly Property SupportedFileExtensions As IEnumerable(Of String) Implements IPlaylistPlugin.SupportedFileExtensions
         Get
             Return New String() {".xspf"}
         End Get
     End Property
 
+    ''' <summary>
+    ''' Reads the file at the specified path and returns a <see cref="Playlist"/>
+    ''' instance representing that files contents.
+    ''' </summary>
+    ''' <param name="path">The path.</param><returns></returns>
     Public Function Read(ByVal path As String) As Playlist Implements IPlaylistPlugin.Read
         Dim playlist As New Playlist
 
@@ -44,6 +56,11 @@ Public Class XSPFPlaylistPlugin
         Return playlist
     End Function
 
+    ''' <summary>
+    ''' Writes the specified playlist in XSPF format.
+    ''' </summary>
+    ''' <param name="playlist">The playlist.</param>
+    ''' <param name="path">The path.</param>
     Public Sub Write(ByVal playlist As Playlist, ByVal path As String) Implements IPlaylistPlugin.Write
 
         Dim xspf As XElement = _
@@ -75,10 +92,18 @@ Public Class XSPFPlaylistPlugin
 
     End Sub
 
+    ''' <summary>
+    ''' Initializes the plugin with the specified application context.
+    ''' </summary>
+    ''' <param name="context">The context.</param>
     Public Sub Initialize(ByVal context As Universe.AppContext) Implements Universe.IPlugin.Initialize
         MyContext = context
     End Sub
 
+    ''' <summary>
+    ''' Private instance variable containing the application context this plugin
+    ''' was initialized with.
+    ''' </summary>
     Private MyContext As AppContext
 
 End Class

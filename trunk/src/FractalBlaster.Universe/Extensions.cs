@@ -31,6 +31,11 @@ namespace FractalBlaster.Universe {
             return file.Extension.ToLower().CompareTo("dll") == 0;
         }
 
+        /// <summary>
+        /// Creates the media file from the specified file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
         public static MediaFile CreateMediaFile(this FileInfo file) {
             return new MediaFile(file.FullName);
         }
@@ -39,6 +44,14 @@ namespace FractalBlaster.Universe {
 
         #region [ System.Linq.IEnumerable<T> ]
 
+        /// <summary>
+        /// Shuffles the specified enumeration. Current implementation only
+        /// reverses the enumeration. This was meant to be a method stub, and never
+        /// was properly finished.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumeration">The enumeration.</param>
+        /// <returns></returns>
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> enumeration) {
             return enumeration.Reverse().AsEnumerable();
         }
@@ -47,6 +60,12 @@ namespace FractalBlaster.Universe {
 
         #region [ System.Configuration.AppSettingsReader ]
 
+        /// <summary>
+        /// Gets the string value from the settings with specified key.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
         public static String GetString(this AppSettingsReader settings, String key) {
             return settings.GetValue(key, typeof(String)) as String;
         }
@@ -55,6 +74,11 @@ namespace FractalBlaster.Universe {
 
         #region [ FractalBlaster.Universe.Metadata ]
 
+        /// <summary>
+        /// Gets the audio metadata from the specified metadata.
+        /// </summary>
+        /// <param name="metadata">The metadata.</param>
+        /// <returns></returns>
         public static AudioMetadata GetAudioMetadata(this Metadata metadata) {
             return new AudioMetadata() {
                 Album = metadata["Album"].Value.ToString(),
@@ -64,9 +88,13 @@ namespace FractalBlaster.Universe {
 
         #endregion
 
-
         #region [ FractalBlaster.Universe.IPlugin ]
 
+        /// <summary>
+        /// Gets the plugin attribute instance from the specified plugin.
+        /// </summary>
+        /// <param name="plugin">The plugin.</param>
+        /// <returns></returns>
         public static PluginAttribute GetInfo(this IPlugin plugin) {
             PluginAttribute attr = plugin.GetType().GetCustomAttributes(typeof(PluginAttribute), false).First() as PluginAttribute;
             if (attr == null) {
@@ -81,6 +109,7 @@ namespace FractalBlaster.Universe {
         }
 
         #endregion
+    
     }
 
 }

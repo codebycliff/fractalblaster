@@ -30,7 +30,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         /// Initializes 3rd party libraries that contain copyrighted and patent protected codecs
         /// </summary>
         static DecoderInterop() {
-            // FractalBlaster.Plugins.Decoder.FFMPEG Register All Encoders/Decoders
+            // FractalBlaster.AllPlugins.Decoder.FFMPEG Register All Encoders/Decoders
             FFMPEG.av_register_all();
         }
         
@@ -64,7 +64,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG {
         /// Frees all static information in 3rd party libraries
         /// </summary>
         ~DecoderInterop() {
-            //FractalBlaster.Plugins.Decoder.FFMPEG.av_free_static();
+            //FractalBlaster.AllPlugins.Decoder.FFMPEG.av_free_static();
         }
 
         /// <summary>

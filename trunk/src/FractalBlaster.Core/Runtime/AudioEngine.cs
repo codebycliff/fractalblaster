@@ -53,7 +53,7 @@ namespace FractalBlaster.Core.Runtime {
         /// <summary>
         /// Gets the playback timer.
         /// </summary>
-        public IPlaybackTimer Timer { get; private set; }
+        public IPlaybackTimer PlaybackTimer { get; private set; }
 
         /// <summary>
         /// Gets the currently loaded media.
@@ -98,7 +98,7 @@ namespace FractalBlaster.Core.Runtime {
             InputPlugin.Initialize(Context);
             OutputPlugin = new PlaybackStateMachine(output, input);
             OutputPlugin.Initialize(Context);
-            Timer = new PlaybackTimer();
+            PlaybackTimer = new PlaybackTimer();
         }
         
         /// <summary>

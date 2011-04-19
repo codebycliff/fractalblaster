@@ -214,7 +214,7 @@ namespace FractalBlaster.Universe
         {
             FileInfo[] files = new FileInfo[0];
             Console.WriteLine("Reading Files");
-            foreach (String s in Config.getProperty("fileformats").Split(';', '|'))
+            foreach (String s in Config.GetProperty("fileformats").Split(';', '|'))
             {
                 foreach (DirectoryInfo dir in Root)
                 {

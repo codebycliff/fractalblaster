@@ -511,7 +511,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG
         /// <param name="arg"></param>
         /// <param name="arg_size"></param>
         /// <param name="tag1"></param>
-        /// <param name="info"></param>
+        /// <param name="FileInfo"></param>
         /// <returns></returns>
         [DllImport("avformat.dll", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         public static extern int find_info_tag([MarshalAs(UnmanagedType.LPTStr)]String arg,
@@ -938,7 +938,7 @@ namespace FractalBlaster.Plugins.Decoder.FFMPEG
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)]
             public byte[] filename; // input or output filename
 
-            /* stream info */
+            /* stream FileInfo */
             [MarshalAs(UnmanagedType.I8)]
             public Int64 timestamp;
 

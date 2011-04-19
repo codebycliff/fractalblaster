@@ -9,12 +9,24 @@ using System.Windows.Forms;
 using FractalBlaster.Universe;
 
 namespace FractalBlaster.Plugins.AvailablePluginsView {
+
+    /// <remarks>
+    /// The user interface (Form) for the available plugins view
+    /// plugin.
+    /// </remarks>
     public partial class PluginsView : Form {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PluginsView"/> class.
+        /// </summary>
         public PluginsView() {
             InitializeComponent();
-
         }
 
+        /// <summary>
+        /// Adds the specified plugin to list of available plugins.
+        /// </summary>
+        /// <param name="plugin">The plugin.</param>
         public void AddPlugin(IPlugin plugin) {
             PluginNode node = new PluginNode(plugin);
             foreach (String category in node.Categories) {
@@ -27,9 +39,18 @@ namespace FractalBlaster.Plugins.AvailablePluginsView {
                 }
             }
         }
+    
     }
 
+    /// <remarks>
+    /// Custom node implementating representing a single node as a plugin.
+    /// </remarks>
     public class PluginNode : TreeNode {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PluginNode"/> class.
+        /// </summary>
+        /// <param name="plugin">The plugin.</param>
         public PluginNode(IPlugin plugin)  : base(plugin.GetInfo().Name) {
             
             this.Nodes.Add(new TreeNode(String.Format("Description: {0}", plugin.GetInfo().Description)));
@@ -56,6 +77,12 @@ namespace FractalBlaster.Plugins.AvailablePluginsView {
                 Categories.Add("Effect");
             }
         }
+
+        /// <summary>
+        /// Gets the list of categories.
+        /// </summary>
         public List<String> Categories { get; private set; }
+    
     }
+
 }

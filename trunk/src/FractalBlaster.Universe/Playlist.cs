@@ -40,13 +40,7 @@ namespace FractalBlaster.Universe {
         /// <summary>
         /// The Title of the playlist.
         /// </summary>
-        protected String title;
-
-        public String Title
-        {
-            get { return title; }
-            set { title = value; }
-        }
+        public String Title { get; set; }
 
         /// <summary>
         /// The currently selected index in the playlist. This represents a selection,
@@ -87,6 +81,11 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// Adds the media file at the specified index.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="media">The media.</param>
         public void AddItem(int index, MediaFile media)
         {
             MediaItems.Insert(index, media);
@@ -96,8 +95,12 @@ namespace FractalBlaster.Universe {
             }
         }
 
-        public void MoveItem(int fromIndex, int toIndex)
-        {
+        /// <summary>
+        /// Moves the media file at the from index to the to index.
+        /// </summary>
+        /// <param name="fromIndex">From index.</param>
+        /// <param name="toIndex">To index.</param>
+        public void MoveItem(int fromIndex, int toIndex) {
             MediaFile removed = MediaItems[fromIndex];
             MediaItems.RemoveAt(fromIndex);
             MediaItems.Insert(toIndex, removed);
@@ -116,6 +119,11 @@ namespace FractalBlaster.Universe {
             }
         }
 
+        /// <summary>
+        /// Removes the media at the specified index from the playlist.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
         public MediaFile RemoveMedia(int index)
         {
             MediaFile removed = MediaItems[index];
@@ -123,6 +131,10 @@ namespace FractalBlaster.Universe {
             return removed;
         }
 
+        /// <summary>
+        /// Sorts the playlist using specified comparer.
+        /// </summary>
+        /// <param name="comparer">The comparer.</param>
         public void Sort(Comparison<MediaFile> comparer)
         {
             MediaItems.Sort(comparer);
@@ -130,10 +142,22 @@ namespace FractalBlaster.Universe {
 
         #region [ IEnumerable ]
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<MediaFile> GetEnumerator() {
             return MediaItems.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator() {
             return MediaItems.GetEnumerator();
         }

@@ -37,7 +37,7 @@ namespace FractalBlaster.Core.UI {
             mPlaylistGridView.DragEnter += new DragEventHandler(DragEnterHandler);
             mPlaylistGridView.DragDrop += new DragEventHandler(DragDropHandler);
 
-            bool sortable = Config.getProperty("sortable") == "false" ? false : true;
+            bool sortable = Config.GetProperty("sortable") == "false" ? false : true;
             if (!sortable) {
                 foreach (DataGridViewColumn dgvc in mPlaylistGridView.Columns) {
                     dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;

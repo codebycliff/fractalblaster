@@ -167,7 +167,7 @@ namespace FractalBlaster.Core.UI {
         private void addFileToPlaylistToolStripMenuItem_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "Supported Formats|" + Config.getProperty("fileformats");
+            ofd.Filter = "Supported Formats|" + Config.GetProperty("fileformats");
             if (ofd.ShowDialog() == DialogResult.OK) {
                 foreach (string s in ofd.FileNames) {
                     CurrentPlaylistControl.Playlist.AddItem(new MediaFile(s));
@@ -249,7 +249,7 @@ namespace FractalBlaster.Core.UI {
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void seekBarRefreshTimer_Tick(object sender, EventArgs e) {
             if (Engine.IsMediaLoaded) {
-                SeekBar.Time = Engine.Timer.CurrentTime;
+                SeekBar.Time = Engine.PlaybackTimer.CurrentTime;
                 SeekBar.TotalTime = (int)Engine.CurrentMedia.Metadata.Duration.TotalSeconds;
                 SeekBar.Refresh();
             }
