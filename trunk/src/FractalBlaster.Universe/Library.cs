@@ -208,27 +208,25 @@ namespace FractalBlaster.Universe
 
 
         /// <summary>
-        /// Tries to load/reload all of the mp3 files in the system defined
-        /// music folder into the Library.
+        /// Tries to load/reload all of the mp3 files from the defined root
+        /// music folders into the Library.
         /// </summary>
         public void Refresh()
         {
             MediaPaths.Clear();
             MediaCollection.Clear();
 
-            try
+            
+            //If a library file exists use it, otherwise
+            //reload from current directory information
+
+            if (File.Exists("library.fbsl"))
             {
-                if (!File.Exists("library.fbsl"))
-                {
-                    load_from_path(this);
-                }
-                else
-                {
-                    load_from_file(this);
-                }
+                Load_From_Save(this);
             }
-            catch (Exception e)
+            else
             {
+                Load_From_Directories(this);
             }
 
 
@@ -443,6 +441,7 @@ namespace FractalBlaster.Universe
         {
             LibraryPathsFileName = "LibraryPaths.fbp";
 
+            // Designate the schema to be used for the datatable
             schema.Add("FullName",      typeof(String));
             schema.Add("#",             typeof(Int32));
             schema.Add("Artist",        typeof(String));
@@ -457,23 +456,20 @@ namespace FractalBlaster.Universe
             schema.Add("File",          typeof(MediaFile));
         }
 
-        ~Library()
-        {
-            this.Save();
-        }
-
         public static String LibraryPathsFileName { get; private set; }
         private static Dictionary<String, Type> schema = new Dictionary<String, Type>();
 
-        private static void load_from_path(Library library)
+        private static void Load_From_Directories(Library library)
         {
             FileInfo[] files = new FileInfo[0];
             Console.WriteLine("Reading Files");
+
+
+            //Fetch supported files in all directories given
             foreach (String s in Config.GetProperty("fileformats").Split(';', '|'))
             {
                 foreach (DirectoryInfo dir in library.Root)
                 {
-
                     FileInfo[] temp = dir.GetFiles(s, SearchOption.AllDirectories);
                     FileInfo[] temp2 = (FileInfo[])files.Clone();
                     files = new FileInfo[temp.Length + files.Length];
@@ -494,6 +490,8 @@ namespace FractalBlaster.Universe
 
                     if (media != null)
                     {
+
+                        //Read metadata
                         String fullName = file.FullName;
                         String artist = media.Metadata.Artist;
                         String album = media.Metadata.Album;
@@ -507,14 +505,15 @@ namespace FractalBlaster.Universe
 
                         TimeSpan duration = media.Metadata.Duration;
 
-                        DataRow dr = library.MediaCollection.NewRow();
-
-
                         //Apostrophes mess with searching and sorting, so we just strip them out
                         artist = artist.Replace("'", "");
                         album = album.Replace("'", "");
                         title = title.Replace("'", "");
 
+
+                        DataRow dr = library.MediaCollection.NewRow();
+
+                        //Assign values to row of the table
                         dr["FullName"] = fullName;
                         dr["#"] = track;
                         dr["Artist"] = artist;
@@ -539,11 +538,13 @@ namespace FractalBlaster.Universe
             //}
         }
 
-        private static void load_from_file(Library library)
+        private static void Load_From_Save(Library library)
         {
             try
             {
+                library.Root.Clear();
 
+                //Reload directory info from file
                 using (StreamReader reader = new StreamReader(File.OpenRead(LibraryPathsFileName)))
                 {
                     string line;
@@ -566,6 +567,7 @@ namespace FractalBlaster.Universe
                         DataRow row = library.MediaCollection.NewRow();
                         Metadata metadata = new Metadata();
 
+                        //Read each line into its corresponding title
                         values["FullName"] = line;
                         values["#"] = Int32.Parse(reader.ReadLine());
                         values["Artist"] = reader.ReadLine();
@@ -578,7 +580,7 @@ namespace FractalBlaster.Universe
                         values["Title"] = reader.ReadLine();
                         values["Year"] = Int32.Parse(reader.ReadLine());
 
-
+                        //Fill our row and metadata object with the values
                         foreach (String column_name in schema.Keys)
                         {
                             if (!column_name.Equals("File"))
@@ -607,8 +609,9 @@ namespace FractalBlaster.Universe
         /// <returns>A library containing all the music in the given directory.</returns>
         public static Library Load(DirectoryInfo defaultDirectory)
         {
-            Library library = new Library();
-            library.Root.Add(defaultDirectory);
+            Library library = new Library(defaultDirectory);
+
+            return library;
             /*
             try
             {
@@ -698,15 +701,14 @@ namespace FractalBlaster.Universe
             }
 
             */
-
-            return library;
         }
 
         /// <summary>
-        /// Serializes the Library into an XML file.
+        /// Serializes the Library into an fbsl file.
         /// </summary>
         public void Save()
         {
+            //Write all directories to their own file
             using (StreamWriter writer = new StreamWriter(File.OpenWrite(LibraryPathsFileName)))
             {
                 foreach (DirectoryInfo dir in Root)
@@ -721,6 +723,7 @@ namespace FractalBlaster.Universe
                 {
                     foreach (String column_name in schema.Keys)
                     {
+                        // For every entry in the table write out all data according to the schema, except for the actual file.
                         if (!column_name.Equals("File")) { write.WriteLine(row[column_name]); }
                     }
                     /*

@@ -49,6 +49,7 @@ Bug: Saving playlist GUI button does nothing.
 Bug: File, settings menu does nothing.
 
 Bug: Library doesn't pull all of the mp3 from a folder
+Status: Changed the way Library deals with files, so that it isn't loading nothing when it should be loading something, but I'm not certain this was the problem.
 Comment: I'm using 3 songs in my music folder. The directory is C:\users\blah\music and the library doesn't contain the 3 songs that I have put in there. 
 		 The tag information is there, as windows fills in the artist, title, and album in. They are of the mp3 file extension.
 *****************************************************************************
@@ -128,14 +129,13 @@ Bug: The song after deleted can be accessed still
 Status: Fixed
 Comment: Moved from known bugs since it was fixed. 
 
+Bug: The exit throws an InvalidOperationException in the Save() method in the Library Class.
+Status: Fixed (Moved from Worked Around)
+Comment: We should change this so that saving works -Greg
 
 *****************************************************************************
 * Worked Around Bugs:
 *****************************************************************************
-
-Bug: The exit throws an InvalidOperationException in the Save() method in the Library Class.
-Status: Worked around by not saving
-Comment: We should change this so that saving works -Greg
 
 Bug: Tree, icon, list view does nothing in the library.
 Status: Worked around by removing the buttons
