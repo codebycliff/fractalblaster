@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Colo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.PhaserEffect", "FractalBlaster.Plugins.PhaserEffect\FractalBlaster.Plugins.PhaserEffect.csproj", "{5294693A-EC6A-439B-AA65-903549E1C88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{71B1F9A0-DEEE-4239-9504-376212C3CFA6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{533CCB11-D8FA-4463-852A-571570E58A44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.BasicVisualizer", "FractalBlasters.Plugins.BasicVisualizer\FractalBlaster.Plugins.BasicVisualizer.csproj", "{EAE6AE90-076E-45CA-A4D2-28F919A060E0}"
@@ -50,6 +48,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.AboutPlugin", "FractalBlaster.Plugins.AboutPlugin\FractalBlaster.Plugins.AboutPlugin.csproj", "{72D2397D-4314-4478-9DCA-AD4E4B9C6C23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Configuration", "FractalBlaster.Configuration\FractalBlaster.Configuration.csproj", "{F698F51F-8EA7-4E0D-A819-990C36E35B57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Generator", "FractalBlaster.Generator\FractalBlaster.Generator.csproj", "{71B1F9A0-DEEE-4239-9504-376212C3CFA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,17 +251,6 @@ Global
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|Win32.ActiveCfg = Release|Any CPU
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|x86.ActiveCfg = Release|Any CPU
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|x86.Build.0 = Release|Any CPU
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Win32.ActiveCfg = Debug|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|x86.ActiveCfg = Debug|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|x86.Build.0 = Debug|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Any CPU.ActiveCfg = Release|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Mixed Platforms.Build.0 = Release|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Win32.ActiveCfg = Release|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|x86.ActiveCfg = Release|x86
-		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|x86.Build.0 = Release|x86
 		{533CCB11-D8FA-4463-852A-571570E58A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{533CCB11-D8FA-4463-852A-571570E58A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{533CCB11-D8FA-4463-852A-571570E58A44}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -313,6 +302,20 @@ Global
 		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Win32.Build.0 = Release|x86
 		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.ActiveCfg = Release|x86
 		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.Build.0 = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Win32.ActiveCfg = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Win32.Build.0 = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|x86.ActiveCfg = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|x86.Build.0 = Debug|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Any CPU.ActiveCfg = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Win32.ActiveCfg = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|Win32.Build.0 = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|x86.ActiveCfg = Release|x86
+		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
