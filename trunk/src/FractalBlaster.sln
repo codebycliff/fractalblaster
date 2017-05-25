@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0B6DAF3-A24B-456E-AF80-CD346858520F}"
 	ProjectSection(SolutionItems) = preProject
 		FractalBlaster.vsmdi = FractalBlaster.vsmdi
@@ -39,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Colo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.PhaserEffect", "FractalBlaster.Plugins.PhaserEffect\FractalBlaster.Plugins.PhaserEffect.csproj", "{5294693A-EC6A-439B-AA65-903549E1C88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "Config\Config.csproj", "{F698F51F-8EA7-4E0D-A819-990C36E35B57}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{71B1F9A0-DEEE-4239-9504-376212C3CFA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{533CCB11-D8FA-4463-852A-571570E58A44}"
@@ -49,14 +49,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.Basi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Plugins.AboutPlugin", "FractalBlaster.Plugins.AboutPlugin\FractalBlaster.Plugins.AboutPlugin.csproj", "{72D2397D-4314-4478-9DCA-AD4E4B9C6C23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalBlaster.Configuration", "FractalBlaster.Configuration\FractalBlaster.Configuration.csproj", "{F698F51F-8EA7-4E0D-A819-990C36E35B57}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = FractalBlaster.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -256,17 +251,6 @@ Global
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|Win32.ActiveCfg = Release|Any CPU
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|x86.ActiveCfg = Release|Any CPU
 		{5294693A-EC6A-439B-AA65-903549E1C88F}.Release|x86.Build.0 = Release|Any CPU
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Win32.ActiveCfg = Debug|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|x86.ActiveCfg = Debug|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|x86.Build.0 = Debug|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Any CPU.ActiveCfg = Release|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Mixed Platforms.Build.0 = Release|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Win32.ActiveCfg = Release|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.ActiveCfg = Release|x86
-		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.Build.0 = Release|x86
 		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{71B1F9A0-DEEE-4239-9504-376212C3CFA6}.Debug|Win32.ActiveCfg = Debug|x86
@@ -315,8 +299,29 @@ Global
 		{72D2397D-4314-4478-9DCA-AD4E4B9C6C23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{72D2397D-4314-4478-9DCA-AD4E4B9C6C23}.Release|Win32.ActiveCfg = Release|Any CPU
 		{72D2397D-4314-4478-9DCA-AD4E4B9C6C23}.Release|x86.ActiveCfg = Release|Any CPU
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Win32.ActiveCfg = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|Win32.Build.0 = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|x86.ActiveCfg = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Debug|x86.Build.0 = Debug|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Any CPU.ActiveCfg = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Win32.ActiveCfg = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|Win32.Build.0 = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.ActiveCfg = Release|x86
+		{F698F51F-8EA7-4E0D-A819-990C36E35B57}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = FractalBlaster.vsmdi
 	EndGlobalSection
 EndGlobal
